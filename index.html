@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>PD Pets</title>
+    <link rel="stylesheet" href="css/index.css">
+    <title>PD Pets | Inicio</title>
 </head>
 
 <body>
@@ -52,12 +54,101 @@
                                         class="ti ti-user icone-nav"></i></a>
                             </li>
                         </ul>
-                        <a class="btn-entrar" href="/pages/login.html">Entrar</a>
+                        <a class="botao" href="/pages/login.html">Entrar</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+
+    <!-- CONTEUDO -->
+    <main>
+        <!-- CARROSSEL -->
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0"
+                    class="active buttons-navigation"></button>
+
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"
+                    class="buttons-navigation"></button>
+
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"
+                    class="buttons-navigation"></button>
+            </div>
+
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+
+                    <picture>
+                        <source srcset="/img/carrossel-1.png" media="(min-width: 800px)">
+                        <img src="/img/carrossel-mobile-1.png" class="d-block w-100" alt="Cuide de quem você ama">
+                    </picture>
+
+                    <div class="carousel-caption banner-1">
+                        <div>
+                            <i class="ti ti-truck-delivery"></i>
+                            <p class="m-0 w-100">Frete grátis em todo o Brasil</p>
+                        </div>
+                        <h2>Tudo que o seu melhor amigo merece</h2>
+                        <p>Ração, petiscos, brinquedos, farmácia e serviços de banho e tosa. </p>
+                        <a href="/pages/produtos.html" class="botao px-4">Ver Cátalogo de Produtos</a>
+                    </div>
+                </div>
+
+
+                <div class="carousel-item">
+
+                    <picture>
+                        <source srcset="/img/carrossel-2.png" media="(min-width: 800px)">
+                        <img src="/img/carrossel-mobile-2.png" class="d-block w-100" alt="Cuide de quem você ama">
+                    </picture>
+
+                    <div class="carousel-caption banner-2">
+                        <div>
+                            <i class="ti ti-star"></i>
+                            <p class="m-0 w-100">Lançamento</p>
+                        </div>
+                        <h2>Cabana Fábrica Pet</h2>
+                        <p>A nova Cabana Fábrica Pet combina um design moderno e elegante com o conforto que cães e
+                            gatos merecem.</p>
+                        <a href="/pages/produtos.html" class="botao">Confira</a>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item ">
+                    <picture>
+                        <source srcset="/img/carrossel-3.png" media="(min-width: 800px)">
+                        <img src="/img/carrossel-mobile-3.png" class="d-block w-100" alt="Cuide de quem você ama">
+                    </picture>
+
+                    <div class="carousel-caption banner-3">
+                        <div>
+                            <i class="ti ti-cat"></i>
+                            <p class="m-0 w-100">Gatos</p>
+                        </div>
+                        <h2>Ração Úmida GranPlus Gourmet Sachê</h2>
+                        <p>Ingredientes selecionados para uma nutrição equilibrada e selecionada.</p>
+                        <a href="/pages/produtos.html" class="botao">Confira</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                <span><i class="ti ti-chevron-compact-left arrow-carousel"></i></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                <span><i class="ti ti-chevron-compact-right arrow-carousel"></i></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+
+        </div>
+    </main>
 
     <!-- RODAPE -->
     <footer class="rodape">
@@ -75,10 +166,10 @@
                                 class="rodape-icones ti ti-brand-instagram"></i></a>
                         <a href="https://www.facebook.com/pdcaseinformatica/" target="_blank" class="rodape-link"><i
                                 class="rodape-icones ti ti-brand-facebook"></i></a>
-                        <a href="https://www.youtube.com/channel/UCU_a1h5vy4_rLolioMv1G9Q" target="_blank" class="rodape-link"><i
-                                class="rodape-icones ti ti-brand-youtube"></i></a>
-                        <a href="https://www.linkedin.com/company/pd-case-informatica-ltda/posts/" target="_blank" class="rodape-link"><i
-                                class="rodape-icones ti ti-brand-linkedin"></i></a>
+                        <a href="https://www.youtube.com/channel/UCU_a1h5vy4_rLolioMv1G9Q" target="_blank"
+                            class="rodape-link"><i class="rodape-icones ti ti-brand-youtube"></i></a>
+                        <a href="https://www.linkedin.com/company/pd-case-informatica-ltda/posts/" target="_blank"
+                            class="rodape-link"><i class="rodape-icones ti ti-brand-linkedin"></i></a>
                     </div>
                 </div>
                 <div class="col-6 col-lg-4 mb-3 mb-lg-0 linha-rodape">

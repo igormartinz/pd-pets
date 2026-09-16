@@ -1,0 +1,123 @@
+/* CARROSSEL */
+.carousel-indicators button {
+    height: .3em !important;
+    border: 1px solid var(--cor-verde-escuro) !important;
+    border-radius: 5px;
+}
+
+.carousel-indicators button.active {
+    opacity: 1;
+    background-color: var(--cor-verde-escuro);
+}
+
+
+/* BANNER 1 */
+.carousel-caption {
+    display: flex;
+    top: 1%;
+    left: 5%;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    text-align: left;
+    color: var(--cor-verde-escuro);
+    font-family: var(--fonte-nunito);
+}
+
+.banner-1 div,
+.banner-2 div,
+.banner-3 div {
+    background-color: var(--cor-salmao);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    padding: .2em 1em;
+    border-radius: 50px;
+    color: var(--cor-branco);
+    font-size: 14px;
+}
+
+.banner-1 div i {
+    font-size: 20px;
+}
+
+.banner-1 h2,
+.banner-2 h2,
+.banner-3 h2 {
+    font-family: var(--fonte-poppins);
+    font-size: clamp(24px, 6vw, 48px);
+    font-weight: bold;
+    width: 100%;
+}
+
+/* BANNER 2 e 3*/
+.banner-2,
+.banner-3 {
+    color: var(--cor-branco);
+}
+
+.banner-2 div {
+    background-color: var(--cor-verde);
+}
+
+
+button.carousel-control-prev,
+button.carousel-control-next {
+    font-size: 2em;
+    color: var(--cor-branco);
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .carousel-caption {
+        justify-content: center;
+        align-items: start;
+        padding: 0 3em;
+    }
+
+    .banner-1 div,
+    .banner-2 div,
+    .banner-3 div {
+        display: inline-flex;
+        margin-bottom: 1em;
+    }
+}
+
+@media (min-width: 800px) {
+
+    .banner-1 h2,
+    .banner-2 h2,
+    .banner-3 h2 {
+        font-size: clamp(24px, 3vw, 48px);
+        font-weight: bold;
+    }
+
+    .carousel-caption {
+        justify-content: center;
+        align-items: start;
+    }
+
+    button.carousel-control-prev,
+    button.carousel-control-next {
+        display: block;
+        opacity: 2;
+    }
+
+    .banner-1,
+    .banner-2,
+    .banner-3 {
+        left: 15%;
+        top: 10%;
+    }
+
+
+    .banner-1 h2,
+    .banner-2 h2,
+    .banner-3 h2,
+    .banner-1 p,
+    .banner-2 p,
+    .banner-3 p {
+        width: 50%;
+    }
+}
