@@ -199,7 +199,7 @@ button.carousel-control-next {
 }
 
 .titulo-contato {
-    font-size: clamp(24px, 4vw ,36px);
+    font-size: clamp(24px, 4vw, 36px);
     text-align: center;
     margin: 0;
     font-weight: bold;
@@ -263,7 +263,8 @@ button.carousel-control-next {
         text-align: left;
     }
 
-    .titulo-contato, .descricao-contato {
+    .titulo-contato,
+    .descricao-contato {
         text-align: left;
     }
 }

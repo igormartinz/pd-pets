@@ -124,6 +124,11 @@ body {
     font-weight: bold;
 }
 
+/* TOAST */
+.toast-body{
+    color: var(--cor-cinza);
+}
+
 /* CABEÇALHO */
 .navbar {
     background-color: var(--cor-branco-amarelado);

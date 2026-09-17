@@ -187,10 +187,12 @@
                             </div>
                             <i class="ti ti-heart ti-heart-icon"></i>
 
-                            <img src="/img/ração-granplus-choice.png" class="produto-img" alt="Ração GranPlus Choice para Gatos Adultos Sabor Frango e Carne">
+                            <img src="/img/ração-granplus-choice.png" class="produto-img"
+                                alt="Ração GranPlus Choice para Gatos Adultos Sabor Frango e Carne">
 
                             <div>
-                                <h3 class="text-truncate produto-nome mb-1 mt-2">Ração GranPlus Choice para Gatos Adultos Sabor Frango e Carne</h3>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Ração GranPlus Choice para Gatos
+                                    Adultos Sabor Frango e Carne</h3>
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p class="produto-lojista m-0">Mundo Pet Comércio Ltda</p>
@@ -210,10 +212,12 @@
                             </div>
                             <i class="ti ti-heart ti-heart-icon"></i>
 
-                            <img src="/img/cabana-fabrica-pet.png" class="produto-img" alt="Cabana Fábrica Pet New Collection Preto para Cães e Gatos">
+                            <img src="/img/cabana-fabrica-pet.png" class="produto-img"
+                                alt="Cabana Fábrica Pet New Collection Preto para Cães e Gatos">
 
                             <div>
-                                <h3 class="text-truncate produto-nome mb-1 mt-2">Cabana Fábrica Pet New Collection Preto para Cães e Gatos</h3>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Cabana Fábrica Pet New Collection Preto
+                                    para Cães e Gatos</h3>
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
@@ -233,10 +237,12 @@
                             </div>
                             <i class="ti ti-heart ti-heart-icon"></i>
 
-                            <img src="/img/arranhador-lilopety-retangular.png" class="produto-img" alt="Arranhador Lilopety Retangular de Papelão para Gatos">
+                            <img src="/img/arranhador-lilopety-retangular.png" class="produto-img"
+                                alt="Arranhador Lilopety Retangular de Papelão para Gatos">
 
                             <div>
-                                <h3 class="text-truncate produto-nome mb-1 mt-2">Arranhador Lilopety Retangular de Papelão para Gatos</h3>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Arranhador Lilopety Retangular de
+                                    Papelão para Gatos</h3>
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <p class="produto-lojista m-0">Mundo Pet Comércio Ltda</p>
@@ -256,7 +262,8 @@
                             </div>
                             <i class="ti ti-heart ti-heart-icon"></i>
 
-                            <img src="/img/fortekor-mg-elanco.png" class="produto-img" alt="Fortekor 5mg Elanco 28 Comprimidos">
+                            <img src="/img/fortekor-mg-elanco.png" class="produto-img"
+                                alt="Fortekor 5mg Elanco 28 Comprimidos">
 
                             <div>
                                 <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos</h3>
@@ -358,24 +365,28 @@
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
                     <h2 class="titulo-contato">Contato</h2>
                     <p class="descricao-contato">Entre em contato conosco</p>
-                    <form class="d-flex flex-column gap-2">
+                    <form id="form-contato" class="d-flex flex-column gap-2" novalidate>
                         <div class="d-flex gap-3">
                             <div class="d-flex flex-column campo-input w-100">
                                 <label for="nome">Nome</label>
-                                <input type="text" name="nome" class="form-control input-contato" id="nome" placeholder="Digite seu nome">
+                                <input type="text" name="nome" class="form-control input-contato" id="nome" required
+                                    placeholder="Digite seu nome">
                             </div>
                             <div class="d-flex flex-column campo-input w-100">
                                 <label for="assunto">Assunto</label>
-                                <input type="text" name="assunto" class="form-control input-contato" id="assunto" placeholder="Digite seu assunto">
+                                <input type="text" name="assunto" class="form-control input-contato" id="assunto"
+                                    required placeholder="Digite seu assunto">
                             </div>
                         </div>
                         <div class="d-flex flex-column campo-input">
                             <label for="email">E-mail</label>
-                            <input type="email" name="email" id="email" class="form-control input-contato" placeholder="Digite seu e-mail">
+                            <input type="email" name="email" id="email" class="form-control input-contato" required
+                                placeholder="Digite seu e-mail">
                         </div>
                         <div class="d-flex flex-column campo-input">
                             <label for="mensagem">Mensagem</label>
-                            <textarea name="mensagem" id="mensagem" class="form-control input-contato" placeholder="Digite sua mensagem"></textarea>
+                            <textarea name="mensagem" id="mensagem" class="form-control input-contato" required
+                                placeholder="Digite sua mensagem"></textarea>
                         </div>
                         <input type="submit" value="Enviar" class="botao w-100 border-0 mt-2">
                     </form>
@@ -424,6 +435,32 @@
         </div>
     </footer>
 
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toast-sucesso" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bg-success rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2 text-success">Sucesso</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Mensagem enviada com sucesso!
+            </div>
+        </div>
+
+        <div id="toast-erro" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bg-danger rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2 text-danger">Campos vazios</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Preencha todos os campos antes de enviar.
+            </div>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
