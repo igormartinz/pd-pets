@@ -27,6 +27,103 @@ body {
     color: var(--cor-branco);
 }
 
+/* COMPONENTES */
+
+.botao {
+    background-color: var(--cor-verde-escuro);
+    padding: .5em 3em;
+    font-size: 16px;
+    color: var(--cor-branco);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-family: var(--fonte-nunito);
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+}
+
+.botao:hover{
+    background-color: #22514B;
+}
+
+/* CARD DE PRODUTO */
+.card-produto {
+    background-color: rgb(255, 255, 255, 0.2);
+    backdrop-filter: blur(30px);
+    border-radius: 20px;
+    font-family: var(--fonte-nunito);
+    border: 2px solid var(--cor-verde-escuro);
+    padding: 1em;
+    position: relative;
+    box-shadow: 0 0 10px #00000025;
+    margin: 0 auto;
+}
+
+.produto-avaliacao {
+    position: absolute;
+    background-color: var(--cor-verde-escuro);
+    padding: .2em .8em;
+    border-radius: 50px;
+    top: 10px;
+    left: 10px;
+}
+
+.ti-heart-icon {
+    position: absolute;
+    background-color: var(--cor-verde-escuro);
+    right: 0;
+    top: 0;
+    padding: .3em;
+    font-size: 35px;
+    border-radius: 0 10px 0 30px;
+}
+
+.produto-img {
+    width: 100%;
+    border-radius: 2em;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) padding-box,
+        linear-gradient(90deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 25%,
+            var(--cor-verde) 50%,
+            var(--cor-verde-escuro) 100%) border-box;
+}
+
+.produto-nome{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.produto-lojista{
+    font-size: 16px;
+    color: var(--cor-verde-escuro);
+}
+
+.produto-categoria{
+    color: var(--cor-branco);
+}
+
+.ti-shopping-bag-plus{
+    align-self: end;
+    background-color: var(--cor-verde-escuro);
+    padding: .5em;
+    font-size: 35px;
+    margin-top: .5em;
+    border-radius: 20px;
+}
+
+.produto-preco{
+    font-size: clamp(16px, 5.5vw, 20px);
+    margin-bottom: 0;
+    margin-top: .3em;
+    font-weight: bold;
+}
+
+
 /* CABEÇALHO */
 .navbar {
     background-color: var(--cor-branco-amarelado);
