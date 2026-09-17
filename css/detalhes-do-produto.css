@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* FONTES */
+    --fonte-poppins: "Poppins", sans-serif;
+    --fonte-nunito: "Nunito", sans-serif;
+
+    /* CORES */
+    --cor-de-fundo: #33714E;
+    --cor-verde: #1F9C62;
+    --cor-verde-escuro: #173B37;
+    --cor-salmao: #F0885A;
+    --cor-branco-amarelado: #FAF8F2;
+    --cor-branco: #FFFFFF;
+    --cor-cinza: #1D1D1D;
+}
+
+body {
+    background-color: var(--cor-de-fundo);
+    color: var(--cor-branco);
+}
+
+figcaption {
+    display: none;
+}
+

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Detalhes do Produto</title>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand d-lg-none" href="/">
+                    <img src="img/logo-mobile.png" alt="Logo PD Pets" class="logo-mobile">
+                </a>
+                <a class="navbar-brand d-lg-block d-none" href="/">
+                    <img src="img/logo-desktop.png" alt="Logo PD Pets" class="logo-desktop">
+                </a>
+
+                <!-- MENU HAMBURGUER -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Abrir menu de navegação">
+                    <i class="ti ti-menu-2 menu-mobile"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex ms-auto" role="search" id="form-pesquisa">
+                        <input type="search" class="input-pesquisa" id="input-pesquisa"
+                            placeholder="O que você procura hoje?">
+                        <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
+                    </form>
+                    <hr class="d-lg-none">
+                    <div class="d-flex ">
+                        <ul class="navbar-nav mx-lg-4 me-auto mb-lg-0">
+                            <li>
+                                <a class="text-decoration-none" href="/pages/carrinho.html"><i
+                                        class="ti ti-shopping-cart icone-nav"></i></a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="/pages/favoritos.html"><i
+                                        class="ti ti-heart icone-nav"></i></a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="/pages/dashboard.html"><i
+                                        class="ti ti-user icone-nav"></i></a>
+                            </li>
+                        </ul>
+                        <a class="botao" href="/pages/login.html">Entrar</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="section-detalhes-avaliacao-produto">
+            <button class="botao">Voltar ao catálogo de produtos</button>
+
+            <section id="section-detalhes-produto">
+                <div class="container-imagem-grande">
+                    <figure>
+                        <img src="/img-produtos/43-racao-umida-granplus-gourmet-sache-carne.webp"
+                            alt="Imagem da ração úmida granplus gourmet sabor carne"
+                            class="imagem-detalhes-produto-grande">
+                    </figure>
+                    <figcaption>Imagem da ração úmida granplus gourmet sabor carne</figcaption>
+                </div>
+
+                <div class="container-imagens-pequenas">
+                    <figure>
+                        <img src="/img-produtos/43-racao-umida-granplus-gourmet-sache-carne.webp"
+                            alt="Imagem da ração úmida granplus gourmet sabor carne"
+                            class="imagem-detalhes-produto-grande">
+                    </figure>
+                    <figcaption>Imagem da ração úmida granplus gourmet sabor carne</figcaption>
+
+                    <figure>
+                        <img src="/img-produtos/44-racao-umida-granplus-gourmet-sache-carne.webp"
+                            alt="Imagem da ração úmida granplus gourmet sabor carne"
+                            class="imagem-detalhes-produto-grande">
+                    </figure>
+                    <figcaption>Imagem da ração úmida granplus gourmet sabor carne</figcaption>
+
+                    <figure>
+                        <img src="/img-produtos/45-racao-umida-granplus-gourmet-sache-carne.webp"
+                            alt="Imagem da ração úmida granplus gourmet sabor carne"
+                            class="imagem-detalhes-produto-grande">
+                    </figure>
+                    <figcaption>Imagem da ração úmida granplus gourmet sabor carne</figcaption>
+                </div>
+
+                <div class="container-informacoes-produto">
+                    <div class="container-informacoes-superior">
+                        <h2 id="nome-produto" class="nome-produto-detalhes">Ração Úmida GranPlus Gourmet Sachê</h2>
+
+                        <button id="btn-favorito">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <p class="categoria-produto">Ração e Petiscos</p>
+                    <p class="nome-loja-produto">Loja: <span id="nome-loja">Granplus</span></p>
+                    <p class="estoque-produto">Em estoque <span id="estoque">(38)</span></p>
+                    <p class="preco-produto"><span id="preco">R$ 5,39</span> à vista <br> ou em até 6x no cartão</p>
+                    <p class="prazo-entrega">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-truck-delivery">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                            <path d="M3 9l4 0" />
+                        </svg>
+                        Frete grátis
+                    </p>
+
+                    <div class="container-informacoes-inferior">
+                        <h2>Quantidade:</h2>
+                        <div class="quantidade-produto">
+                            <button id="btn-mais">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 5l0 14" />
+                                    <path d="M5 12l14 0" />
+                                </svg>
+                            </button>
+                            <input type="number" id="input-quantidade" value="1" min="1">
+                            <button id="btn-menos">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-minus">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M5 12l14 0" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="botao">Adicionar ao carrinho</button>
+                </div>
+            </section>
+
+            <section id="section-descricao">
+                <h2 id="nome-produto" class="nome-produto-descricao">Ração Úmida GranPlus Gourmet Sachê</h2>
+            </section>
+
+            <section id="section-avaliacao-produto">
+                <div class="container-avaliacao-superior">
+                    <h2>Avaliações</h2>
+                    <div class="container-avaliacao-media">
+                        <h2 id="avaliacao-media">5.0</h2>
+                        <div class="container-nota-avaliacoes">
+                            <div class="container-notas">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                    id="icon-tabler-star">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                </svg>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                    id="icon-tabler-star">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                </svg>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                    id="icon-tabler-star">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                </svg>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                    id="icon-tabler-star">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                </svg>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                                    id="icon-tabler-star">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                </svg>
+                            </div>
+                            <p id="txt-quantidade-avaliacoes">
+                            <p id="quantidade-avaliacoes">3</p>
+                            Avaliações
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="container-avaliacao-usuario">
+                    <h2 id="nome-usuario">Natanael Augusto</h2>
+                    <p id="data-avaliacao">28/08/2026</p>
+                    <div id="container-notas-usuario">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+                    </div>
+                    <p id="comentario-produto">
+                        Achei ótimo
+                    </p>
+                </div>
+
+                <div id="container-avaliacao-usuario">
+                    <h2 id="nome-usuario">Wilson Santos</h2>
+                    <p id="data-avaliacao">02/11/2025</p>
+                    <div id="container-notas-usuario">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+                    </div>
+                    <p id="comentario-produto">
+                        Tenho um cachorro muito chato para comer. misturo um sachê desses com ração para raças pequenas,
+                        ele come bem. esse produto está me salvando.
+                    </p>
+                </div>
+
+                <div id="container-avaliacao-usuario">
+                    <h2 id="nome-usuario">Juliana Silva</h2>
+                    <p id="data-avaliacao">03/08/2025</p>
+                    <div id="container-notas-usuario">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"
+                            id="icon-tabler-star">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                        </svg>
+                    </div>
+                    <p id="comentario-produto">
+                        As fezes não deixam cheiro e bem durinhas.
+                    </p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- RODAPE -->
+    <footer class="rodape">
+        <div class="container-fluid conteudo-rodape">
+            <div class="row pt-3 pt-lg-0">
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+                    <img src="/img/logo-desktop.png" alt="Logo PD Pets" class="logo-rodape d-block mx-auto mx-lg-0">
+                    <p class="texto-rodape text-lg-start">O pet shop online que cuida do seu melhor amigo.</p>
+                </div>
+
+                <div class="col-6 col-lg-4 mb-3 mb-lg-0">
+                    <h2 class="titulo-rodape text-center">Redes Sociais</h2>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="https://www.instagram.com/pdcaseinformatica/" target="_blank" class="rodape-link"><i
+                                class="rodape-icones ti ti-brand-instagram"></i></a>
+                        <a href="https://www.facebook.com/pdcaseinformatica/" target="_blank" class="rodape-link"><i
+                                class="rodape-icones ti ti-brand-facebook"></i></a>
+                        <a href="https://www.youtube.com/channel/UCU_a1h5vy4_rLolioMv1G9Q" target="_blank"
+                            class="rodape-link"><i class="rodape-icones ti ti-brand-youtube"></i></a>
+                        <a href="https://www.linkedin.com/company/pd-case-informatica-ltda/posts/" target="_blank"
+                            class="rodape-link"><i class="rodape-icones ti ti-brand-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4 mb-3 mb-lg-0 linha-rodape">
+                    <div class="mx-auto rodape-endereco">
+                        <h2 class="titulo-rodape">Endereço</h2>
+                        <p class="m-0">Alameda Oscar, 891</p>
+                        <p class="m-0">Vila da Serra, Nova Lima - MG</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyrigth">
+            <p class="m-0">© 2026 PD Pets. Todos os Direitos Reservados</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
