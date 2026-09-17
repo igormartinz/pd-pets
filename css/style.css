@@ -44,13 +44,14 @@ body {
     transition: .5s;
 }
 
-.botao:hover{
+.botao:hover {
     background-color: #22514B;
 }
 
 
 /* CARD DE PRODUTO */
 .card-produto {
+    width: 270px;
     background-color: rgb(255, 255, 255, 0.2);
     backdrop-filter: blur(30px);
     border-radius: 20px;
@@ -94,30 +95,37 @@ body {
             var(--cor-verde-escuro) 100%) border-box;
 }
 
-.produto-nome{
+.produto-nome {
     font-size: 16px;
     font-weight: bold;
 }
 
-.produto-lojista{
-    font-size: 16px;
-    color: var(--cor-verde-escuro);
+.produto-lojista {
+    font-size: clamp(10px, 1.1vw, 14px);
+    text-shadow: 0px 0px .5px #000000;
+    color: #A3FFD4;
 }
 
-.produto-categoria{
+.produto-categoria {
     color: var(--cor-branco);
 }
 
-.ti-shopping-bag-plus{
+.ti-shopping-bag-plus {
     align-self: end;
     background-color: var(--cor-verde-escuro);
     padding: .5em;
     font-size: 35px;
     margin-top: .5em;
     border-radius: 20px;
+    cursor: pointer;
+    transition: .3s ease;
 }
 
-.produto-preco{
+.ti-shopping-bag-plus:hover {
+    background-color: #22514B;
+}
+
+.produto-preco {
     font-size: clamp(16px, 5.5vw, 20px);
     margin-bottom: 0;
     margin-top: .3em;
@@ -125,7 +133,7 @@ body {
 }
 
 /* TOAST */
-.toast-body{
+.toast-body {
     color: var(--cor-cinza);
 }
 
@@ -152,7 +160,8 @@ body {
     padding: 0;
 }
 
-.navbar-toggler:focus, .input-pesquisa:focus {
+.navbar-toggler:focus,
+.input-pesquisa:focus {
     outline: none;
     box-shadow: none;
 }
@@ -278,6 +287,7 @@ hr {
 
 
 @media (min-width: 992px) {
+
     .navbar,
     .conteudo-rodape {
         padding: .7em 5em;

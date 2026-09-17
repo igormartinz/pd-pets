@@ -211,18 +211,47 @@ button.carousel-control-next {
     margin-bottom: .5em;
 }
 
+.input-border {
+    position: relative;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.input-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 100%);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
 .input-contato {
     width: 100%;
-    padding: .7em;
-    border-radius: 20px;
-    border: 2px solid transparent;
-    background:
-        linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)) padding-box,
-        linear-gradient(90deg,
-            var(--cor-verde) 0%,
-            var(--cor-verde-escuro) 25%,
-            var(--cor-verde) 50%,
-            var(--cor-verde-escuro) 100%) border-box;
+    display: block;
+    padding: .7em 1em;
+    border: none;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: .3s ease;
+}
+
+.input-contato::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+textarea.input-contato {
+    min-height: 90px;
+    resize: none;
+    width: 100%;
 }
 
 .campo-input label {
