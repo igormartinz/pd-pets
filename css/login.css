@@ -1,0 +1,105 @@
+/* PÁGINA DE LOGIN */
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-image: url(/img/img-fundo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 6em 0 4em 0;
+}
+
+.btn-lojista{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.entrar{
+    background-color: var(--cor-branco-amarelado);
+    border-radius: 30px;
+    box-shadow: 0 0 10px #00000025;
+    padding: 2em;
+    color: var(--cor-cinza);
+    max-width: 28em;
+    margin: 0 auto;
+    font-family: var(--fonte-nunito);
+}
+
+.entrar h1{
+    font-family: var(--fonte-poppins);
+    text-align: center;
+    font-weight: bold;
+}
+
+.logo-mobile{
+    width: 12em;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.input-border {
+    position: relative;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.input-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 100%);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.input-primario {
+    width: 100%;
+    display: block;
+    padding: .7em 1em;
+    border: none;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: .3s ease;
+}
+
+.campo-input label {
+    margin-left: 1em;
+    font-weight: bold;
+}
+
+.entrar-link{
+    text-decoration: none;
+    color: var(--cor-cinza);
+    font-weight: bold;
+}
+
+.entrar-link:hover{
+    text-decoration: underline;
+}
+
+@media (min-width: 992px) {
+    .logo-mobile{
+        margin-bottom: 2em;
+        width: 20em;
+    }
+}
+
+@media (min-height: 780px) {
+    body{
+        margin: 0;
+    }
+}
