@@ -42,45 +42,6 @@ body{
     display: block;
 }
 
-
-.input-border {
-    position: relative;
-    border-radius: 20px;
-    padding: 2px;
-}
-
-.input-border::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(45deg,
-            var(--cor-verde) 0%,
-            var(--cor-verde-escuro) 100%);
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-}
-
-.input-primario {
-    width: 100%;
-    display: block;
-    padding: .7em 1em;
-    border: none;
-    border-radius: 18px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    transition: .3s ease;
-}
-
-.campo-input label {
-    margin-left: 1em;
-    font-weight: bold;
-}
-
 .entrar-link{
     text-decoration: none;
     color: var(--cor-cinza);
