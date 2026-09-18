@@ -44,12 +44,14 @@ body {
     transition: .5s;
 }
 
-.botao:hover{
+.botao:hover {
     background-color: #22514B;
 }
 
+
 /* CARD DE PRODUTO */
 .card-produto {
+    width: 270px;
     background-color: rgb(255, 255, 255, 0.2);
     backdrop-filter: blur(30px);
     border-radius: 20px;
@@ -93,21 +95,22 @@ body {
             var(--cor-verde-escuro) 100%) border-box;
 }
 
-.produto-nome{
+.produto-nome {
     font-size: 16px;
     font-weight: bold;
 }
 
-.produto-lojista{
-    font-size: 16px;
-    color: var(--cor-verde-escuro);
+.produto-lojista {
+    font-size: clamp(10px, 1.1vw, 14px);
+    text-shadow: 0px 0px .5px #000000;
+    color: #A3FFD4;
 }
 
-.produto-categoria{
+.produto-categoria {
     color: var(--cor-branco);
 }
 
-.ti-shopping-bag-plus{
+.ti-shopping-bag-plus {
     align-self: end;
     background-color: var(--cor-verde-escuro);
     padding: .5em;
@@ -117,12 +120,25 @@ body {
 }
 
 .produto-preco{
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.ti-shopping-bag-plus:hover {
+    background-color: #22514B;
+}
+
+.produto-preco {
     font-size: clamp(16px, 5.5vw, 20px);
     margin-bottom: 0;
     margin-top: .3em;
     font-weight: bold;
 }
 
+/* TOAST */
+.toast-body {
+    color: var(--cor-cinza);
+}
 
 /* CABEÇALHO */
 .navbar {
@@ -147,7 +163,8 @@ body {
     padding: 0;
 }
 
-.navbar-toggler:focus {
+.navbar-toggler:focus,
+.input-pesquisa:focus {
     outline: none;
     box-shadow: none;
 }
@@ -171,11 +188,16 @@ body {
             #00000030 100%) border-box;
 }
 
+.input-pesquisa::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
 
 #form-pesquisa {
     position: relative;
     margin: 10px 0;
 }
+
 
 #btn-pesquisa {
     position: absolute;
@@ -207,20 +229,6 @@ hr {
     color: var(--cor-cinza);
 }
 
-.btn-entrar {
-    background-color: var(--cor-verde-escuro);
-    padding: .5em 3em;
-    font-size: 16px;
-    color: var(--cor-branco);
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-family: var(--fonte-nunito);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* RODAPE */
 .rodape {
     background-color: var(--cor-branco-amarelado);
@@ -247,7 +255,7 @@ hr {
     transition: .5s;
 }
 
-.rodape-link:hover{
+.rodape-link:hover {
     color: var(--cor-verde);
 }
 
@@ -269,7 +277,7 @@ hr {
     border-left: 3px solid var(--cor-verde);
 }
 
-.rodape-endereco{
+.rodape-endereco {
     width: clamp(9em, 40vw, 16em);
 }
 
@@ -279,6 +287,7 @@ hr {
     text-align: center;
     padding: 0.8em 1em;
 }
+
 
 @media (min-width: 992px) {
 
@@ -306,5 +315,4 @@ hr {
     .linha-rodape::before {
         border: none;
     }
-
 }
