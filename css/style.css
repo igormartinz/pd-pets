@@ -55,6 +55,96 @@ body {
 
 .botao-secundario:hover{
     background-color: #CF6536;
+
+/* CARD DE PRODUTO */
+.card-produto {
+    width: 270px;
+    background-color: rgb(255, 255, 255, 0.2);
+    backdrop-filter: blur(30px);
+    border-radius: 20px;
+    font-family: var(--fonte-nunito);
+    border: 2px solid var(--cor-verde-escuro);
+    padding: 1em;
+    position: relative;
+    box-shadow: 0 0 10px #00000025;
+    margin: 0 auto;
+}
+
+.produto-avaliacao {
+    position: absolute;
+    background-color: var(--cor-verde-escuro);
+    padding: .2em .8em;
+    border-radius: 50px;
+    top: 10px;
+    left: 10px;
+}
+
+.ti-heart-icon {
+    position: absolute;
+    background-color: var(--cor-verde-escuro);
+    right: 0;
+    top: 0;
+    padding: .3em;
+    font-size: 35px;
+    border-radius: 0 10px 0 30px;
+}
+
+.produto-img {
+    width: 100%;
+    border-radius: 2em;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) padding-box,
+        linear-gradient(90deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 25%,
+            var(--cor-verde) 50%,
+            var(--cor-verde-escuro) 100%) border-box;
+}
+
+.produto-nome {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.produto-lojista {
+    font-size: clamp(10px, 1.1vw, 14px);
+    text-shadow: 0px 0px .5px #000000;
+    color: #A3FFD4;
+}
+
+.produto-categoria {
+    color: var(--cor-branco);
+}
+
+.ti-shopping-bag-plus {
+    align-self: end;
+    background-color: var(--cor-verde-escuro);
+    padding: .5em;
+    font-size: 35px;
+    margin-top: .5em;
+    border-radius: 20px;
+}
+
+.produto-preco{
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.ti-shopping-bag-plus:hover {
+    background-color: #22514B;
+}
+
+.produto-preco {
+    font-size: clamp(16px, 5.5vw, 20px);
+    margin-bottom: 0;
+    margin-top: .3em;
+    font-weight: bold;
+}
+
+/* TOAST */
+.toast-body {
+    color: var(--cor-cinza);
 }
 
 /* CABEÇALHO */
@@ -80,7 +170,8 @@ body {
     padding: 0;
 }
 
-.navbar-toggler:focus {
+.navbar-toggler:focus,
+.input-pesquisa:focus {
     outline: none;
     box-shadow: none;
 }
@@ -104,11 +195,16 @@ body {
             #00000030 100%) border-box;
 }
 
+.input-pesquisa::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
 
 #form-pesquisa {
     position: relative;
     margin: 10px 0;
 }
+
 
 #btn-pesquisa {
     position: absolute;
@@ -140,20 +236,6 @@ hr {
     color: var(--cor-cinza);
 }
 
-.btn-entrar {
-    background-color: var(--cor-verde-escuro);
-    padding: .5em 3em;
-    font-size: 16px;
-    color: var(--cor-branco);
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-family: var(--fonte-nunito);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* RODAPE */
 .rodape {
     background-color: var(--cor-branco-amarelado);
@@ -180,7 +262,7 @@ hr {
     transition: .5s;
 }
 
-.rodape-link:hover{
+.rodape-link:hover {
     color: var(--cor-verde);
 }
 
@@ -202,7 +284,7 @@ hr {
     border-left: 3px solid var(--cor-verde);
 }
 
-.rodape-endereco{
+.rodape-endereco {
     width: clamp(9em, 40vw, 16em);
 }
 
@@ -212,6 +294,7 @@ hr {
     text-align: center;
     padding: 0.8em 1em;
 }
+
 
 @media (min-width: 992px) {
 
@@ -239,5 +322,4 @@ hr {
     .linha-rodape::before {
         border: none;
     }
-
 }

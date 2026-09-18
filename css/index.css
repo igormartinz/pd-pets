@@ -1,0 +1,347 @@
+/* PÁGINA INICIAL */
+
+/* CARROSSEL */
+.carousel-indicators button {
+    height: .3em !important;
+    border: 1px solid var(--cor-verde-escuro) !important;
+    border-radius: 5px;
+}
+
+.carousel-indicators button.active {
+    opacity: 1;
+    background-color: var(--cor-verde-escuro);
+}
+
+
+/* BANNER 1 */
+.carousel-caption {
+    display: flex;
+    top: 1%;
+    left: 5%;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    text-align: left;
+    color: var(--cor-verde-escuro);
+    font-family: var(--fonte-nunito);
+}
+
+.banner-1 div,
+.banner-2 div,
+.banner-3 div {
+    background-color: var(--cor-salmao);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    padding: .2em 1em;
+    border-radius: 50px;
+    color: var(--cor-branco);
+    font-size: 14px;
+}
+
+.banner-1 div i {
+    font-size: 20px;
+}
+
+.banner-1 h2,
+.banner-2 h2,
+.banner-3 h2 {
+    font-family: var(--fonte-poppins);
+    font-size: clamp(24px, 6vw, 48px);
+    font-weight: bold;
+    width: 100%;
+}
+
+/* BANNER 2 e 3*/
+.banner-2,
+.banner-3 {
+    color: var(--cor-branco);
+}
+
+.banner-2 div {
+    background-color: var(--cor-verde);
+}
+
+
+button.carousel-control-prev,
+button.carousel-control-next {
+    font-size: 2em;
+    color: var(--cor-branco);
+    display: none;
+}
+
+
+/* BENEFICIOS */
+.beneficios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em;
+
+}
+
+.beneficio {
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+    border-radius: 1em;
+    border: 2px solid var(--cor-verde);
+    max-width: 22em;
+    min-height: 8em;
+    margin: 0 auto;
+}
+
+.beneficio div i {
+    color: var(--cor-salmao);
+    font-size: 40px;
+}
+
+.beneficio div h3 {
+    font-weight: bold;
+    color: var(--cor-cinza);
+    font-size: 20px;
+}
+
+.beneficio p {
+    color: #8E8E8E;
+}
+
+/* PRODUTOS EM DESTAQUE */
+#produtos-destaque {
+    background-image: url(/img/produtos-destaque-mobile.png);
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.titulo-produtos-destaque {
+    font-size: clamp(24px, 5vw, 36px);
+    text-align: center;
+    font-family: var(--fonte-poppins);
+    margin-bottom: 1em;
+    text-shadow: 0 0 8px #000;
+}
+
+/* SOBRE A EMPRESA */
+.sobre-empresa {
+    padding: 0 2em;
+}
+
+.titulo-sobre-empresa {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: var(--fonte-poppins);
+    margin-bottom: 1em;
+}
+
+.sobre-empresa p {
+    font-family: var(--fonte-nunito);
+}
+
+/* PERGUNTAS FREQUENTES */
+.perguntas-frequentes {
+    background-image: url(/img/pergutas-frequentes-mobile.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 2em 0;
+    color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+}
+
+.subtitulo-perguntas {
+    color: var(--cor-salmao);
+    font-family: var(--fonte-poppins);
+    font-size: 20px;
+    font-size: clamp(20px, 3.5vw, 28px);
+}
+
+.titulo-perguntas {
+    font-size: clamp(24px, 5vw, 36px);
+    text-align: center;
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+}
+
+.accordion {
+    border-radius: 0 !important;
+    border: 0 !important;
+    background-color: none !important;
+}
+
+.accordion-button {
+    background: none !important;
+    border-radius: 0 !important;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--cor-cinza);
+}
+
+.accordion-item {
+    border-top: 3px solid var(--cor-cinza);
+    border-bottom: 3px solid var(--cor-cinza);
+    border-left: none;
+    border-right: none;
+    background: none !important;
+    border-radius: 0 !important;
+}
+
+.accordion-item:focus,
+.accordion-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* CONTATO */
+.contato {
+    font-family: var(--fonte-nunito);
+}
+
+.titulo-contato {
+    font-size: clamp(24px, 4vw, 36px);
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    font-family: var(--fonte-poppins);
+}
+
+.descricao-contato {
+    text-align: center;
+    margin-bottom: .5em;
+}
+
+.input-border {
+    position: relative;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.input-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 100%);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.input-contato {
+    width: 100%;
+    display: block;
+    padding: .7em 1em;
+    border: none;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: .3s ease;
+}
+
+.input-contato::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+textarea.input-contato {
+    min-height: 90px;
+    resize: none;
+    width: 100%;
+}
+
+.campo-input label {
+    margin-left: 1em;
+    font-weight: bold;
+}
+
+.img-contato {
+    border-radius: 20px;
+}
+
+@media (min-width: 992px) {
+    .carousel-caption {
+        justify-content: center;
+        align-items: start;
+        padding: 0 3em;
+    }
+
+    .banner-1 div,
+    .banner-2 div,
+    .banner-3 div {
+        display: inline-flex;
+        margin-bottom: 1em;
+    }
+
+    #produtos-destaque {
+        background-image: url(/img/produtos-destaque.png);
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+
+    .titulo-produtos-destaque {
+        text-align: left;
+    }
+
+    .titulo-sobre-empresa {
+        text-align: left;
+    }
+
+    .titulo-contato,
+    .descricao-contato {
+        text-align: left;
+    }
+}
+
+@media (min-width: 800px) {
+
+    .banner-1 h2,
+    .banner-2 h2,
+    .banner-3 h2 {
+        font-size: clamp(24px, 3vw, 48px);
+        font-weight: bold;
+    }
+
+    .carousel-caption {
+        justify-content: center;
+        align-items: start;
+    }
+
+    button.carousel-control-prev,
+    button.carousel-control-next {
+        display: block;
+        opacity: 2;
+    }
+
+    .banner-1,
+    .banner-2,
+    .banner-3 {
+        left: 15%;
+        top: 10%;
+    }
+
+
+    .banner-1 h2,
+    .banner-2 h2,
+    .banner-3 h2,
+    .banner-1 p,
+    .banner-2 p,
+    .banner-3 p {
+        width: 50%;
+    }
+
+    .titulo-perguntas {
+        text-align: left;
+    }
+}
+
+@media (min-width: 600px) {
+    .perguntas-frequentes {
+        background-image: url(/img/perguntas-frequentes.png);
+    }
+}
