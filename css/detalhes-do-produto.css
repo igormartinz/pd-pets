@@ -441,4 +441,8 @@ h2 {
     #btn-favorito {
         width: 40px;
     }
+
+    .container-avaliacao-usuario {
+        margin: 30px;
+    }
 }
