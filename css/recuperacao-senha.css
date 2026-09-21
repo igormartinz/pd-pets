@@ -1,0 +1,53 @@
+/* PÁGINA DE LOGIN */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-image: url(/img/img-fundo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    font-family: var(--fonte-nunito);
+}
+
+.recuperar-senha {
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+    padding: 2em 1em;
+    border-radius: 30px;
+    max-width: 35em;
+    margin: 0 auto;
+}
+
+.recuperar-senha h1 {
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    text-align: center;
+    font-size: clamp(24px, 5.5vw, 36px);
+}
+
+.botao,
+.botao-secundario {
+    width: 100%;
+}
+
+/* MODAL */
+.modal-content{
+    border-radius: 1em;
+    padding: 1em;
+}
+
+@media (min-width: 768px) {
+    .recuperar-senha h1 {
+        text-align: left;
+    }
+    
+    .botao,
+    .botao-secundario {
+        align-self: end;
+        width: auto;
+    }
+}

@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/detalhes-do-produto.css">
-    <title>PD Pets</title>
+    <link rel="stylesheet" href="css/index.css">
+    <title>PD Pets | Inicio</title>
 </head>
 
 <body>
@@ -53,12 +54,359 @@
                                         class="ti ti-user icone-nav"></i></a>
                             </li>
                         </ul>
-                        <a class="btn-entrar" href="/pages/login.html">Entrar</a>
+                        <a class="botao" href="/pages/login.html">Entrar</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+
+    <!-- CONTEUDO -->
+    <main>
+        <!-- CARROSSEL -->
+        <section id="carousel" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0"
+                    class="active buttons-navigation"></button>
+
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"
+                    class="buttons-navigation"></button>
+
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"
+                    class="buttons-navigation"></button>
+            </div>
+
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+
+                    <picture>
+                        <source srcset="/img/carrossel-1.png" media="(min-width: 800px)">
+                        <img src="/img/carrossel-mobile-1.png" class="d-block w-100" alt="Cuide de quem você ama">
+                    </picture>
+
+                    <div class="carousel-caption banner-1">
+                        <div>
+                            <i class="ti ti-truck-delivery"></i>
+                            <p class="m-0 w-100">Frete grátis em todo o Brasil</p>
+                        </div>
+                        <h2>Tudo que o seu melhor amigo merece</h2>
+                        <p>Ração, petiscos, brinquedos, farmácia e serviços de banho e tosa. </p>
+                        <a href="/pages/catalogo-de-produtos.html" class="botao px-4">Ver Cátalogo de Produtos</a>
+                    </div>
+                </div>
+
+
+                <div class="carousel-item">
+
+                    <picture>
+                        <source srcset="/img/carrossel-2.png" media="(min-width: 800px)">
+                        <img src="/img/carrossel-mobile-2.png" class="d-block w-100" alt="Cuide de quem você ama">
+                    </picture>
+
+                    <div class="carousel-caption banner-2">
+                        <div>
+                            <i class="ti ti-star"></i>
+                            <p class="m-0 w-100">Lançamento</p>
+                        </div>
+                        <h2>Cabana Fábrica Pet</h2>
+                        <p>A nova Cabana Fábrica Pet combina um design moderno e elegante com o conforto que cães e
+                            gatos merecem.</p>
+                        <a href="/pages/produtos.html" class="botao">Confira</a>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item ">
+                    <picture>
+                        <source srcset="/img/carrossel-3.png" media="(min-width: 800px)">
+                        <img src="/img/carrossel-mobile-3.png" class="d-block w-100" alt="Cuide de quem você ama">
+                    </picture>
+
+                    <div class="carousel-caption banner-3">
+                        <div>
+                            <i class="ti ti-cat"></i>
+                            <p class="m-0 w-100">Gatos</p>
+                        </div>
+                        <h2>Ração Úmida GranPlus Gourmet Sachê</h2>
+                        <p>Ingredientes selecionados para uma nutrição equilibrada e selecionada.</p>
+                        <a href="/pages/produtos.html" class="botao">Confira</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                <span><i class="ti ti-chevron-compact-left arrow-carousel"></i></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                <span><i class="ti ti-chevron-compact-right arrow-carousel"></i></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+
+        </section>
+
+        <!-- BENEFICIOS -->
+        <section class="container p-4 beneficios">
+            <article class="beneficio px-4 py-3">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="ti ti-truck-delivery"></i>
+                    <h3 class="m-0">Frete grátis</h3>
+                </div>
+                <p class="m-0">Frete grátis em todas as compras, sem valor mínimo.</p>
+            </article>
+            <article class="beneficio px-4 py-3">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="ti ti-medal-2"></i>
+                    <h3 class="m-0">Entrega ágil</h3>
+                </div>
+                <p class="m-0">Receba seus produtos rapidinho com uma ótima qualidade.</p>
+            </article>
+            <article class="beneficio px-4 py-3">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="ti ti-credit-card"></i>
+                    <h3 class="m-0">Até 4x sem Juros</h3>
+                </div>
+                <p class="m-0">Parcele sua compra sem taxas extras e aproveite.</p>
+            </article>
+        </section>
+
+        <!-- PRODUTOS EM DESTAQUE -->
+        <section id="produtos-destaque" class="container-fluid py-5">
+            <div class="container">
+                <h2 class="titulo-produtos-destaque">Produtos em Destaque</h2>
+                <div class="row gy-4">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card-produto">
+                            <div class="produto-avaliacao">
+                                <i class="ti ti-star-filled"></i>
+                                <span>5,0</span>
+                            </div>
+                            <i class="ti ti-heart ti-heart-icon"></i>
+
+                            <img src="/img/ração-granplus-choice.png" class="produto-img"
+                                alt="Ração GranPlus Choice para Gatos Adultos Sabor Frango e Carne">
+
+                            <div>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Ração GranPlus Choice para Gatos
+                                    Adultos Sabor Frango e Carne</h3>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="produto-lojista m-0 ">Mundo Pet Comércio Ltda</p>
+                                        <small class="produto-categoria">Ração e Petiscos</small>
+                                        <p class="produto-preco">R$ 124,99</p>
+                                    </div>
+                                    <i class="ti ti-shopping-bag-plus"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card-produto">
+                            <div class="produto-avaliacao">
+                                <i class="ti ti-star-filled"></i>
+                                <span>5,0</span>
+                            </div>
+                            <i class="ti ti-heart ti-heart-icon"></i>
+
+                            <img src="/img/cabana-fabrica-pet.png" class="produto-img"
+                                alt="Cabana Fábrica Pet New Collection Preto para Cães e Gatos">
+
+                            <div>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Cabana Fábrica Pet New Collection Preto
+                                    para Cães e Gatos</h3>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
+                                        <small class="produto-categoria">Camas e Casinhas</small>
+                                        <p class="produto-preco">R$ 359,99</p>
+                                    </div>
+                                    <i class="ti ti-shopping-bag-plus"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card-produto">
+                            <div class="produto-avaliacao">
+                                <i class="ti ti-star-filled"></i>
+                                <span>5,0</span>
+                            </div>
+                            <i class="ti ti-heart ti-heart-icon"></i>
+
+                            <img src="/img/arranhador-lilopety-retangular.png" class="produto-img"
+                                alt="Arranhador Lilopety Retangular de Papelão para Gatos">
+
+                            <div>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Arranhador Lilopety Retangular de
+                                    Papelão para Gatos</h3>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="produto-lojista m-0">Mundo Pet Comércio Ltda</p>
+                                        <small class="produto-categoria">Brinquedo</small>
+                                        <p class="produto-preco">R$ 38,49</p>
+                                    </div>
+                                    <i class="ti ti-shopping-bag-plus"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card-produto">
+                            <div class="produto-avaliacao">
+                                <i class="ti ti-star-filled"></i>
+                                <span>5,0</span>
+                            </div>
+                            <i class="ti ti-heart ti-heart-icon"></i>
+
+                            <img src="/img/fortekor-mg-elanco.png" class="produto-img"
+                                alt="Fortekor 5mg Elanco 28 Comprimidos">
+
+                            <div>
+                                <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos</h3>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
+                                        <small class="produto-categoria">Medicamentos</small>
+                                        <p class="produto-preco">R$ 146,99</p>
+                                    </div>
+                                    <i class="ti ti-shopping-bag-plus"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE A EMPRESA -->
+        <section class="container sobre-empresa py-4">
+            <div class="row">
+                <div class="col-12 col-lg-6 d-none d-lg-block">
+                    <img src="/img/sobre-empresa.png" class="w-100" alt="">
+                </div>
+                <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
+                    <h2 class="titulo-sobre-empresa">Sobre a empresa</h2>
+                    <p>A <strong>PD PETS</strong> é uma plataforma digital que conecta clientes, lojistas e apaixonados
+                        por
+                        animais em um único ambiente dedicado ao universo pet.</p>
+                    <p>Nosso propósito é facilitar a vida de quem ama seus pets, reunindo diversos lojistas em um só
+                        lugar e
+                        oferecendo uma experiência <strong>simples</strong>, <strong>segura</strong> e
+                        <strong>acessível</strong> para comprar, cuidar e acompanhar tudo que seu <strong>melhor
+                            amigo</strong> precisa.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PERGUNTAS FREQUENTES -->
+        <section class="container-fluid perguntas-frequentes">
+            <div class="container">
+                <h2 class="titulo-perguntas">Perguntas Frequentes</h2>
+
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    <h3 class="subtitulo-perguntas">Compras</h3>
+                    <a href="/pages/faq.html" class="botao px-3">Ver pergutas frequentes</a>
+                </div>
+                <div class="accordion" id="accordion">
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Como faço uma compra?
+                            </button>
+                        </h3>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                Escolha os produtos desejados, adicione-os ao carrinho e clique em Finalizar Compra.
+                                Depois, escolha a forma de pagamento e confirme o pedido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Posso cancelar um pedido?
+                            </button>
+                        </h3>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                Sim. O pedido pode ser cancelado enquanto ainda não tiver sido enviado pelo lojista.
+                                Após o envio, será necessário solicitar a devolução conforme a política da plataforma.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Como acompanho meu pedido?
+                            </button>
+                        </h3>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                Você pode acompanhar o andamento acessando Seu perfil > Meus Pedidos, onde serão
+                                exibidas todas as atualizações do pedido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTATO -->
+        <section class="container contato py-4">
+            <div class="row">
+                <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
+                    <h2 class="titulo-contato">Contato</h2>
+                    <p class="descricao-contato">Entre em contato conosco</p>
+                    <form id="form-contato" class="d-flex flex-column gap-2" novalidate>
+                        <div class="d-flex gap-3">
+                            <div class="d-flex flex-column campo-input w-100">
+                                <label for="nome">Nome</label>
+                                <div class="input-border">
+                                    <input type="text" name="nome" class="form-control input-contato" id="nome" required
+                                        placeholder="Digite seu nome">
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column campo-input w-100">
+                                <label for="assunto">Assunto</label>
+                                <div class="input-border">
+                                    <input type="text" name="assunto" class="form-control input-contato" id="assunto"
+                                        required placeholder="Digite seu assunto">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column campo-input">
+                            <label for="email">E-mail</label>
+                            <div class="input-border">
+                                <input type="email" name="email" id="email" class="form-control input-contato" required
+                                    placeholder="Digite seu e-mail">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column campo-input">
+
+                            <label for="mensagem">Mensagem</label>
+                            <div class="input-border">
+                                <textarea name="mensagem" id="mensagem" class="form-control input-contato" required
+                                    placeholder="Digite sua mensagem"></textarea>
+                            </div>
+                        </div>
+                        <input type="submit" value="Enviar" class="botao w-100 border-0 mt-2">
+                    </form>
+                </div>
+                <div class="col-12 col-xl-6 d-none d-xl-block">
+                    <img src="/img/contato.png" class="w-100 img-contato"
+                        alt="Cachorro branco e peludo sentado sentindo o vento passar">
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- RODAPE -->
     <footer class="rodape">
@@ -96,6 +444,32 @@
         </div>
     </footer>
 
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toast-sucesso" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bg-success rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2 text-success">Sucesso</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Mensagem enviada com sucesso!
+            </div>
+        </div>
+
+        <div id="toast-erro" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bg-danger rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2 text-danger">Campos vazios</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Preencha todos os campos antes de enviar.
+            </div>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>

@@ -54,7 +54,8 @@ figcaption {
     padding: 0;
 }
 
-.navbar-toggler:focus {
+.navbar-toggler:focus,
+.input-pesquisa:focus {
     outline: none;
     box-shadow: none;
 }
@@ -78,11 +79,16 @@ figcaption {
             #00000030 100%) border-box;
 }
 
+.input-pesquisa::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
 
 #form-pesquisa {
     position: relative;
     margin: 10px 0;
 }
+
 
 #btn-pesquisa {
     position: absolute;
@@ -199,6 +205,7 @@ hr {
     text-align: center;
     padding: 0.8em 1em;
 }
+
 
 @media (min-width: 992px) {
 
