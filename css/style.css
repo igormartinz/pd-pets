@@ -27,6 +27,10 @@ body {
     color: var(--cor-branco);
 }
 
+figcaption {
+    display: none;
+}
+
 /* CABEÇALHO */
 .navbar {
     background-color: var(--cor-branco-amarelado);
@@ -50,7 +54,8 @@ body {
     padding: 0;
 }
 
-.navbar-toggler:focus {
+.navbar-toggler:focus,
+.input-pesquisa:focus {
     outline: none;
     box-shadow: none;
 }
@@ -74,11 +79,16 @@ body {
             #00000030 100%) border-box;
 }
 
+.input-pesquisa::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
 
 #form-pesquisa {
     position: relative;
     margin: 10px 0;
 }
+
 
 #btn-pesquisa {
     position: absolute;
@@ -110,10 +120,11 @@ hr {
     color: var(--cor-cinza);
 }
 
-.btn-entrar {
+.botao {
     background-color: var(--cor-verde-escuro);
+    border: none;
     padding: .5em 3em;
-    font-size: 16px;
+    font-size: clamp(10px, 2vw, 16px);
     color: var(--cor-branco);
     text-decoration: none;
     border-radius: 30px;
@@ -122,6 +133,18 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: .3s ease;
+}
+
+.botao:hover {
+    background-color: #22514B;
+}
+
+@media (max-width: 980px) {
+    .botao {
+        font-size: 16px;
+        padding: .5em 3em;
+    }
 }
 
 /* RODAPE */
@@ -150,7 +173,7 @@ hr {
     transition: .5s;
 }
 
-.rodape-link:hover{
+.rodape-link:hover {
     color: var(--cor-verde);
 }
 
@@ -172,7 +195,7 @@ hr {
     border-left: 3px solid var(--cor-verde);
 }
 
-.rodape-endereco{
+.rodape-endereco {
     width: clamp(9em, 40vw, 16em);
 }
 
@@ -182,6 +205,7 @@ hr {
     text-align: center;
     padding: 0.8em 1em;
 }
+
 
 @media (min-width: 992px) {
 
@@ -209,5 +233,4 @@ hr {
     .linha-rodape::before {
         border: none;
     }
-
 }
