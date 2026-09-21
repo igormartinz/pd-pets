@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/recuperacao-senha.css">
+    <title>PD Pets | Recuperar Senha</title>
+</head>
+
+<body>
+    <!-- CONTEUDO -->
+    <main class="container">
+        <section class="recuperar-senha">
+            <h1>Recuperação de Senha</h1>
+            <p>Informe o e-mail cadastrado na sua conta PD Pets. Vamos te ajudar a criar uma nova senha em poucos
+                passos.</p>
+
+            <form class="d-flex flex-column gap-3">
+                <div class="d-flex flex-column campo-input">
+                    <label for="email" class="d-none"></label>
+                    <div class="input-border">
+                        <input type="email" name="email" id="email" class="form-control input-primario" required
+                            placeholder="E-mail">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 w-100">
+                    <a href="login.html" class="botao-secundario ms-auto">Voltar</a>
+                    <input type="submit" value="Enviar" data-bs-toggle="modal" data-bs-target="#modal"
+                        class="botao border-0">
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <p>Escolha uma nova senha com no mínimo 8 caracteres para continuar.</p>
+                <form class="d-flex flex-column gap-3">
+                    <div class="d-flex flex-column campo-input">
+                        <label for="senha">Nova senha</label>
+                        <div class="input-border">
+                            <input type="password" name="senha" id="senha" class="form-control input-primario" required>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column campo-input">
+                        <label for="senha-confirmacao">Confirmar nova senha</label>
+                        <div class="input-border">
+                            <input type="password" name="senha-confirmacao" id="senha-confirmacao" class="form-control input-primario" required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 w-100">
+                        <button type="button" class="botao-secundario ms-auto border-0 w-100"
+                            data-bs-dismiss="modal">Voltar</button>
+                        <input type="submit" value="Enviar" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            class="botao border-0  w-100">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="/js/login.js"></script>
+</body>
+
+</html>
