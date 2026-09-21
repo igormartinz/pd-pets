@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
-* { 
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,9 +27,14 @@ body {
     color: var(--cor-branco);
 }
 
+figcaption {
+    display: none;
+}
+
 /* COMPONENTES */
 
-.botao, .botao-secundario{
+.botao,
+.botao-secundario {
     background-color: var(--cor-verde-escuro);
     padding: .5em 3em;
     font-size: 16px;
@@ -49,12 +54,19 @@ body {
     background-color: #22514B;
 }
 
-.botao-secundario{
+.botao-secundario {
     background-color: var(--cor-salmao);
 }
 
-.botao-secundario:hover{
+.botao-secundario:hover {
     background-color: #CF6536;
+}
+
+@media (max-width: 980px) {
+    .botao {
+        font-size: 16px;
+        padding: .5em 3em;
+    }
 }
 
 /* CARD DE PRODUTO */
@@ -127,7 +139,7 @@ body {
     border-radius: 20px;
 }
 
-.produto-preco{
+.produto-preco {
     cursor: pointer;
     transition: .3s ease;
 }
@@ -362,4 +374,4 @@ hr {
     .linha-rodape::before {
         border: none;
     }
-} 
+}
