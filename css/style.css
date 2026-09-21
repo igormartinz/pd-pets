@@ -35,6 +35,8 @@ figcaption {
 
 .botao,
 .botao-secundario {
+    outline: none;
+    border: none;
     background-color: var(--cor-verde-escuro);
     padding: .5em 3em;
     font-size: 16px;
@@ -52,6 +54,7 @@ figcaption {
 
 .botao:hover {
     background-color: #22514B;
+    box-shadow: inset 0px 0px 4px 0 rgba(255, 255, 255, 0.2);
 }
 
 .botao-secundario {
