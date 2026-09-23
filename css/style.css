@@ -83,7 +83,6 @@ a {
 
 /* CARD DE PRODUTO */
 .card-produto {
-    width: 270px;
     background-color: rgb(255, 255, 255, 0.2);
     backdrop-filter: blur(30px);
     border-radius: 20px;
