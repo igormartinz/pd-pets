@@ -21,7 +21,7 @@
             <h1>Crie uma Conta</h1>
             <p>Crie sua conta na PD Pets, para ficar informado das ofertas, sorteios, descontos e muito mais!</p>
 
-            <form class="d-flex flex-column gap-3">
+            <form class="d-flex flex-column gap-2">
 
                 <!-- DADOS PESSOAIS -->
                 <div class="d-flex flex-column campo-input w-100">
@@ -32,57 +32,127 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-column campo-input">
-                    <label for="email">E-mail</label>
-                    <div class="input-border">
-                        <input type="email" name="email" id="email" class="form-control input-primario" required
-                            placeholder="Digite seu e-mail">
-                    </div>
-                </div>
+                <div class="row gy-2">
+                    <div class="d-flex flex-column gap-2 col-12 col-md-6">
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="email">E-mail</label>
+                            <div class="input-border">
+                                <input type="email" name="email" id="email" class="form-control input-primario" required
+                                    placeholder="Digite seu e-mail">
+                            </div>
+                        </div>
 
-                <div class="d-flex flex-column campo-input w-100">
-                    <label for="cpf">CPF</label>
-                    <div class="input-border">
-                        <input type="text" name="cpf" class="form-control input-primario" id="cpf" required
-                            placeholder="Digite seu CPF">
-                    </div>
-                </div>
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="cpf">CPF</label>
+                            <div class="input-border">
+                                <input type="text" name="cpf" class="form-control input-primario" id="cpf" required
+                                    placeholder="Digite seu CPF">
+                            </div>
+                        </div>
 
-                <div class="d-flex flex-column campo-input w-100">
-                    <label for="telefone">Telefone</label>
-                    <div class="input-border">
-                        <input type="tel" name="telefone" class="form-control input-primario" id="telefone" required
-                            placeholder="Digite seu telefone">
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="telefone">Telefone</label>
+                            <div class="input-border">
+                                <input type="tel" name="telefone" class="form-control input-primario" id="telefone"
+                                    required placeholder="Digite seu telefone">
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="d-flex flex-column campo-input w-100">
-                    <label for="data-nascimento">Data de Nascimento</label>
-                    <div class="input-border">
-                        <input type="date" name="data-nascimento" class="form-control input-primario" id="data-nascimento" required
-                            placeholder="dd/mm/aaaa">
-                    </div>
-                </div>
+                    <div class="d-flex flex-column gap-2 col-12 col-md-6">
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="data-nascimento">Data de Nascimento</label>
+                            <div class="input-border">
+                                <input type="date" name="data-nascimento" class="form-control input-primario"
+                                    id="data-nascimento" required>
+                            </div>
+                        </div>
 
-                <div class="d-flex flex-column campo-input w-100">
-                    <label for="senha">Senha</label>
-                    <div class="input-border">
-                        <input type="password" name="senha" class="form-control input-primario" id="senha" required
-                            placeholder="Digite sua senha">
-                    </div>
-                </div>
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="senha">Senha</label>
+                            <div class="input-border">
+                                <input type="password" name="senha" class="form-control input-primario" id="senha"
+                                    required placeholder="Digite sua senha">
+                            </div>
+                        </div>
 
-                <div class="d-flex flex-column campo-input w-100">
-                    <label for="senha-confirmacao">Confirmação de Senha</label>
-                    <div class="input-border">
-                        <input type="text" name="senha-confirmacao" class="form-control input-primario" id="senha-confirmacao" required
-                            placeholder="Digite sua senha">
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="senha-confirmacao">Confirmação de Senha</label>
+                            <div class="input-border">
+                                <input type="text" name="senha-confirmacao" class="form-control input-primario"
+                                    id="senha-confirmacao" required placeholder="Confirme sua senha">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- ENDERECO -->
+                <h2>Cadastre seu endereço</h2>
 
-                <div class="d-flex gap-3">
+                <div class="row gy-2">
+                    <div class="d-flex flex-column gap-2 col-12 col-md-6">
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="cep">CEP</label>
+                            <div class="input-border">
+                                <input type="text" name="cep" class="form-control input-primario" id="cep" required
+                                    placeholder="Digite seu CEP">
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="cidade">Cidade</label>
+                            <div class="input-border">
+                                <input type="text" name="cidade" class="form-control input-primario" id="cidade"
+                                    required placeholder="Digite sua cidade">
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="bairro">Bairro</label>
+                            <div class="input-border">
+                                <input type="text" name="bairro" class="form-control input-primario" id="bairro"
+                                    required placeholder="Digite seu bairro">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2 col-12 col-md-6">
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="estado">Estado</label>
+                            <div class="input-border">
+                                <input type="text" name="estado" class="form-control input-primario" id="estado"
+                                    required placeholder="Digite seu estado">
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column campo-input w-100">
+                            <label for="rua">Rua</label>
+                            <div class="input-border">
+                                <input type="text" name="rua" class="form-control input-primario" id="rua" required
+                                    placeholder="Digite sua rua">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="d-flex flex-column campo-input col-6">
+                                <label for="numero">Número</label>
+                                <div class="input-border">
+                                    <input type="text" name="numero" class="form-control input-primario" id="numero"
+                                        required placeholder="Digite seu número">
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column campo-input col-6">
+                                <label for="complemento">Complemento</label>
+                                <div class="input-border">
+                                    <input type="text" name="complemento" class="form-control input-primario"
+                                        id="complemento" required placeholder="Digite seu complemento">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 mt-3">
                     <a href="login.html" class="botao-secundario w-100">Voltar</a>
                     <input type="submit" value="Enviar" class="botao border-0 w-100">
                 </div>
