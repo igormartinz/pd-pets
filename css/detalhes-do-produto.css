@@ -230,6 +230,7 @@ h2 {
     font-weight: 500;
     color: #000000;
     font-size: 20px;
+    background: none;
 }
 
 #input-quantidade::placeholder {
