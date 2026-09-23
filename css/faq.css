@@ -1,0 +1,198 @@
+a {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+p {
+    margin: 0 !important;
+}
+
+
+#title-faq {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(24px, 2.5vw, 36px);
+    color: var(--cor-branco);
+}
+
+#desc-faq {
+    max-width: 750px;
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: clamp(14px, 1.38vw, 20px);
+    color: var(--cor-branco);
+}
+
+#section-page-faq {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+#section-faq {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.title-categoria-faq {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--cor-branco);
+}
+
+.container-accordion-categoria {
+    width: 100%;
+}
+
+.accordion {
+    width: 55vw;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.accordion-item {
+    outline: none;
+    border: 2px solid var(--cor-verde-escuro);
+    background: var(--cor-branco);
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.accordion-header {
+    background-color: var(--cor-verde-escuro);
+}
+
+.accordion-button {
+    outline: none;
+    font-family: var(--fonte-nunito);
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--cor-branco);
+    background-color: var(--cor-verde-escuro);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion-button .collapsed {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.accordion-item:focus,
+.accordion-button:focus {
+    outline: none;
+    box-shadow: none;
+    background: var(--cor-verde-escuro);
+    color: var(--cor-branco);
+}
+
+.accordion-button::after {
+    --bs-accordion-btn-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--cor-branco);
+    background-color: var(--cor-verde-escuro);
+    box-shadow: none;
+}
+
+.accordion-body {
+    font-family: var(--fonte-nunito);
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+}
+
+#section-categorias-faq {
+    width: 180px;
+    background-color: var(--cor-branco-amarelado);
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#title-categorias-faq {
+    text-align: start;
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--cor-cinza);
+}
+
+#box-categorias-faq {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box-categoria-faq {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--cor-cinza);
+    padding-bottom: 10px;
+}
+
+.box-categoria-faq p,
+svg {
+    font-family: var(--fonte-nunito);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--cor-cinza);
+}
+
+#box-categorias-faq a:last-child .box-categoria-faq {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+#section-faq-mobile {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+    #section-page-faq {
+        display: none;
+    }
+
+    #section-faq-mobile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+    }
+
+    #title-faq,
+    #desc-faq {
+        max-width: 355px;
+        text-align: center;
+    }
+
+    #section-categorias-faq-mobile {
+        width: 180px;
+        background-color: var(--cor-branco-amarelado);
+        padding: 20px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .accordion {
+        width: 80vw;
+        max-width: 550px;
+    }
+}
