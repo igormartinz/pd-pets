@@ -187,6 +187,192 @@ body {
     font-weight: bold;
 }
 
+figcaption {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+/* COMPONENTES */
+
+.botao,
+.botao-secundario {
+    outline: none;
+    border: none;
+    background-color: var(--cor-verde-escuro);
+    padding: .5em 3em;
+    font-size: 16px;
+    color: var(--cor-branco);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-family: var(--fonte-nunito);
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: .5s;
+}
+
+.botao:hover {
+    background-color: #22514B;
+    box-shadow: inset 0px 0px 4px 0 rgba(255, 255, 255, 0.2);
+}
+
+.botao-secundario {
+    background-color: var(--cor-salmao);
+}
+
+.botao-secundario:hover {
+    background-color: #CF6536;
+}
+
+@media (max-width: 980px) {
+    .botao {
+        font-size: 16px;
+        padding: .5em 3em;
+    }
+}
+
+/* CARD DE PRODUTO */
+.card-produto {
+    background-color: rgb(255, 255, 255, 0.2);
+    backdrop-filter: blur(30px);
+    border-radius: 20px;
+    font-family: var(--fonte-nunito);
+    border: 2px solid var(--cor-verde-escuro);
+    padding: 1em;
+    position: relative;
+    box-shadow: 0 0 10px #00000025;
+    margin: 0 auto;
+}
+
+.produto-avaliacao {
+    position: absolute;
+    background-color: var(--cor-verde-escuro);
+    padding: .2em .8em;
+    border-radius: 50px;
+    top: 10px;
+    left: 10px;
+    color: #FFFFFF;
+}
+
+.ti-heart-icon {
+    position: absolute;
+    background-color: var(--cor-verde-escuro);
+    right: 0;
+    top: 0;
+    padding: .3em;
+    font-size: 35px;
+    border-radius: 0 10px 0 30px;
+    color: #FFFFFF;
+}
+
+.produto-img {
+    width: 100%;
+    border-radius: 2em;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) padding-box,
+        linear-gradient(90deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 25%,
+            var(--cor-verde) 50%,
+            var(--cor-verde-escuro) 100%) border-box;
+}
+
+.produto-nome {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.produto-lojista {
+    font-size: clamp(10px, 1.1vw, 14px);
+    text-shadow: 0px 0px .5px #000000;
+    color: #A3FFD4;
+}
+
+.produto-categoria {
+    color: var(--cor-branco);
+}
+
+.ti-shopping-bag-plus {
+    align-self: end;
+    background-color: var(--cor-verde-escuro);
+    padding: .5em;
+    font-size: 35px;
+    margin-top: .5em;
+    border-radius: 20px;
+    color: #FFFFFF;
+    transition: .3s ease;
+    cursor: pointer;
+}
+
+.produto-preco {
+    cursor: pointer;
+    transition: .3s ease;
+    color: #FFFFFF;
+}
+
+.ti-shopping-bag-plus:hover {
+    background-color: #22514B;
+}
+
+.produto-preco {
+    font-size: clamp(16px, 5.5vw, 20px);
+    margin-bottom: 0;
+    margin-top: .3em;
+    font-weight: bold;
+}
+
+/* TOAST */
+.toast-body {
+    color: var(--cor-cinza);
+}
+
+/* INPUT */
+.input-border {
+    position: relative;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.input-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg,
+            var(--cor-verde) 0%,
+            var(--cor-verde-escuro) 100%);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.input-primario {
+    width: 100%;
+    display: block;
+    padding: .7em 1em;
+    border: none;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: .3s ease;
+}
+
+.campo-input label {
+    margin-left: 1em;
+    font-weight: bold;
+}
+
 /* CABEÇALHO */
 .navbar {
     background-color: var(--cor-branco-amarelado);

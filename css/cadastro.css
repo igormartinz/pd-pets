@@ -1,0 +1,47 @@
+/* PÁGINAS DE CADASTROS */
+body{
+    background-image: url(../img/img-fundo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cadastro{
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+    padding: 1.5em;
+    margin: 2em auto;
+    border-radius: 2em;
+    max-width: 40em;
+}
+
+.cadastro h1, .cadastro h2{
+    font-size: clamp(24px, 6vw, 36px);
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    margin-top: .5em;
+}
+
+.cadastro p{
+    font-size: clamp(16px, 3.5vw, 20px);
+}
+
+.input-primario{
+    color: var(--cor-cinza) !important;
+}
+
+input[type="date"] {
+    color: #6c757d;
+}
+
+@media (min-height: 920px) {
+    .cadastro{
+        margin: 0 auto;
+    }
+}
