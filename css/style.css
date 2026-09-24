@@ -187,10 +187,6 @@ body {
     font-weight: bold;
 }
 
-figcaption {
-    display: none;
-}
-
 a {
     text-decoration: none;
     list-style-type: none;
