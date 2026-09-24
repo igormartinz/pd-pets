@@ -11,6 +11,12 @@ async function buscarProdutos() {
     }
 }
 
+const PRODUTOS_POR_PAGINA = 12;
+
+let todosOsProdutos = [];
+let mapaLojistas = {};
+let mapaCategorias = {};
+let paginaAtual = 1;
 
 function formatarMoeda(valor) {
     return Number(valor).toLocaleString('pt-BR', {
@@ -34,55 +40,188 @@ async function carregarCatalogo() {
         const lojistas = await respostaLojistas.json();
         const categorias = await respostaCategorias.json();
 
-
-        
-        const mapaLojistas = {};
         for (const lojista of lojistas) {
             mapaLojistas[lojista.id] = lojista.nomeEmpresa;
         }
-        console.log(mapaLojistas);
-        
-        const mapaCategorias = {};
+
         for (const categoria of categorias) {
             mapaCategorias[categoria.id] = categoria.nome;
         }
 
-        for (const produto of produtos) {
-            if (produto.status == 'inativo') continue;
+        // filtra produtos inativos uma única vez, na origem
+        todosOsProdutos = produtos.filter(produto => produto.status !== 'inativo');
 
-            const coluna = document.createElement('div');
-            coluna.className = "col-12 col-md-6 col-xl-4";
-
-            coluna.innerHTML = `
-                <article class="card-produto">
-                    <div class="produto-avaliacao">
-                        <i class="ti ti-star-filled"></i>
-                        <span>5,0</span>
-                    </div>
-                    <i class="ti ti-heart ti-heart-icon"></i>
-
-                    <img src="../img-produtos/${produto.imagemURL[0]}" class="produto-img" alt="${produto.nome}">
-
-                    <div>
-                        <h3 class="text-truncate produto-nome mb-1 mt-2">${produto.nome}</h3>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <p class="produto-lojista m-0">${mapaLojistas[produto.lojistaID]}</p>
-                                <small class="produto-categoria">${mapaCategorias[produto.categoriaID]}</small>
-                                <p class="produto-preco">${formatarMoeda(produto.preco)}</p>
-                            </div>
-                            <i class="ti ti-shopping-bag-plus"></i>
-                        </div>
-                    </div>
-                </article>
-            `
-
-            container.appendChild(coluna);
-        }
+        renderizarPagina(1);
 
     } catch {
         container.innerHTML = '<p class="text-center w-100">Não foi possível carregar os produtos. Tente novamente mais tarde.</p>';
     }
 }
+
+function renderizarPagina(numeroPagina) {
+    paginaAtual = numeroPagina;
+
+    const inicio = (numeroPagina - 1) * PRODUTOS_POR_PAGINA;
+    const fim = inicio + PRODUTOS_POR_PAGINA;
+    const produtosDaPagina = todosOsProdutos.slice(inicio, fim);
+
+    renderizarCards(produtosDaPagina);
+    renderizarPaginacao();
+
+    // volta o scroll pro topo do catálogo ao trocar de página
+    document.getElementById('cabecalho').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderizarCards(produtos) {
+    const container = document.getElementById('lista-produtos');
+
+    container.innerHTML = '';
+
+    if (produtos.length === 0) {
+        container.innerHTML = '<p class="text-center w-100">Nenhum produto encontrado.</p>';
+        return;
+    }
+
+    for (const produto of produtos) {
+        const mediaAvaliacoes = calcularMediaAvaliacoes(produto.avaliacoesProduto);
+
+        const coluna = document.createElement('div');
+        coluna.className = "col-12 col-md-6 col-xl-4";
+
+        coluna.innerHTML = `
+                <article class="card-produto">
+                    <a href="detalhes-do-produto.html?id=${produto.id}">
+                        <div class="produto-avaliacao">
+                            <i class="ti ti-star-filled"></i>
+                            <span>${mediaAvaliacoes ?? ''}</span>
+                        </div>
+                        <i class="ti ti-heart ti-heart-icon"></i>
+
+                        <img src="../img-produtos/${produto.imagemURL[0]}" class="produto-img" alt="${produto.nome}">
+
+                        <div>
+                            <h3 class="text-truncate produto-nome mb-1 mt-2">${produto.nome}</h3>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="produto-lojista m-0">${mapaLojistas[produto.lojistaID]}</p>
+                                    <small class="produto-categoria">${mapaCategorias[produto.categoriaID]}</small>
+                                    <p class="produto-preco">${formatarMoeda(produto.preco)}</p>
+                                </div>
+                                <i class="ti ti-shopping-bag-plus"></i>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            `
+
+        container.appendChild(coluna);
+    }
+}
+
+function renderizarPaginacao() {
+    const totalPaginas = Math.ceil(todosOsProdutos.length / PRODUTOS_POR_PAGINA);
+    const paginacao = document.getElementById('paginacao');
+    paginacao.innerHTML = '';
+
+    if (totalPaginas <= 1) return;
+
+    // seta "Anterior"
+    paginacao.appendChild(criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Previous'));
+
+    // números de página
+    for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+        paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
+    }
+
+    // seta "Próximo"
+    paginacao.appendChild(criarSeta('right', paginaAtual + 1, paginaAtual === totalPaginas, 'Next'));
+}
+
+function criarSeta(direcao, pagina, desabilitado, aria) {
+    const item = document.createElement('li');
+    item.className = `page-item ${desabilitado ? 'disabled' : ''}`;
+
+    const link = document.createElement('a');
+    link.className = 'page-link paginacao-seta';
+    link.href = '#';
+    link.setAttribute('aria-label', aria);
+    link.innerHTML = `<span aria-hidden="true"><i class="ti ti-chevron-compact-${direcao}"></i></span>`;
+
+    link.addEventListener('click', function (evento) {
+        evento.preventDefault();
+        if (!desabilitado) renderizarPagina(pagina);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+function criarNumero(pagina, ativo) {
+    const item = document.createElement('li');
+    item.className = `page-item ${ativo ? 'ativo' : ''}`;
+
+    const link = document.createElement('a');
+    link.className = `page-link paginacao-numeracao ${ativo ? 'link-ativo' : ''}`;
+    link.href = '#';
+    link.textContent = pagina;
+
+    link.addEventListener('click', function (evento) {
+        evento.preventDefault();
+        renderizarPagina(pagina);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+function calcularMediaAvaliacoes(avaliacoes) {
+
+    if (!avaliacoes || avaliacoes[0].data === '0000-00-00') {
+        return null; // sem avaliações ainda
+    }
+
+    let somaNotas = 0;
+    for (const avaliacao of avaliacoes) {
+        somaNotas += avaliacao.nota;
+    }
+
+    const media = somaNotas / avaliacoes.length;
+    return media.toFixed(1);
+}
+
+const itensOrdenacao = document.querySelectorAll('[data-ordenar]');
+for (const item of itensOrdenacao) {
+    item.addEventListener('click', function () {
+        ordenarProdutos(this.dataset.ordenar);
+    });
+}
+
+function ordenarProdutos(criterio) {
+    switch (criterio) {
+        case 'menor-preco':
+            todosOsProdutos.sort((a, b) => a.preco - b.preco);
+            break;
+
+        case 'maior-preco':
+            todosOsProdutos.sort((a, b) => b.preco - a.preco);
+            break;
+
+        case 'melhor-avaliacao':
+            todosOsProdutos.sort((a, b) => {
+                const mediaA = parseFloat(calcularMediaAvaliacoes(a.avaliacoesProduto)) || 0;
+                const mediaB = parseFloat(calcularMediaAvaliacoes(b.avaliacoesProduto)) || 0;
+                return mediaB - mediaA;
+            });
+            break;
+
+        case 'alfabetica':
+            todosOsProdutos.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+            break;
+    }
+
+    renderizarPagina(1);
+}
+
+
 
 document.addEventListener('DOMContentLoaded', carregarCatalogo);

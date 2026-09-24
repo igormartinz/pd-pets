@@ -71,6 +71,11 @@ body {
     margin: 0 auto;
 }
 
+.card-produto a{
+    color: var(--cor-branco);
+    text-decoration: none;
+}
+
 .produto-avaliacao {
     position: absolute;
     background-color: var(--cor-verde-escuro);

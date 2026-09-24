@@ -15,7 +15,7 @@
 
 <body>
     <!-- CABEÇALHO -->
-    <header class="cabecalho">
+    <header class="cabecalho" id="cabecalho">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand d-lg-none" href="/">
@@ -64,7 +64,7 @@
     <!-- CONTEUDO -->
     <main class="container py-5">
         <div class="d-lg-flex justify-content-between">
-            <h2 class="mb-3">Catálogo de Produtos</h2>
+            <h2 class="mb-3" id="titulo-catalogo">Catálogo de Produtos</h2>
             <div class="d-flex justify-content-center gap-3">
                 <button class="botao border-0 px-4 d-lg-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#menuFiltros" aria-expanded="false" aria-controls="menuFiltros">Filtrar <i
@@ -74,10 +74,10 @@
                         aria-expanded="false">Ordenar
                         <i class="ti ti-arrows-sort"></i></button>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item">Menor Preço</button></li>
-                        <li><button class="dropdown-item">Maior Preço</button></li>
-                        <li><button class="dropdown-item">Melhor Avaliação</button></li>
-                        <li><button class="dropdown-item">Ordem Alfabética</button></li>
+                        <li><button class="dropdown-item" data-ordenar="menor-preco">Menor Preço</button></li>
+                        <li><button class="dropdown-item" data-ordenar="maior-preco">Maior Preço</button></li>
+                        <li><button class="dropdown-item" data-ordenar="melhor-avaliacao">Melhor Avaliação</button></li>
+                        <li><button class="dropdown-item" data-ordenar="alfabetica">Ordem Alfabética</button></li>
                     </ul>
                 </div>
             </div>
@@ -181,7 +181,30 @@
             <div class="col-lg-9">
                 <section class="lista-produtos mt-3">
                     <div class="row gy-4" id="lista-produtos">
-                        
+                        <!-- <article class="card-produto">
+                            <a href="detalhes-do-produto.html?id={}">
+                                <div class="produto-avaliacao">
+                                    <i class="ti ti-star-filled"></i>
+                                    <span>5,0</span>
+                                </div>
+                                <i class="ti ti-heart ti-heart-icon"></i>
+
+                                <img src="../img-produtos/01-racao-granplus-choice-frango-carne-caes-adultos.webp"
+                                    class="produto-img" alt="${produto.nome}">
+
+                                <div>
+                                    <h3 class="text-truncate produto-nome mb-1 mt-2">${produto.nome}</h3>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <p class="produto-lojista m-0">$mapaLojistas</p>
+                                            <small class="produto-categoria">$mapaCategor</small>
+                                            <p class="produto-preco">$</p>
+                                        </div>
+                                        <i class="ti ti-shopping-bag-plus"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </article> -->
                     </div>
                 </section>
             </div>
@@ -189,8 +212,8 @@
 
         <!-- PAGINAÇÃO -->
         <nav class="mt-4" aria-label="Paginação">
-            <ul class="pagination justify-content-end">
-                <li class="page-item">
+            <ul class="pagination justify-content-end" id="paginacao">
+                <!-- <li class="page-item">
                     <a class="page-link paginacao-seta" href="#" aria-label="Previous">
                         <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
                     </a>
@@ -202,7 +225,7 @@
                     <a class="page-link paginacao-seta" href="#" aria-label="Next">
                         <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
     </main>
