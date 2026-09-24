@@ -1,4 +1,15 @@
 /* PÁGINA CATÁLOGO DE PRODUTOS */
+body{
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
 main div h2 {
     font-family: var(--fonte-poppins);
     text-align: center;
@@ -31,7 +42,7 @@ main div h2 {
             #00000030 25%,
             #000000 50%,
             #00000030 100%) border-box;
-    max-width: 5em;
+    max-width: 5.5em;
 }
 
 .btn-preco{

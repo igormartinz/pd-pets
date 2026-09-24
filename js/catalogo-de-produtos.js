@@ -1,22 +1,11 @@
-async function buscarProdutos() {
-    try {
-        const resposta = await fetch('https://6a98614f7160beda2292eff8.mockapi.io/produtos');
-
-        const produtos = await resposta.json();
-        console.log(produtos);
-        return produtos;
-
-    } catch (erro) {
-        console.log('erro');
-    }
-}
-
 const PRODUTOS_POR_PAGINA = 12;
 
 let todosOsProdutos = [];
+let produtosExibidos = [];
 let mapaLojistas = {};
 let mapaCategorias = {};
 let paginaAtual = 1;
+let criterioOrdenacaoAtual = null;
 
 function formatarMoeda(valor) {
     return Number(valor).toLocaleString('pt-BR', {
@@ -27,6 +16,8 @@ function formatarMoeda(valor) {
 
 async function carregarCatalogo() {
     const container = document.getElementById('lista-produtos');
+
+    container.innerHTML = '<p class="w-100">Carregando...</p>';
 
     try {
         // busca produtos, lojistas e categorias em paralelo
@@ -49,7 +40,12 @@ async function carregarCatalogo() {
         }
 
         // filtra produtos inativos uma única vez, na origem
-        todosOsProdutos = produtos.filter(produto => produto.status !== 'inativo');
+        todosOsProdutos = produtos.filter(produto => produto.status === 'Ativo');
+        produtosExibidos = [...todosOsProdutos];
+
+        popularCategorias(categorias);
+        conectarEventosDeFiltro();
+        conectarEventosDeOrdenacao();
 
         renderizarPagina(1);
 
@@ -58,12 +54,95 @@ async function carregarCatalogo() {
     }
 }
 
+function popularCategorias(categorias) {
+    const lista = document.getElementById('lista-categorias');
+
+    for (const categoria of categorias) {
+
+        const item = document.createElement('li');
+        item.className = 'd-flex gap-2 align-items-center';
+        item.innerHTML = `
+            <input type="checkbox" class="filtro-categoria" id="categoria-${categoria.id}" data-categoria-id="${categoria.id}">
+            <label for="categoria-${categoria.id}" class="m-0">${categoria.nome}</label>
+        `
+
+        lista.appendChild(item);
+    }
+}
+
+function conectarEventosDeFiltro() {
+    // categorias: aplica assim que marca/desmarca
+    document.getElementById('lista-categorias').addEventListener('change', aplicarFiltros);
+
+    // avaliação: aplica assim que marca/desmarca
+    document.getElementById('lista-avaliacoes').addEventListener('change', aplicarFiltros);
+
+    // preço: só aplica ao clicar no botão (setinha)
+    document.querySelector('.btn-preco').addEventListener('click', function (evento) {
+        evento.preventDefault();
+        aplicarFiltros();
+    });
+}
+
+function conectarEventosDeOrdenacao() {
+    const itensOrdenacao = document.querySelectorAll('[data-ordenar]');
+    for (const item of itensOrdenacao) {
+        item.addEventListener('click', function () {
+            criterioOrdenacaoAtual = this.dataset.ordenar;
+            aplicarFiltros(); // reaplica filtro + já ordena o resultado
+        });
+    }
+}
+
+function aplicarFiltros() {
+    const categoriasSelecionadas = Array.from(
+        document.querySelectorAll('.filtro-categoria:checked')
+    ).map(input => input.dataset.categoriaId);
+
+    const precoMin = parseFloat(document.getElementById('preco-min').value) || null;
+    const precoMax = parseFloat(document.getElementById('preco-max').value) || null;
+
+    const avaliacoesSelecionadas = Array.from(
+        document.querySelectorAll('.filtro-avaliacao:checked')
+    ).map(input => parseInt(input.dataset.estrelas));
+
+    const avaliacaoMinima = avaliacoesSelecionadas.length > 0
+        ? Math.min(...avaliacoesSelecionadas)
+        : null;
+
+    produtosExibidos = todosOsProdutos.filter(produto => {
+
+        // categoria (se nenhuma marcada, não filtra)
+        if (categoriasSelecionadas.length > 0 && !categoriasSelecionadas.includes(String(produto.categoriaID))) {
+            return false;
+        }
+
+        // preço
+        if (precoMin !== null && produto.preco < precoMin) return false;
+        if (precoMax !== null && produto.preco > precoMax) return false;
+
+        // avaliação (produto precisa ter média >= menor valor marcado)
+        if (avaliacaoMinima !== null) {
+            const media = parseFloat(calcularMediaAvaliacoes(produto.avaliacoesProduto)) || 0;
+            if (media < avaliacaoMinima) return false;
+        }
+
+        return true;
+    });
+
+    if (criterioOrdenacaoAtual) {
+        ordenarProdutos(criterioOrdenacaoAtual);
+    }
+
+    renderizarPagina(1); // todo novo filtro/ordenação volta pra página 1
+}
+
 function renderizarPagina(numeroPagina) {
     paginaAtual = numeroPagina;
 
     const inicio = (numeroPagina - 1) * PRODUTOS_POR_PAGINA;
     const fim = inicio + PRODUTOS_POR_PAGINA;
-    const produtosDaPagina = todosOsProdutos.slice(inicio, fim);
+    const produtosDaPagina = produtosExibidos.slice(inicio, fim);
 
     renderizarCards(produtosDaPagina);
     renderizarPaginacao();
@@ -119,7 +198,7 @@ function renderizarCards(produtos) {
 }
 
 function renderizarPaginacao() {
-    const totalPaginas = Math.ceil(todosOsProdutos.length / PRODUTOS_POR_PAGINA);
+    const totalPaginas = Math.ceil(produtosExibidos.length / PRODUTOS_POR_PAGINA);
     const paginacao = document.getElementById('paginacao');
     paginacao.innerHTML = '';
 
@@ -127,13 +206,9 @@ function renderizarPaginacao() {
 
     // seta "Anterior"
     paginacao.appendChild(criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Previous'));
-
-    // números de página
     for (let pagina = 1; pagina <= totalPaginas; pagina++) {
         paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
     }
-
-    // seta "Próximo"
     paginacao.appendChild(criarSeta('right', paginaAtual + 1, paginaAtual === totalPaginas, 'Next'));
 }
 
@@ -221,7 +296,5 @@ function ordenarProdutos(criterio) {
 
     renderizarPagina(1);
 }
-
-
 
 document.addEventListener('DOMContentLoaded', carregarCatalogo);
