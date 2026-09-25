@@ -1,3 +1,5 @@
+// CATÁLOGO DE PRODUTOS - lógica de listagem, filtro, ordenação, paginação e busca
+
 const PRODUTOS_POR_PAGINA = 12;
 
 let todosOsProdutos = [];
@@ -5,8 +7,10 @@ let produtosExibidos = [];
 let mapaLojistas = {};
 let mapaCategorias = {};
 let paginaAtual = 1;
-let criterioOrdenacaoAtual = null;
+let criterioOrdenacaoAtual = null; // guarda a última ordenação escolhida, pra reaplicar após novo filtro
+let termoPesquisaAtual = '';
 
+// Formata um número para o padrão brasileiro.
 function formatarMoeda(valor) {
     return Number(valor).toLocaleString('pt-BR', {
         style: 'currency',
@@ -14,13 +18,14 @@ function formatarMoeda(valor) {
     });
 }
 
+/* Ponto de entrada da página: busca produtos, lojistas e categoriasve monta os mapas de consulta, popula os filtros e conecta todos os eventos da tela. */
 async function carregarCatalogo() {
     const container = document.getElementById('lista-produtos');
-
     container.innerHTML = '<p class="w-100">Carregando...</p>';
 
     try {
-        // busca produtos, lojistas e categorias em paralelo
+        // As 3 chamadas saem juntas, em vez de uma atrás da outra
+        // reduz o tempo total de espera e o número de requisições sequenciais
         const [respostaProdutos, respostaLojistas, respostaCategorias] = await Promise.all([
             fetch(`https://6a98614f7160beda2292eff8.mockapi.io/produtos`),
             fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/lojistas`),
@@ -31,69 +36,76 @@ async function carregarCatalogo() {
         const lojistas = await respostaLojistas.json();
         const categorias = await respostaCategorias.json();
 
+        // Monta os mapas id -> nome pra consulta
         for (const lojista of lojistas) {
             mapaLojistas[lojista.id] = lojista.nomeEmpresa;
         }
-
         for (const categoria of categorias) {
             mapaCategorias[categoria.id] = categoria.nome;
         }
 
-        // filtra produtos inativos uma única vez, na origem
+        // Só produtos "Ativo" entram no catálogo
         todosOsProdutos = produtos.filter(produto => produto.status === 'Ativo');
+
+        // Cópia inicial, sem filtro nenhum aplicado ainda
         produtosExibidos = [...todosOsProdutos];
 
         popularCategorias(categorias);
         conectarEventosDeFiltro();
         conectarEventosDeOrdenacao();
+        conectarBusca();
+        verificarBuscaNaUrl();
 
-        renderizarPagina(1);
+        aplicarFiltros();
 
     } catch {
         container.innerHTML = '<p class="text-center w-100">Não foi possível carregar os produtos. Tente novamente mais tarde.</p>';
     }
 }
 
+// Preenche dinamicamente a lista de checkboxes de categoria no menu de filtros
 function popularCategorias(categorias) {
     const lista = document.getElementById('lista-categorias');
 
     for (const categoria of categorias) {
-
         const item = document.createElement('li');
         item.className = 'd-flex gap-2 align-items-center';
         item.innerHTML = `
             <input type="checkbox" class="filtro-categoria" id="categoria-${categoria.id}" data-categoria-id="${categoria.id}">
             <label for="categoria-${categoria.id}" class="m-0">${categoria.nome}</label>
-        `
-
+        `;
         lista.appendChild(item);
     }
 }
 
-function conectarEventosDeFiltro() {
-    // categorias: aplica assim que marca/desmarca
-    document.getElementById('lista-categorias').addEventListener('change', aplicarFiltros);
 
-    // avaliação: aplica assim que marca/desmarca
+// Conecta os filtros de categoria, avaliação e preço à função central
+// aplicarFiltros(). Categoria e avaliação reagem a qualquer mudança de checkbox
+function conectarEventosDeFiltro() {
+    document.getElementById('lista-categorias').addEventListener('change', aplicarFiltros);
     document.getElementById('lista-avaliacoes').addEventListener('change', aplicarFiltros);
 
-    // preço: só aplica ao clicar no botão (setinha)
     document.querySelector('.btn-preco').addEventListener('click', function (evento) {
         evento.preventDefault();
         aplicarFiltros();
     });
 }
 
+/* Conecta os itens do dropdown "Ordenar" ao clicar, guarda o critério
+escolhido e reaplica os filtros */
 function conectarEventosDeOrdenacao() {
     const itensOrdenacao = document.querySelectorAll('[data-ordenar]');
     for (const item of itensOrdenacao) {
         item.addEventListener('click', function () {
             criterioOrdenacaoAtual = this.dataset.ordenar;
-            aplicarFiltros(); // reaplica filtro + já ordena o resultado
+            aplicarFiltros();
         });
     }
 }
 
+/* Função central de filtragem: recalcula produtosExibidos do zero, a
+partir de todosOsProdutos, aplicando busca + categoria + preço +
+avaliação de uma só vez. */
 function aplicarFiltros() {
     const categoriasSelecionadas = Array.from(
         document.querySelectorAll('.filtro-categoria:checked')
@@ -106,22 +118,33 @@ function aplicarFiltros() {
         document.querySelectorAll('.filtro-avaliacao:checked')
     ).map(input => parseInt(input.dataset.estrelas));
 
+    // Se várias notas estiverem marcadas, usa a menor como corte mínimo
     const avaliacaoMinima = avaliacoesSelecionadas.length > 0
         ? Math.min(...avaliacoesSelecionadas)
         : null;
 
+    const termoNormalizado = normalizarTexto(termoPesquisaAtual);
+
     produtosExibidos = todosOsProdutos.filter(produto => {
 
-        // categoria (se nenhuma marcada, não filtra)
+        // Busca por nome ou categoria
+        if (termoNormalizado) {
+            const nomeCategoria = mapaCategorias[produto.categoriaID] ?? '';
+            const nomeCorresponde = normalizarTexto(produto.nome).includes(termoNormalizado);
+            const categoriaCorresponde = normalizarTexto(nomeCategoria).includes(termoNormalizado);
+            if (!nomeCorresponde && !categoriaCorresponde) return false;
+        }
+
+        // Categoria
         if (categoriasSelecionadas.length > 0 && !categoriasSelecionadas.includes(String(produto.categoriaID))) {
             return false;
         }
 
-        // preço
+        // Faixa de preço
         if (precoMin !== null && produto.preco < precoMin) return false;
         if (precoMax !== null && produto.preco > precoMax) return false;
 
-        // avaliação (produto precisa ter média >= menor valor marcado)
+        // Avaliação mínima
         if (avaliacaoMinima !== null) {
             const media = parseFloat(calcularMediaAvaliacoes(produto.avaliacoesProduto)) || 0;
             if (media < avaliacaoMinima) return false;
@@ -130,13 +153,19 @@ function aplicarFiltros() {
         return true;
     });
 
+    // Se existe uma ordenação ativa, reaplica sobre o resultado já filtrado
     if (criterioOrdenacaoAtual) {
         ordenarProdutos(criterioOrdenacaoAtual);
     }
 
-    renderizarPagina(1); // todo novo filtro/ordenação volta pra página 1
+    atualizarTituloCatalogo();
+
+    // Todo novo filtro/ordenação sempre volta pra página 1
+    renderizarPagina(1); 
 }
 
+/* Renderiza a página especificada: fatia produtosExibidos de acordo com
+PRODUTOS_POR_PAGINA */
 function renderizarPagina(numeroPagina) {
     paginaAtual = numeroPagina;
 
@@ -147,13 +176,13 @@ function renderizarPagina(numeroPagina) {
     renderizarCards(produtosDaPagina);
     renderizarPaginacao();
 
-    // volta o scroll pro topo do catálogo ao trocar de página
-    document.getElementById('cabecalho').scrollIntoView({ behavior: 'smooth' });
+    const cabecalho = document.getElementById('cabecalho');
+    if (cabecalho) cabecalho.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Desenha os cards de produto na tela a partir de uma lista já paginada.
 function renderizarCards(produtos) {
     const container = document.getElementById('lista-produtos');
-
     container.innerHTML = '';
 
     if (produtos.length === 0) {
@@ -191,30 +220,34 @@ function renderizarCards(produtos) {
                         </div>
                     </a>
                 </article>
-            `
+            `;
 
         container.appendChild(coluna);
     }
 }
 
+/* Desenha os botões de paginação (setas + números) com base na
+quantidade total de produtosExibidos. */
 function renderizarPaginacao() {
     const totalPaginas = Math.ceil(produtosExibidos.length / PRODUTOS_POR_PAGINA);
     const paginacao = document.getElementById('paginacao');
     paginacao.innerHTML = '';
 
-    if (totalPaginas <= 1) return;
+    // Não mostra paginação se tudo cabe numa página só
+    if (totalPaginas <= 1) return; 
 
-    // seta "Anterior"
     paginacao.appendChild(criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Previous'));
+
     for (let pagina = 1; pagina <= totalPaginas; pagina++) {
         paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
     }
+
     paginacao.appendChild(criarSeta('right', paginaAtual + 1, paginaAtual === totalPaginas, 'Next'));
 }
 
+/* Cria o item <li> da seta de navegação (anterior/próximo). */
 function criarSeta(direcao, pagina, desabilitado, aria) {
     const item = document.createElement('li');
-    item.className = `page-item ${desabilitado ? 'disabled' : ''}`;
 
     const link = document.createElement('a');
     link.className = 'page-link paginacao-seta';
@@ -231,6 +264,7 @@ function criarSeta(direcao, pagina, desabilitado, aria) {
     return item;
 }
 
+/* Cria o item <li> de número de página. */
 function criarNumero(pagina, ativo) {
     const item = document.createElement('li');
     item.className = `page-item ${ativo ? 'ativo' : ''}`;
@@ -249,10 +283,11 @@ function criarNumero(pagina, ativo) {
     return item;
 }
 
+/* Calcula a média das notas de um produto a partir do array
+avaliacoesProduto embutido nele. */
 function calcularMediaAvaliacoes(avaliacoes) {
-
-    if (!avaliacoes || avaliacoes[0].data === '0000-00-00') {
-        return null; // sem avaliações ainda
+    if (!avaliacoes || avaliacoes[0].data === '') {
+        return null;
     }
 
     let somaNotas = 0;
@@ -264,25 +299,19 @@ function calcularMediaAvaliacoes(avaliacoes) {
     return media.toFixed(1);
 }
 
-const itensOrdenacao = document.querySelectorAll('[data-ordenar]');
-for (const item of itensOrdenacao) {
-    item.addEventListener('click', function () {
-        ordenarProdutos(this.dataset.ordenar);
-    });
-}
-
+/* Ordena produtosExibidos de acordo com o critério escolhido no dropdown "Ordenar". */
 function ordenarProdutos(criterio) {
     switch (criterio) {
         case 'menor-preco':
-            todosOsProdutos.sort((a, b) => a.preco - b.preco);
+            produtosExibidos.sort((a, b) => a.preco - b.preco);
             break;
 
         case 'maior-preco':
-            todosOsProdutos.sort((a, b) => b.preco - a.preco);
+            produtosExibidos.sort((a, b) => b.preco - a.preco);
             break;
 
         case 'melhor-avaliacao':
-            todosOsProdutos.sort((a, b) => {
+            produtosExibidos.sort((a, b) => {
                 const mediaA = parseFloat(calcularMediaAvaliacoes(a.avaliacoesProduto)) || 0;
                 const mediaB = parseFloat(calcularMediaAvaliacoes(b.avaliacoesProduto)) || 0;
                 return mediaB - mediaA;
@@ -290,11 +319,71 @@ function ordenarProdutos(criterio) {
             break;
 
         case 'alfabetica':
-            todosOsProdutos.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+            produtosExibidos.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
             break;
     }
-
-    renderizarPagina(1);
 }
+
+/* Remove acentos e normaliza para minúsculas, pra comparação de busca
+não ser sensível a maiúsculas/acentuação (ex: "Ração" == "racao"). */
+function normalizarTexto(texto) {
+    return texto
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+}
+
+/* Conecta a busca em tempo real do campo do header só tem efeito
+quando a página atual é o catálogo */
+function conectarBusca() {
+    const formPesquisa = document.getElementById('form-pesquisa');
+    const inputPesquisa = document.getElementById('input-pesquisa');
+
+    if (!formPesquisa) return;
+
+    const estaNoCatalogo = document.getElementById('lista-produtos') !== null;
+
+    if (estaNoCatalogo) {
+        let temporizador;
+        inputPesquisa.addEventListener('input', function () {
+            clearTimeout(temporizador);
+            temporizador = setTimeout(() => {
+                termoPesquisaAtual = this.value;
+                aplicarFiltros();
+            }, 300);
+        });
+    }
+}
+
+// Atualiza o título da página de acordo com o estado da busca
+function atualizarTituloCatalogo() {
+    const titulo = document.getElementById('titulo-catalogo');
+
+    if (termoPesquisaAtual.trim() === '') {
+        titulo.textContent = 'Catálogo de Produtos';
+    } else {
+        titulo.innerHTML = `Resultados para <span class='resultados-valor'>"${termoPesquisaAtual}" (${produtosExibidos.length})</span>`;
+    }
+}
+
+/* Ao carregar o catálogo, verifica se a URL trouxe um termo de busca
+vindo de um redirecionamento feito em outra página. */
+function verificarBuscaNaUrl() {
+    const parametros = new URLSearchParams(window.location.search);
+    const termo = parametros.get('busca');
+
+    if (termo) {
+        document.getElementById('input-pesquisa').value = termo;
+        termoPesquisaAtual = termo;
+    }
+}
+
+// Exibe a função de busca do catálogo para o script global
+// Conseguir chamá-la quando o usuário estiver nesta página.
+window.filtrarCatalogoPorBusca = function (termo) {
+    termoPesquisaAtual = termo;
+    aplicarFiltros();
+};
 
 document.addEventListener('DOMContentLoaded', carregarCatalogo);
