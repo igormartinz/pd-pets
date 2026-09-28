@@ -1,4 +1,15 @@
 /* PÁGINA CATÁLOGO DE PRODUTOS */
+body{
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
 main div h2 {
     font-family: var(--fonte-poppins);
     text-align: center;
@@ -19,6 +30,9 @@ main div h2 {
     text-align: left;
 }
 
+.resultados-valor{
+    color: var(--cor-salmao);
+}
 
 .input-preco {
     padding: .7em;
@@ -31,7 +45,7 @@ main div h2 {
             #00000030 25%,
             #000000 50%,
             #00000030 100%) border-box;
-    max-width: 5em;
+    max-width: 5.5em;
 }
 
 .btn-preco{
@@ -48,22 +62,52 @@ main div h2 {
 /* PAGINAÇÃO */
 .pagination{
     font-family: var(--fonte-nunito);
+    border-radius: 1em;
 }
+
+.pagination .page-link:hover, .page-item:disabled  {
+    background-color: inherit;
+    color: inherit;
+    border-color: inherit;
+}
+
 
 .paginacao-seta{
     background-color: var(--cor-verde-escuro);
     border: none;
-    
+    color: var(--cor-branco);
+    transition: .5s;
+}
+
+.paginacao-seta:hover{
+    background-color: #22514B !important;
+}
+
+.page-link[aria-label="Next"] {
+    border-radius: 0 5px 5px 0;
+}
+
+.page-link[aria-label="Previous"] {
+    border-radius: 5px 0 0 5px;
 }
 
 .paginacao-numeracao{
     background-color: transparent;
     border: none;
+    transition: .5s;
+}
+
+.page-item:hover{
+    color: var(--cor-salmao);
 }
 
 .page-link{
     color: var(--cor-branco);
     font-size: 24px;
+}
+
+.page-link:hover{
+    background-color: none !important;
 }
 
 .page-item{
@@ -73,6 +117,7 @@ main div h2 {
     align-items: center;
     justify-content: center;
 }
+
 
 .ativo{
     color: var(--cor-salmao);
