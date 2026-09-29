@@ -12,14 +12,11 @@ const configPerfil = {
     },
     lojista: {
         url: `${API_URL_CATEGORIA_LOJISTA}/lojistas`,
-        dashboard: "dashboard-cliente.html",
-        dashboardLojista: "dashboard-lojista.html"
+        dashboard: "dashboard-lojista.html",
     },
     administrador: {
         url: `${API_URL_ADMINISTRADOR_CHAMADOS}/administradores`,
-        dashboard: "dashboard-cliente.html",
-        dashboardLojista: "dashboard-lojista.html",
-        dashboardAdministrador: "dashboard-administrador.html",
+        dashboard: "dashboard-administrador.html",
     }
 };
 
@@ -27,7 +24,6 @@ const configPerfil = {
 
 function mostrarToast(tipo, título, mensagem) {
     const toastId = tipo === "sucesso" ? "toast-sucesso" : "toast-erro";
-    console.log(toastId);
 
     const toastElemento = document.getElementById(toastId);
 
@@ -48,17 +44,19 @@ function pegarPerfilSelecionado() {
 
 async function BuscarUsuarioPorCredenciais(url, email, senha) {
     try {
-        const resp = await fetch(`${url}?email=${encodeURIComponent(email)}`)
+        const resp = await fetch(url);
 
-        if (!resp.ok) {
-            throw new Error("Erro ao consultar o usuário");
-        }
+        // Nessa linha estamos verificando se o status da resposta é 404, e se for, retorna nulo, porque quando utilizamos o login com o perfil de cliente utilizando o email do lojista como exemplo, ele retorna status 404 no console
+        if (resp.status === 404) return null;
+
+        if (!resp.ok) throw new Error("Erro ao consultar o usuário");
 
         const usuarios = await resp.json();
 
-        return usuarios.find(usuario => {
-            usuario.email?.toLowerCase() === email.toLowerCase() && usuario.senha === senha;
-        })
+        return usuarios.find(usuario =>
+            usuario.email?.toLowerCase() === email.toLowerCase() && usuario.senha === senha
+        );
+
     } catch (error) {
         console.error("Erro ao buscar o usuário no MockAPI", error);
         return null;
@@ -83,11 +81,11 @@ function salvarSessao(usuario, perfil) {
         perfil: perfil
     };
 
-    if (perfil === "Lojista") {
+    if (perfil === "lojista") {
         dadosSessao.nomeEmpresa = usuario.nomeEmpresa;
     }
 
-    localStorage.setItem("usuarioLogado", JSON.stringify(dadosSessao));
+    localStorage.setItem(CHAVE_SESSAO, JSON.stringify(dadosSessao));
 }
 
 async function iniciarLogin(email, senha, perfil) {
@@ -96,7 +94,8 @@ async function iniciarLogin(email, senha, perfil) {
     const usuario = await BuscarUsuarioPorCredenciais(config.url, email, senha);
 
     if (!usuario) {
-        mostrarToast("erro", "Credenciais inválidas", "E-mail ou senha incorretos.")
+        mostrarToast("erro", "Erro de login", "E-mail, senha ou perfil incorreto.");
+        return null;
     }
 
     if (perfil === "lojista") {
@@ -110,9 +109,12 @@ async function iniciarLogin(email, senha, perfil) {
             return null;
         }
     }
+
+    salvarSessao(usuario, perfil);
+    window.location.href = config.dashboard;
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const radioCliente = document.getElementById('cliente');
     const radiosVisiveis = document.querySelectorAll('#lojista, #administrador');
 
@@ -131,4 +133,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    const form = document.querySelector(".entrar form");
+
+    if (!form) return null;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value.trim();
+        const perfil = pegarPerfilSelecionado();
+
+        // campos obrigatórios
+        if (!email || !senha) {
+            mostrarToast("erro", "Campos vazios", "Preencha todos os campos.");
+            return;
+        }
+
+        await iniciarLogin(email, senha, perfil);
+    });
 });

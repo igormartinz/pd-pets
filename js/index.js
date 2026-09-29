@@ -25,3 +25,8 @@ document.getElementById('form-contato').addEventListener('submit', function (eve
         toastErro.show();
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const linkPerfil = document.getElementById("link-perfil");
+    if (linkPerfil) linkPerfil.href = pegarDashboardUsuario();
+})
