@@ -1,5 +1,4 @@
 document.getElementById('form-contato').addEventListener('submit', function (evento) {
-    console.log('teste');
     evento.preventDefault(); // impede o recarregamento da página
 
 
