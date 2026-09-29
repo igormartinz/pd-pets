@@ -1,4 +1,120 @@
-document.addEventListener('DOMContentLoaded', function () {
+// URLs base do MockAPI, cada recurso direcionado ao seus respectivos endpoints
+const API_URL_ADMINISTRADOR_CHAMADOS = "https://6a98675a7160beda2292f7f2.mockapi.io";
+const API_URL_CATEGORIA_LOJISTA = "https://6a9872a37160beda2292ff4f.mockapi.io";
+const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
+
+// Configuração de perfil
+
+const configPerfil = {
+    cliente: {
+        url: `${API_URL_CLIENTE}/clientes`,
+        dashboard: "dashboard-cliente.html"
+    },
+    lojista: {
+        url: `${API_URL_CATEGORIA_LOJISTA}/lojistas`,
+        dashboard: "dashboard-lojista.html",
+    },
+    administrador: {
+        url: `${API_URL_ADMINISTRADOR_CHAMADOS}/administradores`,
+        dashboard: "dashboard-administrador.html",
+    }
+};
+
+// Toasts reutilizados para a página de login
+
+function mostrarToast(tipo, título, mensagem) {
+    const toastId = tipo === "sucesso" ? "toast-sucesso" : "toast-erro";
+
+    const toastElemento = document.getElementById(toastId);
+
+    toastElemento.querySelector(".toast-header strong").textContent = título;
+    toastElemento.querySelector(".toast-body").textContent = mensagem;
+
+    const toast = bootstrap.Toast.getOrCreateInstance(toastElemento);
+    toast.show();
+}
+
+// Descobre qual perfil foi selecionado pelo usuário
+
+function pegarPerfilSelecionado() {
+    return document.querySelector('input[name="perfil"]:checked').value;
+}
+
+// busca o perfil pelo e-mail cadastrado no MockAPI
+
+async function BuscarUsuarioPorCredenciais(url, email, senha) {
+    try {
+        const resp = await fetch(url);
+
+        // Nessa linha estamos verificando se o status da resposta é 404, e se for, retorna nulo, porque quando utilizamos o login com o perfil de cliente utilizando o email do lojista como exemplo, ele retorna status 404 no console
+        if (resp.status === 404) return null;
+
+        if (!resp.ok) throw new Error("Erro ao consultar o usuário");
+
+        const usuarios = await resp.json();
+
+        return usuarios.find(usuario =>
+            usuario.email?.toLowerCase() === email.toLowerCase() && usuario.senha === senha
+        );
+
+    } catch (error) {
+        console.error("Erro ao buscar o usuário no MockAPI", error);
+        return null;
+    }
+}
+
+// Obtém o nome do usuário conforme o seu perfil
+
+function nomeUsuario(usuario, perfil) {
+    if (perfil === "cliente") return usuario.nomeCompleto;
+    if (perfil === "lojista") return usuario.nomeResponsavel;
+    return usuario.nome;
+}
+
+// Salva a sessão do usuário no localStorage (Não salva a senha)
+
+function salvarSessao(usuario, perfil) {
+    const dadosSessao = {
+        id: usuario.id,
+        nome: nomeUsuario(usuario, perfil),
+        email: usuario.email,
+        perfil: perfil
+    };
+
+    if (perfil === "lojista") {
+        dadosSessao.nomeEmpresa = usuario.nomeEmpresa;
+    }
+
+    localStorage.setItem(CHAVE_SESSAO, JSON.stringify(dadosSessao));
+}
+
+async function iniciarLogin(email, senha, perfil) {
+    const config = configPerfil[perfil];
+
+    const usuario = await BuscarUsuarioPorCredenciais(config.url, email, senha);
+
+    if (!usuario) {
+        mostrarToast("erro", "Erro de login", "E-mail, senha ou perfil incorreto.");
+        return null;
+    }
+
+    if (perfil === "lojista") {
+        if (usuario.status === "Pendente") {
+            mostrarToast("erro", "Cadastro em análise", "Seu cadastro ainda está em análise. Você receberá acesso assim que for aprovado.");
+            return null;
+        }
+
+        if (usuario.status === "Inativo") {
+            mostrarToast("erro", "Loja desativada", "Sua loja está desativada.");
+            return null;
+        }
+    }
+
+    salvarSessao(usuario, perfil);
+    window.location.href = config.dashboard;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
     const radioCliente = document.getElementById('cliente');
     const radiosVisiveis = document.querySelectorAll('#lojista, #administrador');
 
@@ -17,4 +133,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    const form = document.querySelector(".entrar form");
+
+    if (!form) return null;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value.trim();
+        const perfil = pegarPerfilSelecionado();
+
+        // campos obrigatórios
+        if (!email || !senha) {
+            mostrarToast("erro", "Campos vazios", "Preencha todos os campos.");
+            return;
+        }
+
+        await iniciarLogin(email, senha, perfil);
+    });
 });
