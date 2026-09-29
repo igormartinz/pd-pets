@@ -1,5 +1,6 @@
-const formCadastro = document.getElementById('form-cadastro');
+import { mostrarToast } from "./toast.js";
 
+const formCadastro = document.getElementById('form-cadastro');
 
 formCadastro.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -111,7 +112,7 @@ formCadastro.addEventListener('submit', async (e) => {
                 return;
             }
 
-            if (cliente.cpf == cpf) {
+            if (cliente.cpf === cpf) {
                 mostrarToast('Compo CPF', 'CPF já cadastrado', 'erro');
                 return;
             }
@@ -165,7 +166,7 @@ formCadastro.addEventListener('submit', async (e) => {
             }
         );
 
-        if (!respostaCliente.ok || !respostaEnderco.ok) {
+        if (!respostaEnderco.ok) {
             mostrarToast('Erro', 'Não foi possível realizar o cadastro', 'erro');
             return;
         }
@@ -184,46 +185,3 @@ formCadastro.addEventListener('submit', async (e) => {
 
 });
 
-function mostrarToast(titulo, mensagem, tipo) {
-    const toastElemento = document.getElementById('toast');
-    const indicador = document.getElementById('toast-indicador');
-    const tituloElemento = document.getElementById('toast-titulo');
-    const mensagemElemento = document.getElementById('toast-mensagem');
-
-    tituloElemento.textContent = titulo;
-    mensagemElemento.textContent = mensagem;
-
-    // Remove classes anteriores
-    tituloElemento.classList.remove(
-        'text-success',
-        'text-danger',
-        'text-warning',
-        'text-primary'
-    );
-
-    // Define o estilo de acordo com o tipo
-    switch (tipo) {
-        case 'sucesso':
-            indicador.classList.add('bg-success');
-            tituloElemento.classList.add('text-success');
-            break;
-
-        case 'erro':
-            indicador.classList.add('bg-danger');
-            tituloElemento.classList.add('text-danger');
-            break;
-
-        case 'aviso':
-            indicador.classList.add('bg-warning');
-            tituloElemento.classList.add('text-warning');
-            break;
-
-        case 'info':
-            indicador.classList.add('bg-primary');
-            tituloElemento.classList.add('text-primary');
-            break;
-    }
-
-    const toast = bootstrap.Toast.getOrCreateInstance(toastElemento);
-    toast.show();
-}
