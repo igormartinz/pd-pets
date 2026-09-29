@@ -1,5 +1,4 @@
 document.getElementById('form-contato').addEventListener('submit', function (evento) {
-    console.log('teste');
     evento.preventDefault(); // impede o recarregamento da página
 
 
@@ -25,3 +24,8 @@ document.getElementById('form-contato').addEventListener('submit', function (eve
         toastErro.show();
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const linkPerfil = document.getElementById("link-perfil");
+    if (linkPerfil) linkPerfil.href = pegarDashboardUsuario();
+})

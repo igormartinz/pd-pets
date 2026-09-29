@@ -40,6 +40,10 @@ body {
     padding: 1em;
 }
 
+#senha, #senha-confirmacao, #email{
+    color: var(--cor-cinza);
+}
+
 @media (min-width: 768px) {
     .recuperar-senha h1 {
         text-align: left;
