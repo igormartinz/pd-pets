@@ -26,6 +26,15 @@
     font-family: var(--fonte-nunito);
 }
 
+.banner-1 h2,
+.banner-1 p {
+
+}
+
+.banner-1 p {
+    
+}
+
 .banner-1 div,
 .banner-2 div,
 .banner-3 div {
@@ -263,6 +272,14 @@ textarea.input-contato {
     border-radius: 20px;
 }
 
+@media (min-width: 1200px) {
+    .banner-1 div {
+        display: inline-flex;
+        margin-bottom: 1em;
+    }
+}
+
+
 @media (min-width: 992px) {
     .carousel-caption {
         justify-content: center;
@@ -270,7 +287,10 @@ textarea.input-contato {
         padding: 0 3em;
     }
 
-    .banner-1 div,
+    .banner-1 {
+        width: 50%;
+    }
+
     .banner-2 div,
     .banner-3 div {
         display: inline-flex;
@@ -343,5 +363,9 @@ textarea.input-contato {
 @media (min-width: 600px) {
     .perguntas-frequentes {
         background-image: url(/img/perguntas-frequentes.png);
+    }
+
+    .banner-1 h2 {
+        width: 74%;
     }
 }
