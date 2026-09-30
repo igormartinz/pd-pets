@@ -1,0 +1,246 @@
+/* PÁGINAS DE DASHBOARD */
+body {
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+}
+
+/* CABECALHO */
+.cabecalho-sidebar{
+    font-family: var(--fonte-nunito);
+}
+
+.link-inicio a{
+    color: var(--cor-verde-escuro);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.link-inicio a i{
+    font-size: 1.5em;
+}
+
+.link-inicio span{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* SIDEBAR */
+#sidebar {
+    background-color: var(--cor-de-fundo);
+    padding: .2em 1.5em;
+    font-family: var(--fonte-nunito);
+}
+
+.menu-mobile-sidebar {
+    background: none;
+    border: none;
+}
+
+.ti-user-circle {
+    font-size: 3em;
+    color: var(--cor-cinza);
+}
+
+.btn-sair,
+.btn-sair i {
+    font-size: 1.2em;
+}
+
+.btn-fechar {
+    font-size: 2.5em;
+    background: none;
+    border: none;
+    color: var(--cor-branco);
+}
+
+.logo-sidebar,
+.offcanvas-body {
+    width: 15em;
+    margin: 0 auto;
+}
+
+#sidebar hr {
+    margin: 2em 0;
+    border: 2px solid var(--cor-salmao);
+}
+
+.list-unstyled li a {
+    color: var(--cor-branco);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: .3em;
+}
+
+.list-unstyled li a i {
+    font-size: 1.5em;
+}
+
+#nome-usuario-titulo{
+    font-weight: bold;
+    font-family: var(--fonte-poppins);
+    font-size: clamp(32px, 5vw, 48px);
+}
+
+.descricao-pagina{
+    font-family: var(--fonte-nunito);
+    font-size: clamp(16px, 3vw, 20px);
+
+}
+
+/* CARDS INDICADORES */
+.card-indicador{
+    background-color: var(--cor-de-fundo);
+    color: var(--cor-branco);
+    padding: 1.5em;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.icone-indicador{
+    background-color: var(--cor-verde-escuro);
+    padding: .3em;
+    border-radius: 50px;
+    font-size: 2em;
+    width: fit-content;
+}
+
+.texto-indicador{
+    font-size: 20px;
+}
+
+.valor-indicador{
+    font-size: 48px;
+    font-family: var(--fonte-poppins);
+}
+
+.card-indicador a{
+    color: var(--cor-branco);
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    transition: .5s;
+}
+
+.card-indicador a i{
+    font-size: 1.5em;
+}
+
+.card-indicador a:hover{
+    color: var(--cor-salmao);
+}
+
+/* PEDIDOS RECEBIDOS */
+.table-responsive{
+    border: 2px solid var(--cor-verde-escuro);
+    border-radius: 1em !important;
+    font-family: var(--fonte-nunito);
+}
+
+.cabecalho-tabela{
+    padding: 1em;
+    background-color: var(--cor-branco);
+}
+
+.cabecalho-tabela a{
+    color: var(--cor-verde-escuro);
+    font-weight: bold;
+    font-size: 16px;
+    transition: .5s;
+}
+
+.cabecalho-tabela a:hover{
+    color: #22514B;
+}
+
+.cabecalho-tabela a i{
+    font-size: 1.5em;
+}
+
+.tabela-pedidos tbody tr{
+    border-top: 2px solid var(--cor-verde-escuro);
+}
+
+.titulo-tabela-pedidos{
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.descricao-tabela-pedidos{
+    font-family: var(--fonte-nunito);
+}
+
+.pedido-linha {
+    display: grid;
+    grid-template-columns: 1fr 120px 140px;
+    align-items: center;
+    gap: 1rem;
+    color: var(--cor-cinza);
+}
+
+.icone-tabela{
+    background-color: var(--cor-verde-escuro);
+    color: var(--cor-branco);
+    border-radius: 50px;
+    padding: .3em;
+    font-size: 1.2em;
+}
+
+.produto-nome{
+    color: var(--cor-cinza);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.produto-preco {
+    text-align: left;
+    color: var(--cor-cinza);
+}
+
+.produto-status {
+    text-align: center;
+    font-size: 16px;
+}
+
+@media (min-width: 992px) {
+
+    /* SIDEBAR */
+    .sidebar {
+        visibility: visible !important;
+        transform: translateX(0) !important;
+        background-color: var(--cor-de-fundo) !important;
+        position: static;
+        min-height: 100vh;
+    }
+
+    .offcanvas-header {
+        padding: .5em;
+    }
+
+    
+    .offcanvas-body {
+        width: 13em;
+        margin: 0 auto;
+    }
+
+    .logo-sidebar{
+        width: 90%;
+        max-width: 13em;
+    }
+
+    #sidebar hr {
+        margin: 1em 0;
+        border: 2px solid var(--cor-salmao);
+    }
+
+    /* CONTEUDO */
+    #nome-usuario{
+        color: var(--cor-cinza);
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

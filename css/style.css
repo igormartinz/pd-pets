@@ -29,7 +29,8 @@ body {
 
 /* COMPONENTES */
 
-.botao, .botao-secundario{
+.botao,
+.botao-secundario {
     background-color: var(--cor-verde-escuro);
     padding: .5em 3em;
     font-size: 16px;
@@ -49,11 +50,11 @@ body {
     background-color: #22514B;
 }
 
-.botao-secundario{
+.botao-secundario {
     background-color: var(--cor-salmao);
 }
 
-.botao-secundario:hover{
+.botao-secundario:hover {
     background-color: #CF6536;
 }
 
@@ -127,7 +128,7 @@ body {
     border-radius: 20px;
 }
 
-.produto-preco{
+.produto-preco {
     cursor: pointer;
     transition: .3s ease;
 }
@@ -520,6 +521,7 @@ hr {
 
 @media (min-width: 992px) {
 
+    /* CABECALHO */
     .navbar,
     .conteudo-rodape {
         padding: .7em 5em;
@@ -535,6 +537,7 @@ hr {
         margin: 0 2em;
     }
 
+    /* RODAPE */
     .logo-rodape,
     .texto-rodape {
         text-align: start;
