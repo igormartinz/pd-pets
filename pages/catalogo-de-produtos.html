@@ -15,7 +15,7 @@
 
 <body>
     <!-- CABEÇALHO -->
-    <header class="cabecalho">
+    <header class="cabecalho" id="cabecalho">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand d-lg-none" href="/">
@@ -64,7 +64,7 @@
     <!-- CONTEUDO -->
     <main class="container py-5">
         <div class="d-lg-flex justify-content-between">
-            <h2 class="mb-3">Catálogo de Produtos</h2>
+            <h2 class="mb-3" id="titulo-catalogo">Catálogo de Produtos</h2>
             <div class="d-flex justify-content-center gap-3">
                 <button class="botao border-0 px-4 d-lg-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#menuFiltros" aria-expanded="false" aria-controls="menuFiltros">Filtrar <i
@@ -74,10 +74,10 @@
                         aria-expanded="false">Ordenar
                         <i class="ti ti-arrows-sort"></i></button>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item">Menor Preço</button></li>
-                        <li><button class="dropdown-item">Maior Preço</button></li>
-                        <li><button class="dropdown-item">Melhor Avaliação</button></li>
-                        <li><button class="dropdown-item">Ordem Alfabética</button></li>
+                        <li><button class="dropdown-item" data-ordenar="menor-preco">Menor Preço</button></li>
+                        <li><button class="dropdown-item" data-ordenar="maior-preco">Maior Preço</button></li>
+                        <li><button class="dropdown-item" data-ordenar="melhor-avaliacao">Melhor Avaliação</button></li>
+                        <li><button class="dropdown-item" data-ordenar="alfabetica">Ordem Alfabética</button></li>
                     </ul>
                 </div>
             </div>
@@ -89,35 +89,8 @@
                 <aside class="collapse d-lg-block mt-3 filtros" id="menuFiltros">
                     <article>
                         <h2 class="titulo-filtragem">Categorias</h2>
-                        <ul class="list-unstyled">
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="racao-petiscos">
-                                <label for="racao-petiscos" class="m-0">Ração e Petiscos</label>
-                            </li>
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="higiene">
-                                <label for="higiene" class="m-0">Higiene</label>
-                            </li>
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="brinquedos">
-                                <label for="brinquedos" class="m-0">Brinquedos</label>
-                            </li>
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="acessorios">
-                                <label for="acessorios" class="m-0">Acessórios</label>
-                            </li>
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="medicamentos">
-                                <label for="medicamentos" class="m-0">Medicamentos</label>
-                            </li>
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="roupas">
-                                <label for="roupas" class="m-0">Roupas</label>
-                            </li>
-                            <li class="d-flex gap-2 align-items-center">
-                                <input type="checkbox" id="camas-casinhas">
-                                <label for="camas-casinhas" class="m-0">Camas e Casinhas</label>
-                            </li>
+                        <ul class="list-unstyled" id="lista-categorias">
+                            
                         </ul>
                     </article>
                     <article>
@@ -131,22 +104,22 @@
                     </article>
                     <article>
                         <h2 class="titulo-filtragem">Avaliação</h2>
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled" id="lista-avaliacoes">
                             <li>
-                                <input type="checkbox" id="1-estrela">
+                                <input type="checkbox" class="filtro-avaliacao" id="1-estrela" data-estrelas="1">
                                 <label for="1-estrela">
                                     <i class="ti ti-star-filled"></i>
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="2-estrela">
+                                <input type="checkbox" class="filtro-avaliacao" id="2-estrela" data-estrelas="2">
                                 <label for="2-estrela">
                                     <i class="ti ti-star-filled"></i>
                                     <i class="ti ti-star-filled"></i>
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="3-estrela">
+                                <input type="checkbox" class="filtro-avaliacao" id="3-estrela" data-estrelas="3">
                                 <label for="3-estrela">
                                     <i class="ti ti-star-filled"></i>
                                     <i class="ti ti-star-filled"></i>
@@ -154,7 +127,7 @@
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="4-estrela">
+                                <input type="checkbox" class="filtro-avaliacao" id="4-estrela" data-estrelas="4">
                                 <label for="4-estrela">
                                     <i class="ti ti-star-filled"></i>
                                     <i class="ti ti-star-filled"></i>
@@ -163,7 +136,7 @@
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="5-estrela">
+                                <input type="checkbox" class="filtro-avaliacao" id="5-estrela" data-estrelas="5">
                                 <label for="5-estrela">
                                     <i class="ti ti-star-filled"></i>
                                     <i class="ti ti-star-filled"></i>
@@ -180,327 +153,17 @@
             <!-- LISTAGEM DE PRODUTOS -->
             <div class="col-lg-9">
                 <section class="lista-produtos mt-3">
-                    <div class="row gy-4">
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="card-produto">
-                                <div class="produto-avaliacao">
-                                    <i class="ti ti-star-filled"></i>
-                                    <span>5,0</span>
-                                </div>
-                                <i class="ti ti-heart ti-heart-icon"></i>
-
-                                <img src="../img/arranhador-lilopety-retangular.png" class="produto-img"
-                                    alt="Fortekor 5mg Elanco 28 Comprimidos">
-
-                                <div>
-                                    <h3 class="text-truncate produto-nome mb-1 mt-2">Fortekor 5mg Elanco 28 Comprimidos
-                                    </h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p class="produto-lojista m-0">Cão & Cia Acessórios</p>
-                                            <small class="produto-categoria">Medicamentos</small>
-                                            <p class="produto-preco">R$ 146,99</p>
-                                        </div>
-                                        <i class="ti ti-shopping-bag-plus"></i>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
+                    <div class="row gy-4" id="lista-produtos">
+                        
+                    </div>
                 </section>
             </div>
         </div>
 
         <!-- PAGINAÇÃO -->
         <nav class="mt-4" aria-label="Paginação">
-            <ul class="pagination justify-content-end">
-                <li class="page-item">
-                    <a class="page-link paginacao-seta" href="#" aria-label="Previous">
-                        <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
-                    </a>
-                </li>
-                <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
-                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
-                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link paginacao-seta" href="#" aria-label="Next">
-                        <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
-                    </a>
-                </li>
+            <ul class="pagination justify-content-end rounded-2" id="paginacao">
+               
             </ul>
         </nav>
     </main>
@@ -544,6 +207,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="../js/pesquisa-catalogo.js"></script>
+    <script src="../js/catalogo-de-produtos.js"></script>
 </body>
 
 </html>
