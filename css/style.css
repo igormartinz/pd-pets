@@ -27,6 +27,23 @@ body {
     color: var(--cor-branco);
 }
 
+/* View Transition */
+
+@view-transition {
+    navigation: auto
+}
+
+::view-transition-old(:root) {
+    animation-duration: .3s ease;
+    animation-timing-function: ease-out;
+}
+
+::view-transition-new(:root) {
+    animation-duration: .3s ease;
+    animation-delay: .5s;
+    animation-timing-function: ease-in;
+}
+
 /* COMPONENTES */
 
 .botao, .botao-secundario{
@@ -183,7 +200,9 @@ body {
     border: none;
     border-radius: 18px;
     background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    color: var(--cor-cinza);
     transition: .3s ease;
 }
 
@@ -356,17 +375,6 @@ a {
         linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
-}
-
-.input-primario {
-    width: 100%;
-    display: block;
-    padding: .7em 1em;
-    border: none;
-    border-radius: 18px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    transition: .3s ease;
 }
 
 .campo-input label {
