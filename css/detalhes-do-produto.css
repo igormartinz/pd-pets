@@ -513,8 +513,40 @@ h2 {
     display: none !important;
 }
 
+#section-avaliacao-produto.sem-avaliacoes-produto .container-avaliacao-superior {
+    display: none;
+}
+
 #btn-mais:disabled,
 #btn-menos:disabled {
     opacity: .5;
     cursor: not-allowed;
+}
+
+.container-estrelas-media {
+    display: flex;
+}
+
+.estrela-media {
+    position: relative;
+    width: 24px;
+    height: 20px;
+}
+
+.estrela-media svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.estrela-media>svg {
+    opacity: .25;
+}
+
+.estrela-preenchida-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
 }
