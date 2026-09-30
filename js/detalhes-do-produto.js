@@ -85,7 +85,7 @@ async function anexarNomesClientes(avaliacoesProduto) {
 
     const nomesId = {};
     idsUnicos.forEach((id, index) => {
-        nomesId[id] = clientes[index]?.nome;
+        nomesId[id] = clientes[index]?.nomeCompleto;
     });
 
     return avaliacoesProduto.map((avaliacao) => ({
@@ -179,14 +179,16 @@ function renderizarAvaliacoes(avaliacoesProduto) {
         return;
     }
 
+    secao.classList.toggle("sem-avaliacoes-produto", avaliacoesProduto.length === 0);
+
     const semAvaliacao = document.createElement("div");
     semAvaliacao.id = "section-sem-avaliacao";
 
     const mensagem = document.createElement("p");
-    mensagem.classList.add("sem-avaliacoes", "mt-4");
+    mensagem.classList.add("sem-avaliacoes", "mt-4", "mb-4");
     mensagem.textContent = "Seja o primeiro a avaliar esse produto.";
 
-    semAvaliacao.append(mensagem, criarBotaoAvaliar());
+    semAvaliacao.append(mensagem);
     secao.append(semAvaliacao);
 }
 
@@ -223,42 +225,64 @@ function criarCardAvaliacao(avaliacao) {
     return container;
 }
 
+function criarSvgEstrela() {
+    const estrela = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    estrela.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    estrela.setAttribute("width", "24");
+    estrela.setAttribute("height", "20");
+    estrela.setAttribute("viewBox", "0 0 24 24");
+    estrela.setAttribute("fill", "currentColor");
+    estrela.classList.add("icon-tabler-star");
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z");
+    estrela.appendChild(path);
+
+    return estrela;
+}
+
 function criarEstrelas(nota) {
     const wrapper = document.createElement("div");
-    for (let i = 1; i <= 5; i++) {
-        const estrela = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        estrela.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        estrela.setAttribute("width", "24");
-        estrela.setAttribute("height", "20");
-        estrela.setAttribute("viewBox", "0 0 24 24");
-        estrela.setAttribute("fill", "currentColor");
-        estrela.classList.add("icon-tabler-star");
 
+    for (let i = 1; i <= 5; i++) {
+        const estrela = criarSvgEstrela();
         if (i > nota) {
             estrela.style.opacity = "0.25"; // estilizar como estrela vazia
         }
 
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", "M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z");
-
-        estrela.appendChild(path);
         wrapper.appendChild(estrela);
     }
 
     return wrapper;
 }
 
-function criarBotaoAvaliar() {
-    const botao = document.createElement("button");
-    botao.classList.add("botao", "mt-5", "mb-4");
-    botao.textContent = "Avaliar produto";
-    botao.id = "btn-avaliar-produto";
+// Funcionalide de acompanhar o preenchimento das estrelas conforme a avaliação média
 
-    botao.addEventListener("click", () => {
-        // Estrutura preparada para colocar o modal de avaliação
-    });
+function criarEstrelasMedia(media) {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("container-estrelas-media");
 
-    return botao
+    for (let i = 1; i <= 5; i++) {
+
+        const percentual = Math.max(0, Math.min(1, media - (i - 1))) * 100;
+        console.log(percentual);
+        
+
+        const estrelaContainer = document.createElement("div");
+        estrelaContainer.classList.add("estrela-media");
+
+        estrelaContainer.appendChild(criarSvgEstrela());
+
+        const preenchidaWrapper = document.createElement("div");
+        preenchidaWrapper.classList.add("estrela-preenchida-wrapper");
+        preenchidaWrapper.style.width = `${percentual}%`;
+        preenchidaWrapper.appendChild(criarSvgEstrela());
+
+        estrelaContainer.appendChild(preenchidaWrapper);
+        wrapper.appendChild(estrelaContainer);
+    }
+
+    return wrapper;
 }
 
 function formatarData(dataIso) {
@@ -283,6 +307,10 @@ function popularInfoProduto(produto, categoria, lojista, avaliacoesProduto) {
     const { media, quantidade } = calcularMediaAvaliacoes(avaliacoesProduto);
     document.getElementById("avaliacao-media").textContent = media;
     document.getElementById("quantidade-avaliacoes").textContent = quantidade;
+
+    const containerNotas = document.querySelector(".container-notas");
+    containerNotas.innerHTML = "";
+    containerNotas.appendChild(criarEstrelasMedia(Number(media)));
 
     renderizarAvaliacoes(avaliacoesProduto);
 }
