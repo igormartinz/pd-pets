@@ -1,0 +1,169 @@
+/* PÁGINA DE CARRINHO */
+body{
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+    flex: 1;
+}
+
+.titulo-carrinho{
+    color: var(--cor-branco);
+    font-family: var(--fonte-poppins);
+    font-size: clamp(30px, 5vw, 36px);
+}
+
+/* ITENS DO CARRINHO */
+.item-carrinho{
+    background-color: var(--cor-branco-amarelado);
+    padding: .6em;
+    border-radius: 1em;
+}
+
+.img-item{
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border: 2px solid var(--cor-verde-escuro);
+    border-radius: 5px;
+}
+
+.conteudo-item {
+    flex: 1;
+    min-width: 0;
+}
+
+.nome-produto{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.preco-unitario-produto{
+    font-size: 14px;
+}
+
+.preco-unitario-produto span{
+    font-weight: bold;
+}
+
+.min-w-0 {
+    min-width: 0;
+}
+
+.preco-total-produto{
+    font-family: var(--fonte-poppins);
+    color: var(--cor-verde-escuro);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.botao-lixeira{
+    background: none;
+    border: none;
+    font-size: 1.8em;
+}
+
+.botao-quantidade{
+    background-color: var(--cor-salmao);
+    border: none;
+    color: var(--cor-branco);
+    padding: .2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 22px;
+}
+
+.quantidade-produto{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* RESUMO DA COMPRA */
+.resumo-compra{
+    background-color: var(--cor-branco-amarelado);
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.titulo-resumo-compra{
+    color: var(--cor-verde-escuro);
+    font-size: 24px;
+    font-weight: bold;
+    font-family: var(--fonte-poppins);
+}
+
+.produtos-totais{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.valor-total-produtos, .valor-total{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.taxa-servicos{
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.resumo-compra hr{
+    border: 2px solid var(--cor-verde-escuro);
+}
+
+.valor-total-final{
+    font-family: var(--fonte-poppins);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* MODAL EXCLUIR ITEM */
+.modal-titulo-excluir{
+    font-family: var(--fonte-poppins);
+    font-size: 24px;
+}
+
+/* MODAL FINALIZAÇÃO */
+#modalFinalizar, #modalPix, #modalBoleto, #modalCredito, #modalDebito{
+    font-family: var(--fonte-nunito);
+}
+
+#modalFinalizar hr{
+    border: 2px solid var(--cor-verde-escuro);
+}
+
+.modal-titulo-finalizar{
+    font-family: var(--fonte-poppins);
+    color: var(--cor-verde-escuro);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.finalizacao-texto-destaque{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.link-gerenciar-enderecos{
+    color: var(--cor-salmao);
+    text-decoration: underline;
+}
+
+/* MODAL PIX */
+.modal-titulo-pagamento{
+    font-family: var(--fonte-poppins);
+    color: var(--cor-verde-escuro);
+    font-size: 24px;
+}
+
+.img-qr-code{
+    max-width: 17em;
+    margin: 0 auto;
+}
