@@ -92,6 +92,9 @@ body {
 .card-produto a{
     color: var(--cor-branco);
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .produto-avaliacao {
