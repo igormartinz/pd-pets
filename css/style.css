@@ -58,7 +58,6 @@ h3 {
 
 .botao,
 .botao-secundario {
-    display: flex;
     background-color: var(--cor-verde-escuro);
     padding: .5em 2em;
     font-size: 16px;
@@ -103,6 +102,9 @@ h3 {
 .card-produto a {
     color: var(--cor-branco);
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .produto-avaliacao {
@@ -545,6 +547,7 @@ hr {
 
 @media (min-width: 992px) {
 
+    /* CABECALHO */
     .navbar,
     .conteudo-rodape {
         padding: .7em 5em;
@@ -560,6 +563,7 @@ hr {
         margin: 0 2em;
     }
 
+    /* RODAPE */
     .logo-rodape,
     .texto-rodape {
         text-align: start;
