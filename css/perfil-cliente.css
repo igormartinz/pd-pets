@@ -1,0 +1,432 @@
+figcaption {
+    display: none;
+}
+
+main {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+#section-perfil-cliente {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+#section-perfil-cliente-endereco {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+#section-form-dados-perfil {
+    width: 50vw;
+    max-width: 400px;
+    background-color: #FAF8F2;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .25);
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-verde-escuro);
+    padding-bottom: 10px;
+}
+
+.perfil-header>.botao {
+    width: 0;
+    display: flex;
+}
+
+.circulo-perfil {
+    width: 80px;
+    height: 80px;
+    background-color: #198754;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.abrev-nome {
+    font-family: var(--fonte-poppins);
+    font-weight: 550;
+    font-size: clamp(16px, 1.38vw, 20px);
+    color: var(--cor-branco-amarelado);
+}
+
+.nome-e-email-perfil {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.nome-usuario {
+    font-family: var(--fonte-poppins);
+    font-weight: 550;
+    font-size: clamp(16px, 1.38vw, 20px);
+    color: var(--cor-cinza);
+}
+
+.email-usuario {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: clamp(12, 1.11vw, 16px);
+    color: #9c9b9b;
+}
+
+.form-perfil-cliente {
+    gap: 20px;
+    padding-top: 10px;
+}
+
+.campo-dados-perfil {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(12px, 1.5vw, 16px);
+    color: var(--cor-cinza);
+}
+
+.input-dados-perfil {
+    outline: none;
+    border: none;
+    background: none;
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: clamp(10px, 1.5vw, 14px);
+    color: var(--cor-cinza);
+}
+
+.container-endereco {
+    width: 40vw;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.enderecos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: var(--cor-branco-amarelado);
+    border-radius: 30px;
+}
+
+#titulo-enderecos {
+    font-family: var(--fonte-poppins);
+    font-weight: 500;
+    font-size: clamp(16px, 1.66vw, 24px);
+    color: var(--cor-cinza);
+}
+
+.botao-novo-endereco {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: 1px solid #0B3622;
+    height: 40px;
+    padding: 0 15px 0 15px;
+    background-color: var(--cor-verde-escuro);
+    border-radius: 30px;
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(12px, 1.5vw, 16px);
+    color: var(--cor-branco-amarelado);
+    transition: .3s ease;
+}
+
+.botao-novo-endereco:hover {
+    background-color: #22514B;
+}
+
+.container-item-endereco {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--cor-branco-amarelado);
+    border-radius: 30px;
+    color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+}
+
+.principal {
+    border: 2px solid var(--cor-verde-escuro);
+}
+
+.container-info-endereco {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.badge-principal {
+    width: 80px;
+    background-color: var(--cor-verde-escuro);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: clamp(10px, 1.5vw, 14px);
+    color: var(--cor-branco);
+}
+
+.nome-rua-numero-endereco {
+    font-weight: bold;
+    font-size: clamp(16px, 1.5vw, 20px);
+}
+
+.bairro-estado-UF-endereco {
+    font-weight: 500;
+    font-size: clamp(10px, 1.5vw, 14px);
+}
+
+.container-btn-acoes {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-pencil,
+.btn-trash {
+    outline: none;
+    border: none;
+    background: none;
+    transition: .3s ease;
+}
+
+.btn-pencil:hover {
+    color: var(--cor-branco);
+    background-color: #19875471;
+    border-radius: 5px;
+}
+
+.btn-trash:hover {
+    color: var(--cor-branco);
+    background-color: #dc354696;
+    border-radius: 5px;
+}
+
+@media(max-width: 768px) {
+    #section-perfil-cliente>h2 {
+        text-align: center;
+    }
+
+    #section-perfil-cliente-endereco {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    #section-form-dados-perfil {
+        width: 360px;
+    }
+
+    .circulo-perfil {
+        width: 60px;
+        height: 60px;
+    }
+
+    .container-endereco {
+        width: 360px;
+    }
+}
+
+#modalNovoEndereco .modal-dialog,
+#modalEditarEndereco .modal-dialog {
+    max-width: 630px;
+}
+
+.modal-content {
+    border-radius: 15px;
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-groups-colunas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.container-ultimos-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.form-modal-endereco {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.modal-titulo {
+    font-family: var(--fonte-poppins);
+}
+
+.container-btns-modal-endereco {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-btns-modal-acoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input:focus {
+    border-radius: 20px !important;
+}
+
+.form-control {
+    border-radius: 20px !important;
+}
+
+.form-control::placeholder {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: clamp(14px, 1.5vw, 16px);
+    color: var(--cor-cinza);
+}
+
+.input-grupo {
+    width: 100%;
+    height: 50px;
+}
+
+.input-grupo>label {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(12px, 1.5vw, 16px);
+    padding-left: 10px;
+    color: var(--cor-cinza);
+}
+
+.input-group-num>label,
+.input-group-comp>label {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(12px, 1.5vw, 16px);
+    padding-left: 10px;
+    color: var(--cor-cinza);
+}
+
+.checkbox-btn-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+
+.checkbox-btn-principal>label {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(12px, 1.5vw, 14px);
+    color: var(--cor-cinza);
+}
+
+#input-checkbox-principal {
+    appearance: none;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    background-color: var(--cor-verde-escuro);
+    cursor: pointer;
+}
+
+#input-checkbox-principal::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--cor-branco);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), opacity .2s ease;
+}
+
+#input-checkbox-principal:checked::before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+#input-checkbox-principal:focus-visible {
+    outline: 2px solid var(--cor-verde);
+    outline-offset: 2px;
+}
+
+#modalExcluirEndereco .modal-dialog {
+    width: 80vw;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.modal-content-excluir-endereco {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.texto-modal-excluir-endereco {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    color: var(--cor-cinza);
+    font-size: clamp(14px, 1.5vw, 16px);
+}
+
+@media(max-width: 768px) {
+    .container-groups-colunas {
+        grid-template-columns: 1fr;
+    }
+
+    .container-btns-modal-endereco {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .container-btns-modal-acoes {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #modalNovoEndereco .modal-dialog,
+    #modalEditarEndereco .modal-dialog {
+        width: 80vw;
+        max-width: 350px;
+        height: 100vh;
+        margin: 0 auto;
+    }
+
+    .modal-titulo {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,64 @@
+/* PÁGINA MEUS PETS */
+body {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--fonte-nunito);
+}
+
+main {
+    flex: 1;
+}
+
+h1 {
+    font-family: var(--fonte-poppins);
+}
+
+/* CARD PET */
+.card-pet {
+    max-width: 270px;
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+    border-radius: 1em;
+    border: 3px solid var(--cor-verde-escuro);
+    padding: 1em;
+    margin: 0 auto;
+}
+
+.nome-pet {
+    font-family: var(--fonte-poppins);
+    font-size: 20px;
+}
+
+.card-pet dt {
+    font-weight: 500;
+}
+
+.card-pet dd {
+    font-weight: bold;
+}
+
+.botao-acao {
+    background-color: var(--cor-verde-escuro);
+    border: none;
+    width: 3em;
+    height: 3em;
+    border-radius: .5em;
+    transition: .5s;
+}
+
+.botao-acao i {
+    font-size: 2em;
+    color: var(--cor-branco);
+}
+
+.botao-acao:hover {
+    background-color: #22514B;
+}
+
+.modal-titulo{
+    font-family: var(--fonte-poppins);
+    font-size: 24px;
+    font-weight: bold;
+}
