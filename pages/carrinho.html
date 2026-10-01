@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/carrinho.css">
+    <title>PD Pets | Carrinho</title>
+</head>
+
+<body>
+    <!-- CABEÇALHO -->
+    <header class="cabecalho" id="cabecalho">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand d-lg-none" href="/">
+                    <img src="../img/logo-mobile.png" alt="Logo PD Pets" class="logo-mobile">
+                </a>
+                <a class="navbar-brand d-lg-block d-none" href="/">
+                    <img src="../img/logo-desktop.png" alt="Logo PD Pets" class="logo-desktop">
+                </a>
+
+                <!-- MENU HAMBURGUER -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Abrir menu de navegação">
+                    <i class="ti ti-menu-2 menu-mobile"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex ms-auto" role="search" id="form-pesquisa">
+                        <input type="search" class="input-pesquisa" id="input-pesquisa"
+                            placeholder="O que você procura hoje?">
+                        <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
+                    </form>
+                    <hr class="d-lg-none">
+                    <div class="d-flex ">
+                        <ul class="navbar-nav mx-lg-4 me-auto mb-lg-0">
+                            <li>
+                                <a class="text-decoration-none" href="/pages/carrinho.html"><i
+                                        class="ti ti-shopping-cart icone-nav"></i></a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="/pages/favoritos.html"><i
+                                        class="ti ti-heart icone-nav"></i></a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="/pages/dashboard.html"><i
+                                        class="ti ti-user icone-nav"></i></a>
+                            </li>
+                        </ul>
+                        <a class="botao" href="/pages/login.html">Entrar</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTEUDO -->
+    <main class="container py-4">
+        <h1 class="text-center text-lg-start mb-3 mb-lg-2 titulo-carrinho">Carrinho</h1>
+
+        <div class="row g-3">
+            <div class="col-12 col-lg-8">
+                <section class="lista-produtos row g-2">
+                    <div class="col-12">
+                        <article class="item-carrinho d-flex gap-2 w-100">
+                            <img src="/img/ração-granplus-choice.png" class="img-item" alt="Ração">
+                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="min-w-0">
+                                        <h3 class="nome-produto text-truncate mb-1">Ração Úmida GranPlus</h3>
+                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
+                                                5,39</span></p>
+                                    </div>
+                                    <button class="align-self-start botao-lixeira" data-bs-toggle="modal"
+                                        data-bs-target="#modalExcluir"><i class="ti ti-trash"></i></button>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <p class="preco-total-produto m-0">R$ 26,95</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
+                                        <p class="quantidade-produto m-0">5</p>
+                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12">
+                        <article class="item-carrinho d-flex gap-2 w-100">
+                            <img src="/img/arranhador-lilopety-retangular.png" class="img-item" alt="Ração">
+                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="min-w-0">
+                                        <h3 class="nome-produto text-truncate mb-1">Catnip Cansei de Ser Gato</h3>
+                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
+                                                41,99</span></p>
+                                    </div>
+                                    <button class="align-self-start botao-lixeira"><i class="ti ti-trash"></i></button>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <p class="preco-total-produto m-0">R$ 41,99</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
+                                        <p class="quantidade-produto m-0">1</p>
+                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12">
+                        <article class="item-carrinho d-flex gap-2 w-100">
+                            <img src="/img/fortekor-mg-elanco.png" class="img-item" alt="Ração">
+                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="min-w-0">
+                                        <h3 class="nome-produto text-truncate mb-1">Coleira Zee.Cat NeoPro</h3>
+                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
+                                                69,00</span></p>
+                                    </div>
+                                    <button class="align-self-start botao-lixeira"><i class="ti ti-trash"></i></button>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <p class="preco-total-produto m-0">R$ 138,00</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
+                                        <p class="quantidade-produto m-0">2</p>
+                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12">
+                        <article class="item-carrinho d-flex gap-2 w-100">
+                            <img src="/img/cabana-fabrica-pet.png" class="img-item" alt="Ração">
+                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="min-w-0">
+                                        <h3 class="nome-produto text-truncate mb-1">Cama Caixa Cansei</h3>
+                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
+                                                249,99</span></p>
+                                    </div>
+                                    <button class="align-self-start botao-lixeira"><i class="ti ti-trash"></i></button>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <p class="preco-total-produto m-0">R$ 249,99</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
+                                        <p class="quantidade-produto m-0">1</p>
+                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+            <div class="col-12 col-lg-4">
+                <section class="resumo-compra">
+                    <h2 class="titulo-resumo-compra">Resumo da compra</h2>
+
+                    <dl>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <dt class="produtos-totais">Produtos (4)</dt>
+                            <dd class="valor-total-produtos">R$456,93</dd>
+                        </div>
+                        <div class="d-flex alignx-items-center justify-content-between">
+                            <dt class="taxa-servicos">Taxa de serviço</dt>
+                            <dd class="taxa-servicos">R$ 2,00</dd>
+                        </div>
+                    </dl>
+                    <hr>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <dt class="valor-total">Total</dt>
+                        <dd class="valor-total-final">R$458,93</dd>
+                    </div>
+
+                    <button class="botao w-100 mt-3 px-1" data-bs-toggle="modal"
+                        data-bs-target="#modalFinalizar">Continuar
+                        para finalização</button>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- RODAPE -->
+    <footer class="rodape">
+        <div class="container-fluid conteudo-rodape">
+            <div class="row pt-3 pt-lg-0">
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+                    <img src="/img/logo-desktop.png" alt="Logo PD Pets" class="logo-rodape d-block mx-auto mx-lg-0">
+                    <p class="texto-rodape text-lg-start">O pet shop online que cuida do seu melhor amigo.</p>
+                </div>
+
+                <div class="col-6 col-lg-4 mb-3 mb-lg-0">
+                    <h2 class="titulo-rodape text-center">Redes Sociais</h2>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="https://www.instagram.com/pdcaseinformatica/" target="_blank" class="rodape-link"><i
+                                class="rodape-icones ti ti-brand-instagram"></i></a>
+                        <a href="https://www.facebook.com/pdcaseinformatica/" target="_blank" class="rodape-link"><i
+                                class="rodape-icones ti ti-brand-facebook"></i></a>
+                        <a href="https://www.youtube.com/channel/UCU_a1h5vy4_rLolioMv1G9Q" target="_blank"
+                            class="rodape-link"><i class="rodape-icones ti ti-brand-youtube"></i></a>
+                        <a href="https://www.linkedin.com/company/pd-case-informatica-ltda/posts/" target="_blank"
+                            class="rodape-link"><i class="rodape-icones ti ti-brand-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4 mb-3 mb-lg-0 linha-rodape">
+                    <div class="mx-auto rodape-endereco">
+                        <h2 class="titulo-rodape">Endereço</h2>
+                        <p class="m-0">Alameda Oscar, 891</p>
+                        <p class="m-0">Vila da Serra, Nova Lima - MG</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyrigth">
+            <p class="m-0">© 2026 PD Pets. Todos os Direitos Reservados</p>
+        </div>
+    </footer>
+
+    <!-- MODAIS -->
+    <!-- Modal Excluir Item -->
+    <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="modalExcluir" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content p-3 rounded-3">
+                <h2 class="modal-titulo-excluir fs-5 text-center" id="modalExcluir">Excluir produto</h2>
+                <p class="text-center">Tem certeza que quer excluir este produto do seu carrinho?</p>
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="botao px-0 w-50">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Finalização -->
+    <div class="modal fade" id="modalFinalizar" tabindex="-1" aria-labelledby="modalFinalizar" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4">
+                <h2 class="modal-titulo-finalizar mb-3">Finalizar Pedido</h2>
+                <article>
+                    <dl class="m-0">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <dt class="finalizacao-texto-destaque">Produtos (4)</dt>
+                            <dd class="m-0">R$456,93</dd>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <dt class="finalizacao-texto-destaque">Frete</dt>
+                            <dd class="m-0">Grátis</dd>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <dt class="finalizacao-texto-destaque">Taxa de serviço</dt>
+                            <dd class="m-0">R$ 2,00</dd>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between  mt-3">
+                            <dt class="finalizacao-texto-destaque">Total da compra</dt>
+                            <dd class="finalizacao-texto-destaque">R$ 458,93</dd>
+                        </div>
+                    </dl>
+                </article>
+                <hr class="my-2">
+                <article>
+                    <h3 class="finalizacao-texto-destaque">Endereço principal</h3>
+                    <div>
+                        <p class="m-0">Rua das Acácias, 145 Vila Madalena</p>
+                        <p>São Paulo - São Paulo, 05433-010</p>
+                    </div>
+                    <a href="perfil-cliente.html" class="link-gerenciar-enderecos">Gerenciar endereços</a>
+                </article>
+                <hr class="my-2">
+                <article>
+                    <h3 class="finalizacao-texto-destaque">Forma de pagamento</h3>
+                    <form class="d-flex flex-column gap-2">
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+                            <input type="radio" name="pagamento" id="pix">
+                            <label data-bs-toggle="modal" data-bs-target="#modalPix" class="finalizacao-texto-destaque"
+                                for="pix"><img src="../img/pix.svg" alt="Símbolo de pix"> Pix</label>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+                            <input type="radio" name="pagamento" id="credito">
+                            <label data-bs-toggle="modal" data-bs-target="#modalCredito"
+                                class="finalizacao-texto-destaque" for="credito"><img src="../img/credito.svg"
+                                    alt="Símbolo de cartão de crédito">
+                                Cartão de Crédito</label>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+                            <input type="radio" name="pagamento" id="debito">
+                            <label data-bs-toggle="modal" data-bs-target="#modalDebito"
+                                class="finalizacao-texto-destaque" for="debito"><img src="../img/debito.svg"
+                                    alt="Símbolo de cartão de débito"> Cartão
+                                de Débito</label>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+                            <input type="radio" name="pagamento" id="boleto">
+                            <label data-bs-toggle="modal" data-bs-target="#modalBoleto"
+                                class="finalizacao-texto-destaque" for="boleto"><img src="../img/boleto.svg"
+                                    alt="Símbolo de boleto"> Boleto</label>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2 mt-4">
+                            <button type="button" class="botao px-0 w-100">Continuar pagamento</button>
+                            <button type="button" class="botao-secundario px-0 w-100"
+                                data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento via Pix -->
+    <div class="modal fade" id="modalPix" tabindex="-1" aria-labelledby="modalPix" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4">
+                <h2 class="modal-titulo-pagamento mb-3">Pagamento via Pix</h2>
+                <img src="../img/qr-code.png" class="img-qr-code" alt="QR Code">
+                <p class="text-center my-2">Escaneie o QR Code ou copie o código</p>
+                <div class="input-border">
+                    <input type="text" id="codigo-pix" class="p-2 form-control input-contato"
+                        value="00020126580014BR.GOV.BCB.PIX0136pdpet.5204000053039865802BR5910PD PETS6007SABARA62070503***6304ABCD"
+                        readonly>
+                </div>
+                <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
+                    <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                    <button type="button" class="botao-secundario px-0 w-100" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento via Boleto -->
+    <div class="modal fade" id="modalBoleto" tabindex="-1" aria-labelledby="modalBoleto" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4">
+                <h2 class="modal-titulo-pagamento mb-3">Pagamento via Boleto</h2>
+                <img src="../img/codigo-barras.png" class="img-qr-code my-4" alt="QR Code">
+                <p class="text-center my-2">Escaneie o código de barras ou copie o código</p>
+                <div class="input-border">
+                    <input type="text" id="codigo-pix" class="p-2 form-control input-contato"
+                        value="34191.09008 12345.678901 23456.789012 3" readonly>
+                </div>
+                <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
+                    <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                    <button type="button" class="botao-secundario px-0 w-100" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento via Cartão de Crédito -->
+    <div class="modal fade" id="modalCredito" tabindex="-1" aria-labelledby="modalCredito" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4">
+                <h2 class="modal-titulo-pagamento mb-3">Pagamento via Cartão de Crédito</h2>
+                <form class="d-flex flex-column gap-2">
+                    <div class="d-flex flex-column campo-input w-100">
+                        <label for="numero">Número do cartão</label>
+                        <div class="input-border">
+                            <input type="text" name="numero" class="form-control input-contato" id="numero"
+                                placeholder="0000 0000 0000 0000">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column campo-input w-100">
+                        <label for="nome-impresso">Nome impresso no cartão</label>
+                        <div class="input-border">
+                            <input type="text" name="nome-impresso" class="form-control input-contato"
+                                id="nome-impresso" placeholder="Digite o nome impresso no cartão">
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex flex-column campo-input w-100">
+                                <label for="validade">Data de validade</label>
+                                <div class="input-border">
+                                    <input type="text" name="validade" class="form-control input-contato" id="validade"
+                                        placeholder="MM/AA">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex flex-column campo-input w-100">
+                                <label for="cvv">CVV</label>
+                                <div class="input-border">
+                                    <input type="text" name="cvv" class="form-control input-contato" id="cvv"
+                                        placeholder="000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
+                        <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                        <button type="button" class="botao-secundario px-0 w-100"
+                            data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento via Cartão de Débito -->
+    <div class="modal fade" id="modalDebito" tabindex="-1" aria-labelledby="modalDebito" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4">
+                <h2 class="modal-titulo-pagamento mb-3">Pagamento via Cartão de Débito</h2>
+                <form class="d-flex flex-column gap-2">
+                    <div class="d-flex flex-column campo-input w-100">
+                        <label for="numero">Número do cartão</label>
+                        <div class="input-border">
+                            <input type="text" name="numero" class="form-control input-contato" id="numero"
+                                placeholder="0000 0000 0000 0000">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column campo-input w-100">
+                        <label for="nome-impresso">Nome impresso no cartão</label>
+                        <div class="input-border">
+                            <input type="text" name="nome-impresso" class="form-control input-contato"
+                                id="nome-impresso" placeholder="Digite o nome impresso no cartão">
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex flex-column campo-input w-100">
+                                <label for="validade">Data de validade</label>
+                                <div class="input-border">
+                                    <input type="text" name="validade" class="form-control input-contato" id="validade"
+                                        placeholder="MM/AA">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex flex-column campo-input w-100">
+                                <label for="cvv">CVV</label>
+                                <div class="input-border">
+                                    <input type="text" name="cvv" class="form-control input-contato" id="cvv"
+                                        placeholder="000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
+                        <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                        <button type="button" class="botao-secundario px-0 w-100"
+                            data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
