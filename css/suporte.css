@@ -1,0 +1,87 @@
+/* PÁGINA DE SUPORTE */
+body {
+    margin-top: 3em;
+}
+
+.ti-message-circle-plus {
+    font-size: 24px;
+}
+
+/* CARDS ATENDIMENTO */
+.card-atendimento {
+    color: var(--cor-cinza);
+    background-color: var(--cor-branco-amarelado);
+    padding: 1.2em;
+    border-radius: 1em;
+    font-family: var(--fonte-nunito);
+    display: flex;
+    flex-direction: column;
+    gap: .8em;
+    height: 100%;
+}
+
+.atendimento-assunto {
+    margin-top: .5em;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.status-em-atendimento {
+    background-color: var(--cor-salmao);
+}
+
+.status-atendimento {
+    width: auto;
+    margin-right: auto;
+}
+
+/* MODAIS */
+.modal-titulo{
+    font-family: var(--fonte-poppins);
+}
+
+.form-control, .form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+.ti-star{
+    color: var(--cor-verde);
+    font-size: 35px;
+}
+
+.resposta-cliente, .resposta-adm{
+    background-color: var(--cor-verde);
+    color: var(--cor-branco);
+    width: 60%;
+    align-self: flex-end;
+    padding: .5em;
+    border-radius: 1em 0 1em 1em;
+    font-family: var(--fonte-nunito);
+}
+
+.resposta-adm{
+    background-color: var(--cor-cinza);
+    align-self: flex-start;
+    border-radius: 0 1em 1em 1em;
+}
+
+@media (min-width: 992px) {
+    .w-lg-auto {
+        width: auto !important;
+    }
+
+    .status-atendimento {
+        width: auto;
+        height: auto;
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    .btn-voltar{
+        top: 30px;
+        left: 40px;
+    }
+}
