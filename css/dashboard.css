@@ -29,6 +29,7 @@ body {
     background-color: var(--cor-de-fundo);
     padding: .2em 1.5em;
     font-family: var(--fonte-nunito);
+    height: 100%;
 }
 
 .menu-mobile-sidebar {

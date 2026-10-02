@@ -1,0 +1,29 @@
+/* PÁGINA DE FAVORITOS */
+body{
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
+.btn-lixeira{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    background-color: var(--cor-verde-escuro);
+    color: var(--cor-branco);
+    font-size: 30px;
+    padding: .2em;
+    border-radius: 16px 0 16px 0;
+    width: 1.6em;
+    height: 1.6em;
+}
+
+.produto-nome{
+    font-weight: 500;
+}
