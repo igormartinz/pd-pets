@@ -29,7 +29,8 @@ body {
 
 /* COMPONENTES */
 
-.botao, .botao-secundario{
+.botao,
+.botao-secundario {
     background-color: var(--cor-verde-escuro);
     padding: .5em 3em;
     font-size: 16px;
@@ -49,19 +50,19 @@ body {
     background-color: #22514B;
 }
 
-.botao-secundario{
+.botao-secundario {
     background-color: var(--cor-salmao);
 }
 
-.botao-secundario:hover{
+.botao-secundario:hover {
     background-color: #CF6536;
 }
 
 /* CARD DE PRODUTO */
 .card-produto {
     max-width: 450px;
-    background-color: rgb(255, 255, 255, 0.2);
-    backdrop-filter: blur(30px);
+    background-color: rgb(255, 255, 255, .2);
+    backdrop-filter: blur(40px);
     border-radius: 20px;
     font-family: var(--fonte-nunito);
     border: 2px solid var(--cor-verde-escuro);
@@ -108,14 +109,9 @@ body {
     font-weight: bold;
 }
 
-.produto-lojista {
-    font-size: clamp(10px, 1.1vw, 14px);
-    text-shadow: 0px 0px .5px #000000;
-    color: #A3FFD4;
-}
-
 .produto-categoria {
     color: var(--cor-branco);
+    text-shadow: 0px 0px 3px #000000;
 }
 
 .ti-shopping-bag-plus {
@@ -127,7 +123,7 @@ body {
     border-radius: 20px;
 }
 
-.produto-preco{
+.produto-preco {
     cursor: pointer;
     transition: .3s ease;
 }
@@ -240,7 +236,7 @@ a {
 /* CARD DE PRODUTO */
 .card-produto {
     background-color: rgb(255, 255, 255, 0.2);
-    backdrop-filter: blur(30px);
+    backdrop-filter: blur(40px);
     border-radius: 20px;
     font-family: var(--fonte-nunito);
     border: 2px solid var(--cor-verde-escuro);
@@ -291,9 +287,9 @@ a {
 }
 
 .produto-lojista {
-    font-size: clamp(10px, 1.1vw, 14px);
-    text-shadow: 0px 0px .5px #000000;
-    color: #A3FFD4;
+    font-size: clamp(12px, 3.7vw, 14px);
+    text-shadow: 0px 0px 3px #000000;
+    color: rgba(255, 255, 255, .85);
 }
 
 .produto-categoria {
@@ -303,7 +299,7 @@ a {
 .ti-shopping-bag-plus {
     align-self: end;
     background-color: var(--cor-verde-escuro);
-    padding: .5em;
+    padding: .3em;
     font-size: 35px;
     margin-top: .5em;
     border-radius: 20px;
@@ -547,5 +543,9 @@ hr {
 
     .linha-rodape::before {
         border: none;
+    }
+
+    .produto-lojista {
+        font-size: clamp(10px, .98vw, 14px);
     }
 }

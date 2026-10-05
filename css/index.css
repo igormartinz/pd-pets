@@ -26,15 +26,6 @@
     font-family: var(--fonte-nunito);
 }
 
-.banner-1 h2,
-.banner-1 p {
-
-}
-
-.banner-1 p {
-    
-}
-
 .banner-1 div,
 .banner-2 div,
 .banner-3 div {
@@ -117,10 +108,13 @@ button.carousel-control-next {
 
 /* PRODUTOS EM DESTAQUE */
 #produtos-destaque {
-    background-image: url(/img/produtos-destaque-mobile.png);
+    background-image:
+        linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)),
+        url(/img/produtos-destaque-mobile.png);
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
+    background-color: var(--cor-cinza);
 }
 
 .titulo-produtos-destaque {
@@ -150,7 +144,7 @@ button.carousel-control-next {
 
 /* PERGUNTAS FREQUENTES */
 .perguntas-frequentes {
-    background-image: url(/img/pergutas-frequentes-mobile.png);
+    background-color: var(--cor-branco-amarelado);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -298,11 +292,14 @@ textarea.input-contato {
     }
 
     #produtos-destaque {
-        background-image: url(/img/produtos-destaque.png);
+        background-image:
+            linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)),
+            url(/img/produtos-destaque.png);
         background-repeat: no-repeat !important;
         background-size: cover !important;
         background-position: center !important;
     }
+
 
     .titulo-produtos-destaque {
         text-align: left;
@@ -362,7 +359,7 @@ textarea.input-contato {
 
 @media (min-width: 600px) {
     .perguntas-frequentes {
-        background-image: url(/img/perguntas-frequentes.png);
+        background-color: var(--cor-branco-amarelado);
     }
 
     .banner-1 h2 {
