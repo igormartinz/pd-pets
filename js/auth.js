@@ -21,6 +21,7 @@ function pegarDashboardUsuario() {
     const usuario = pegarUsuarioLogado();
     if (!usuario) return "/pages/login.html";
     return DASHBOARDS[usuario.perfil] ?? "/pages/login.html";
+    
 }
 
 // Proteção de rota conforme o perfil do usuário

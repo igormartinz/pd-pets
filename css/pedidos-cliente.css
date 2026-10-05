@@ -1,0 +1,356 @@
+/* PÁGINA DE PEDIDOS DO CLIENTE */
+
+body {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 30px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.container-superior-pedidos-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main>h1 {
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    font-size: 32px;
+    text-align: center;
+}
+
+.btn-voltar {
+    position: relative;
+    inset: 0;
+}
+
+#pedidos-cliente {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.container-pedidos-info {
+    width: 100%;
+    height: 320px;
+    background-color: var(--cor-branco);
+    border-radius: 15px;
+    color: var(--cor-cinza);
+    padding: 20px;
+}
+
+.header-pedidos-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--cor-verde-escuro);
+}
+
+.Id-data-pedidos-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#idPedido {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--cor-verde-escuro);
+}
+
+.Id-data-pedidos-info>p {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.aguardando-pagamento,
+.pago,
+.separando,
+.enviado,
+.entregue,
+.cancelado {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--cor-branco);
+    padding: 5px 10px;
+    border-radius: 30px;
+    max-width: 180px;
+}
+
+.aguardando-pagamento {
+    background-color: var(--cor-salmao);
+}
+
+.pago {
+    background-color: var(--cor-verde-escuro);
+}
+
+.separando {
+    background-color: #FFC107;
+    color: var(--cor-cinza);
+}
+
+.enviado {
+    background-color: var(--cor-cinza);
+}
+
+.entregue {
+    background-color: #0DCAF0;
+    color: var(--cor-cinza);
+}
+
+.cancelado {
+    background-color: #DC3545;
+}
+
+.container-central-pedidos-info {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+#tituloProduto {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--cor-verde-escuro);
+    margin-top: 15px;
+}
+
+.container-valor-quantidade {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding-top: 10px;
+}
+
+.valor-produto>p,
+.quantidade-produto>p {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: 16px;
+}
+
+#valorProduto,
+#quantidadeProduto {
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.link-fazer-pagamento {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-verde-escuro);
+    text-decoration: underline;
+}
+
+.container-btns-pedidos-cliente {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    gap: 15px;
+}
+
+#btnCancelar {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: #DC3545;
+    border-radius: 30px;
+    padding: 10px 0;
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-branco);
+    transition: .3s ease;
+}
+
+#btnCancelar:hover {
+    background-color: #dd5663;
+}
+
+#btnVerDetalhes {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--cor-verde-escuro);
+    border-radius: 30px;
+    padding: 10px 0;
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-branco);
+    transition: .3s ease;
+}
+
+#btnVerDetalhes:hover {
+    background-color: #22514B;
+}
+
+#btnAvaliarProduto {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--cor-salmao);
+    border-radius: 30px;
+    padding: 10px 0;
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-branco);
+    transition: .3s ease;
+}
+
+#btnAvaliarProduto:hover {
+    background-color: #CF6536;
+}
+
+@media (min-width: 768px) {
+    #pedidos-cliente {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(min-width: 1200px) {
+    #pedidos-cliente {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .container>h1 {
+        text-align: left;
+        font-size: 36px;
+    }
+
+    #idPedido {
+        font-size: 14px;
+    }
+
+    .Id-data-pedidos-info>p {
+        font-size: clamp(12px, .9vw, 14px);
+    }
+
+    .aguardando-pagamento,
+    .pago,
+    .separando,
+    .enviado,
+    .entregue,
+    .cancelado {
+        font-size: clamp(12px, .9vw, 14px);
+    }
+}
+
+.modal-content {
+    border-radius: 15px;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modalCancelarPedido .modal-dialog {
+    width: 90vw;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.modal-content-cancelar-pedido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.texto-modal-cancelar-pedido {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    color: var(--cor-cinza);
+    font-size: clamp(14px, 1.5vw, 16px);
+}
+
+.container-btns-modal-acoes {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-cancelar {
+    width: 100%;
+    padding: 10px 0;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0885A;
+    border-radius: 30px;
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--cor-branco);
+    transition: .3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: #CF6536;
+}
+
+.btn-remover {
+    width: 100%;
+    padding: 10px 0;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--cor-verde-escuro);
+    border-radius: 30px;
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-branco);
+    transition: .3s ease;
+}
+
+.btn-remover:hover {
+    background-color: #22514B;
+}
+
+.modal-titulo {
+    font-family: var(--fonte-poppins);
+    font-weight: 550;
+    font-size: 24px;
+}
+
+.texto-modal-cancelar-pedido {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: 20px;
+}
