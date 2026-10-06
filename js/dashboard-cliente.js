@@ -21,7 +21,6 @@ async function buscaUsuario(id) {
         const todosOsPedidos = await respostaPedidos.json();
 
         const pedidosDoCliente = todosOsPedidos.filter(pedido => pedido.clienteID == id);
-        console.log(usuarioLogado)
 
         const quantidadeAnimais = document.getElementById('quantidade-animais');
         quantidadeAnimais.textContent = usuarioLogado[0].animais.length;
