@@ -1,4 +1,7 @@
 import { mostrarToast } from "./toast.js";
+import { mostrarSenha } from "./mostrarSenha.js";
+
+mostrarSenha();
 
 const formCadastro = document.getElementById('form-cadastro');
 
