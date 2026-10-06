@@ -197,12 +197,12 @@
                 <h2 class="modal-titulo">Avaliar atendimento</h2>
                 <p class="mb-3">Como foi sua experiência com este atendimento?</p>
                 <form class="row gy-2">
-                    <div class="text-center">
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
+                    <div class="text-center avaliacao-estrelas" id="avaliacao-estrelas">
+                        <i class="ti ti-star" data-nota="1"></i>
+                        <i class="ti ti-star" data-nota="2"></i>
+                        <i class="ti ti-star" data-nota="3"></i>
+                        <i class="ti ti-star" data-nota="4"></i>
+                        <i class="ti ti-star" data-nota="5"></i>
                     </div>
                     <div class="d-flex flex-column campo-input">
                         <div class="input-border">
@@ -226,12 +226,17 @@
             <div class="modal-content p-4 rounded-3">
                 <h2 class="modal-titulo mb-1">Chamado</h2>
                 <div class="d-flex flex-column gap-3 my-4">
-                    <p class="resposta-cliente">Olá! Meu pedido consta como "Entregue", mas não recebi o produto. Poderiam verificar o que aconteceu?</p>
-                    <p class="resposta-adm">Olá! Claro. Vou verificar as informações do seu pedido e o status da entrega.</p>
-                    <p class="resposta-cliente">Certo, obrigado. Gostaria de saber se existe alguma informação sobre onde o pedido foi entregue.</p>
-                    <p class="resposta-adm">Verifiquei o pedido e consta que ele foi entregue ontem. Vou encaminhar a ocorrência para verificarmos com a transportadora o local e o responsável pela entrega.</p>
+                    <p class="resposta-cliente">Olá! Meu pedido consta como "Entregue", mas não recebi o produto.
+                        Poderiam verificar o que aconteceu?</p>
+                    <p class="resposta-adm">Olá! Claro. Vou verificar as informações do seu pedido e o status da
+                        entrega.</p>
+                    <p class="resposta-cliente">Certo, obrigado. Gostaria de saber se existe alguma informação sobre
+                        onde o pedido foi entregue.</p>
+                    <p class="resposta-adm">Verifiquei o pedido e consta que ele foi entregue ontem. Vou encaminhar a
+                        ocorrência para verificarmos com a transportadora o local e o responsável pela entrega.</p>
                     <p class="resposta-cliente">Tudo bem. Existe algum prazo para eu receber um retorno?</p>
-                    <p class="resposta-adm">Sim. A solicitação será analisada e você receberá uma atualização assim que tivermos um posicionamento.</p>
+                    <p class="resposta-adm">Sim. A solicitação será analisada e você receberá uma atualização assim que
+                        tivermos um posicionamento.</p>
                 </div>
                 <form class="row gy-2">
                     <div class="d-flex flex-column campo-input">
@@ -249,6 +254,7 @@
         </div>
     </div>
 
+    <script src="../js/suporte.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
