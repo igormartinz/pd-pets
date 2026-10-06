@@ -31,12 +31,6 @@ figcaption {
     display: none;
 }
 
-p,
-h2,
-h3 {
-    margin-bottom: 0 !important;
-}
-
 /* View Transition */
 
 @view-transition {
