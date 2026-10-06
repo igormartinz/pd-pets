@@ -220,7 +220,12 @@ function criarCardAvaliacao(avaliacao) {
         comentario.classList.add("comentario-produto", "mt-4", "mb-4");
         comentario.textContent = avaliacao.comentario;
         container.appendChild(comentario);
-    };
+    } else {
+        const comentarioVazio = document.createElement("p");
+        comentarioVazio.classList.add("comentario-vazio", "mt-4", "mb-4");
+        comentarioVazio.textContent = "Nenhum comentário.";
+        container.appendChild(comentarioVazio);
+    }
 
     return container;
 }
@@ -266,7 +271,7 @@ function criarEstrelasMedia(media) {
 
         const percentual = Math.max(0, Math.min(1, media - (i - 1))) * 100;
         console.log(percentual);
-        
+
 
         const estrelaContainer = document.createElement("div");
         estrelaContainer.classList.add("estrela-media");
