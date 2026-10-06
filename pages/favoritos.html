@@ -75,9 +75,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira" data-bs-toggle="modal" data-bs-target="#modalRemover"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -90,9 +90,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -105,9 +105,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -120,9 +120,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -135,9 +135,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -150,9 +150,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -165,9 +165,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -180,9 +180,9 @@
                             <h3 class="text-truncate produto-nome mb-2 mt-2">Ração GranPlus Choice para Gatos
                                 Adultos Sabor Frango e Carne</h3>
                             <p class="produto-preco">R$ 124,99</p>
-                            <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                         </div>
                     </a>
+                    <button class="btn-lixeira"><i class="ti ti-trash"></i></button>
                 </article>
             </div>
         </section>
@@ -223,6 +223,21 @@
             <p class="m-0">© 2026 PD Pets. Todos os Direitos Reservados</p>
         </div>
     </footer>
+
+    <!-- MODAL -->
+    <!-- Modal Remover Item -->
+    <div class="modal fade" id="modalRemover" tabindex="-1" aria-labelledby="modalRemover" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content p-3 rounded-3">
+                <h2 class="modal-title fs-5 text-center mb-2" id="modalRemover">Remover Item</h2>
+                <p class="text-center mb-2">Deseja remover esse item dos favoritos?</p>
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                    <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="botao px-0 w-50">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/pesquisa-catalogo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
