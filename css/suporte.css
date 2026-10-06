@@ -47,9 +47,15 @@ body {
     border: none;
 }
 
-.ti-star{
+.avaliacao-estrelas i {
     color: var(--cor-verde);
     font-size: 35px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.avaliacao-estrelas i.ti-star-filled {
+    color: var(--cor-verde);
 }
 
 .resposta-cliente, .resposta-adm{

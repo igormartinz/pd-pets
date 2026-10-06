@@ -239,7 +239,7 @@ body {
     }
 
     /* CONTEUDO */
-    #nome-usuario{
+    #nome-usuario-perfil{
         color: var(--cor-cinza);
         font-size: 20px;
         font-weight: bold;
