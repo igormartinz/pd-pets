@@ -43,6 +43,7 @@ p {
     font-weight: bold;
     font-size: 20px;
     color: var(--cor-branco);
+    padding: 10px 0;
 }
 
 .container-accordion-categoria {
@@ -194,5 +195,9 @@ svg {
     .accordion {
         width: 80vw;
         max-width: 550px;
+    }
+
+    .accordion-button {
+        font-size: 14px;
     }
 }

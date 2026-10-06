@@ -114,8 +114,7 @@ main>h1 {
 }
 
 .entregue {
-    background-color: #0DCAF0;
-    color: var(--cor-cinza);
+    background-color: #007bff;
 }
 
 .cancelado {
