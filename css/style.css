@@ -622,6 +622,24 @@ hr {
     padding: 0.8em 1em;
 }
 
+/* REMOVE ICONE DE VISUALIZAR SENHA DO CAMPO PASSWORD */
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+
+.btn-exibir-senha{
+    color: var(--cor-cinza);
+    font-size: 1.5em;
+    top: 9px;
+    right: 15px;
+    border-radius: 16px;
+    background: none;
+    border: none;
+}
+
+.input-senha{
+    padding-right: 3em;
+}
 
 @media (min-width: 992px) {
 
