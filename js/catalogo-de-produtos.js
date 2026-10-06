@@ -87,6 +87,7 @@ function conectarEventosDeFiltro() {
 
     document.querySelector('.btn-preco').addEventListener('click', function (evento) {
         evento.preventDefault();
+        criterioOrdenacaoAtual = 'menor-preco';
         aplicarFiltros();
     });
 }
