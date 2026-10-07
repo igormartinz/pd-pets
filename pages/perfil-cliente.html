@@ -78,13 +78,18 @@
                             <p class="email-usuario">mjorge@gmail.com</p>
                         </div>
 
-                        <button class="botao">Editar</button>
+                        <div class="container-btns-perfil">
+                            <button class="botao" id="btn-editar-perfil">Editar</button>
+                            <button type="button" class="botao d-none" id="btn-salvar-perfil">Salvar</button>
+                        </div>
                     </div>
 
 
                     <form class="d-flex flex-column form-perfil-cliente">
                         <div class="campo-dados-perfil">
                             <label for="CPF">CPF</label>
+                            <i class="ti ti-lock cadeado-cpf d-none" id="cadeado-cpf"
+                                aria-label="Campo não editável"></i>
                             <div class="">
                                 <input class="input-dados-perfil" type="text" id="CPF" placeholder="123.456.789.00"
                                     readonly="true">
@@ -93,6 +98,8 @@
 
                         <div class="campo-dados-perfil">
                             <label for="data-nascimento">Data de nascimento</label>
+                            <i class="ti ti-lock cadeado-cpf d-none" id="cadeado-data-nascimento"
+                                aria-label="Campo não editável"></i>
                             <div class="">
                                 <input class="input-dados-perfil" type="text" id="data-nascimento"
                                     placeholder="DD/MM/AAAA" readonly="true">
@@ -122,6 +129,8 @@
                                     placeholder="••••••••••••••••" readonly="true">
                             </div>
                         </div>
+
+                        <button id="btn-cancelar-perfil">Cancelar</button>
                     </form>
                 </section>
 
@@ -141,140 +150,209 @@
                         </button>
                     </div>
 
-                    <div class="container-item-endereco principal">
-                        <div class="container-info-endereco">
-                            <p class="badge-principal">principal</p>
-                            <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
-                            <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                    <div class="container-item-endereco-overflow">
+
+                        <div class="container-item-endereco principal">
+                            <div class="container-info-endereco">
+                                <p class="badge-principal">principal</p>
+                                <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
+                                <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                            </div>
+
+                            <div class="container-btn-acoes">
+                                <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                        <path d="M13.5 6.5l4 4" />
+                                    </svg>
+                                </button>
+
+                                <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="container-btn-acoes">
-                            <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                    <path d="M13.5 6.5l4 4" />
-                                </svg>
-                            </button>
+                        <div class="container-item-endereco">
+                            <div class="container-info-endereco">
+                                <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
+                                <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                            </div>
 
-                            <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 7l16 0" />
-                                    <path d="M10 11l0 6" />
-                                    <path d="M14 11l0 6" />
-                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                            <div class="container-btn-acoes">
+                                <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                        <path d="M13.5 6.5l4 4" />
+                                    </svg>
+                                </button>
 
-                    <div class="container-item-endereco">
-                        <div class="container-info-endereco">
-                            <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
-                            <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
-                        </div>
-
-                        <div class="container-btn-acoes">
-                            <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                    <path d="M13.5 6.5l4 4" />
-                                </svg>
-                            </button>
-
-                            <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 7l16 0" />
-                                    <path d="M10 11l0 6" />
-                                    <path d="M14 11l0 6" />
-                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="container-item-endereco">
-                        <div class="container-info-endereco">
-                            <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
-                            <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                                <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="container-btn-acoes">
-                            <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                    <path d="M13.5 6.5l4 4" />
-                                </svg>
-                            </button>
+                        <div class="container-item-endereco">
+                            <div class="container-info-endereco">
+                                <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
+                                <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                            </div>
 
-                            <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 7l16 0" />
-                                    <path d="M10 11l0 6" />
-                                    <path d="M14 11l0 6" />
-                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                </svg>
-                            </button>
+                            <div class="container-btn-acoes">
+                                <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                        <path d="M13.5 6.5l4 4" />
+                                    </svg>
+                                </button>
+
+                                <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="container-item-endereco">
-                        <div class="container-info-endereco">
-                            <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
-                            <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                        <div class="container-item-endereco">
+                            <div class="container-info-endereco">
+                                <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
+                                <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                            </div>
+
+                            <div class="container-btn-acoes">
+                                <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                        <path d="M13.5 6.5l4 4" />
+                                    </svg>
+                                </button>
+
+                                <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
+                        <div class="container-item-endereco">
+                            <div class="container-info-endereco">
+                                <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
+                                <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                            </div>
 
-                        <div class="container-btn-acoes">
-                            <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                    <path d="M13.5 6.5l4 4" />
-                                </svg>
-                            </button>
+                            <div class="container-btn-acoes">
+                                <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                        <path d="M13.5 6.5l4 4" />
+                                    </svg>
+                                </button>
 
-                            <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 7l16 0" />
-                                    <path d="M10 11l0 6" />
-                                    <path d="M14 11l0 6" />
-                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                </svg>
-                            </button>
+                                <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="container-item-endereco">
+                            <div class="container-info-endereco">
+                                <h3 class="nome-rua-numero-endereco">Rua dos Pets, 123</h3>
+                                <p class="bairro-estado-UF-endereco">Vila da Serra, Nova Lima - MG</p>
+                            </div>
+
+                            <div class="container-btn-acoes">
+                                <button class="btn-pencil" data-bs-target="#modalEditarEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                        <path d="M13.5 6.5l4 4" />
+                                    </svg>
+                                </button>
+
+                                <button class="btn-trash" data-bs-target="#modalExcluirEndereco" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -483,7 +561,33 @@
         </div>
     </div>
 
-    <script src="../js/pesquisa-catalogo.js"></script>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast-sucesso" class="toast" role="status" aria-live="polite" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bg-success rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2 text-success"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+
+        <div id="toast-erro" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="bg-danger rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2 text-danger"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const usuarioLogado = verificarAut("cliente");
+        });
+    </script>
+    <script type="module" src="/js/perfil-cliente.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
