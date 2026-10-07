@@ -32,6 +32,12 @@ h2, h3, p{
     gap: 32px;
 }
 
+#section-perfil-cliente h2{
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    font-size: 32px;
+}
+
 #section-perfil-cliente-endereco {
     display: flex;
     justify-content: center;
