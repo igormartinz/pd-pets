@@ -197,12 +197,12 @@
                 <h2 class="modal-titulo">Avaliar atendimento</h2>
                 <p class="mb-3">Como foi sua experiência com este atendimento?</p>
                 <form class="row gy-2">
-                    <div class="text-center">
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
-                        <i class="ti ti-star"></i>
+                    <div class="text-center avaliacao-estrelas" id="avaliacao-estrelas">
+                        <i class="ti ti-star" data-nota="1"></i>
+                        <i class="ti ti-star" data-nota="2"></i>
+                        <i class="ti ti-star" data-nota="3"></i>
+                        <i class="ti ti-star" data-nota="4"></i>
+                        <i class="ti ti-star" data-nota="5"></i>
                     </div>
                     <div class="d-flex flex-column campo-input">
                         <div class="input-border">
@@ -260,6 +260,7 @@
             const usuarioLogado = verificarAut("cliente");
         });
     </script>
+    <script src="../js/suporte.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
