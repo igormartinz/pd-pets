@@ -61,7 +61,7 @@
         </nav>
     </header>
 
-    <main class="container">
+    <main>
 
         <section id="section-perfil-cliente">
             <h2>Meu Perfil</h2>
@@ -70,12 +70,12 @@
                 <section id="section-form-dados-perfil">
                     <div class="perfil-header">
                         <div class="circulo-perfil">
-                            <p class="abrev-nome">NA</p>
+                            <p class="abrev-nome"></p>
                         </div>
 
                         <div class="nome-e-email-perfil">
-                            <h3 class="nome-usuario">Mateus Jorge</h3>
-                            <p class="email-usuario">mjorge@gmail.com</p>
+                            <h3 class="nome-usuario"></h3>
+                            <p class="email-usuario"></p>
                         </div>
 
                         <div class="container-btns-perfil">
@@ -91,8 +91,7 @@
                             <i class="ti ti-lock cadeado-cpf d-none" id="cadeado-cpf"
                                 aria-label="Campo não editável"></i>
                             <div class="">
-                                <input class="input-dados-perfil" type="text" id="CPF" placeholder="123.456.789.00"
-                                    readonly="true">
+                                <input class="input-dados-perfil" type="text" id="CPF" placeholder="" readonly="true">
                             </div>
                         </div>
 
@@ -101,15 +100,15 @@
                             <i class="ti ti-lock cadeado-cpf d-none" id="cadeado-data-nascimento"
                                 aria-label="Campo não editável"></i>
                             <div class="">
-                                <input class="input-dados-perfil" type="text" id="data-nascimento"
-                                    placeholder="DD/MM/AAAA" readonly="true">
+                                <input class="input-dados-perfil" type="text" id="data-nascimento" placeholder=""
+                                    readonly="true">
                             </div>
                         </div>
 
                         <div class="campo-dados-perfil">
                             <label for="email">E-mail</label>
                             <div class="">
-                                <input class="input-dados-perfil" type="email" id="email" placeholder="mjorge@gmail.com"
+                                <input class="input-dados-perfil" type="email" id="email" placeholder=""
                                     readonly="true">
                             </div>
                         </div>
@@ -117,7 +116,7 @@
                         <div class="campo-dados-perfil">
                             <label for="telefone">Telefone</label>
                             <div class="">
-                                <input class="input-dados-perfil" type="tel" id="telefone" placeholder="(31) 99999-0000"
+                                <input class="input-dados-perfil" type="tel" id="telefone" placeholder=""
                                     readonly="true">
                             </div>
                         </div>
@@ -125,12 +124,12 @@
                         <div class="campo-dados-perfil">
                             <label for="senha">Senha</label>
                             <div class="">
-                                <input class="input-dados-perfil" type="password" id="senha"
-                                    placeholder="••••••••••••••••" readonly="true">
+                                <input class="input-dados-perfil" type="password" id="senha" placeholder=""
+                                    readonly="true">
                             </div>
                         </div>
 
-                        <button id="btn-cancelar-perfil">Cancelar</button>
+                        <button type="button" class="d-none" id="btn-cancelar-perfil">Cancelar</button>
                     </form>
                 </section>
 
@@ -478,52 +477,55 @@
                     <h2 class="modal-titulo mb-3">Editar Endereço</h2>
                     <div class="container-groups-colunas">
                         <div class="input-grupo">
-                            <label for="cep">CEP</label>
+                            <label for="novo-cep">CEP</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="cep" placeholder="Digite o CEP">
+                                <input type="text" class="form-control" id="novo-cep" placeholder="Digite o CEP">
                             </div>
                         </div>
 
                         <div class="input-grupo">
-                            <label for="cidade">Cidade</label>
+                            <label for="nova-cidade">Cidade</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="cidade" placeholder="Digite sua cidade">
+                                <input type="text" class="form-control" id="nova-cidade"
+                                    placeholder="Digite sua cidade">
                             </div>
                         </div>
 
                         <div class="input-grupo">
-                            <label for="bairro">Bairro</label>
+                            <label for="novo-bairro">Bairro</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="bairro" placeholder="Digite seu bairro">
+                                <input type="text" class="form-control" id="novo-bairro"
+                                    placeholder="Digite seu bairro">
                             </div>
                         </div>
 
                         <div class="input-grupo">
-                            <label for="estado">Estado</label>
+                            <label for="novo-estado">Estado</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="estado" placeholder="Digite seu estado">
+                                <input type="text" class="form-control" id="novo-estado"
+                                    placeholder="Digite seu estado">
                             </div>
                         </div>
 
                         <div class="input-grupo">
-                            <label for="rua">Rua</label>
+                            <label for="nova-rua">Rua</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="rua" placeholder="Digite sua rua">
+                                <input type="text" class="form-control" id="nova-rua" placeholder="Digite sua rua">
                             </div>
                         </div>
 
                         <div class="container-ultimos-inputs">
                             <div class="input-group-num">
-                                <label for="numero">Número</label>
+                                <label for="novo-numero">Número</label>
                                 <div class="input-border">
-                                    <input type="text" class="form-control" id="numero" placeholder="Nº">
+                                    <input type="text" class="form-control" id="novo-numero" placeholder="Nº">
                                 </div>
                             </div>
 
                             <div class="input-group-comp">
-                                <label for="complemento">Complemento</label>
+                                <label for="novo-complemento">Complemento</label>
                                 <div class="input-border">
-                                    <input type="text" class="form-control" id="complemento"
+                                    <input type="text" class="form-control" id="novo-complemento"
                                         placeholder="Apto, casa...">
                                 </div>
                             </div>

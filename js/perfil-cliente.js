@@ -48,7 +48,7 @@ function camposEditaveis() {
 // Verifica se o o email que o cliente quer editar pertence a outro usuário
 
 async function emailDeOutroCliente(email, idClienteAtual) {
-    const resp = await fetch(`${URL_API_CLIENTE}?email=${encodeURIComponent(email)}`);
+    const resp = await fetch(`${API_URL_CLIENTE}?email=${encodeURIComponent(email)}`);
 
     if (resp.status === 404) return null;
     if (!resp.ok) throw new Error("Erro ao validar o e-mail.");
