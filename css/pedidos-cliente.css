@@ -19,6 +19,10 @@ main {
     flex: 1;
 }
 
+h2, h3, p{
+    margin: 0;
+}
+
 .container-superior-pedidos-info {
     display: flex;
     justify-content: space-between;
@@ -204,6 +208,7 @@ main>h1 {
     font-size: 16px;
     color: var(--cor-branco);
     transition: .3s ease;
+    text-align: center;
 }
 
 #btnVerDetalhes:hover {
@@ -226,6 +231,32 @@ main>h1 {
 
 #btnAvaliarProduto:hover {
     background-color: #CF6536;
+}
+
+/* MODAL AVALIAR PEDIDO */
+.avaliacao-estrelas i {
+    color: var(--cor-verde);
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.avaliacao-estrelas i.ti-star-filled {
+    color: var(--cor-verde);
+}
+
+.modal-titulo{
+    text-align: left;
+}
+
+#modalAvaliarProduto.modal-content{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
 }
 
 @media (min-width: 768px) {
@@ -267,9 +298,6 @@ main>h1 {
 .modal-content {
     border-radius: 15px;
     padding: 20px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #modalCancelarPedido .modal-dialog {

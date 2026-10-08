@@ -1,3 +1,7 @@
+import { mostrarSenha } from "./mostrarSenha.js";
+mostrarSenha();
+
+
 // URLs base do MockAPI, cada recurso direcionado ao seus respectivos endpoints
 const API_URL_ADMINISTRADOR_CHAMADOS = "https://6a98675a7160beda2292f7f2.mockapi.io";
 const API_URL_CATEGORIA_LOJISTA = "https://6a9872a37160beda2292ff4f.mockapi.io";

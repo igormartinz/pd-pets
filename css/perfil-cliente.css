@@ -28,11 +28,21 @@ main {
     flex: 1;
 }
 
+h2, h3, p{
+    margin: 0;
+}
+
 #section-perfil-cliente {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 32px;
+}
+
+#section-perfil-cliente h2{
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    font-size: 32px;
 }
 
 #section-perfil-cliente-endereco {
