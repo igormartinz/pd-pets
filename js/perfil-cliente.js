@@ -48,7 +48,7 @@ function camposEditaveis() {
 // Verifica se o o email que o cliente quer editar pertence a outro usuário
 
 async function emailDeOutroCliente(email, idClienteAtual) {
-    const resp = await fetch(`${API_URL_CLIENTE}?email=${encodeURIComponent(email)}`);
+    const resp = await fetch(`${API_URL_CLIENTE}/clientes?email=${encodeURIComponent(email)}`);
 
     if (resp.status === 404) return null;
     if (!resp.ok) throw new Error("Erro ao validar o e-mail.");
@@ -153,17 +153,17 @@ async function salvarAlteracoes() {
     const novaSenha = el.senha.value.trim();
 
     if (!telefone || !email) {
-        mostrarToast("erro", "Campos vazios", "Preencha telefone e e-mail.");
+        mostrarToast("Campos vazios", "Preencha telefone e e-mail.", "erro");
         return null;
     }
 
     if (!emailValido(email)) {
-        mostrarToast("erro", "E-mail inválido", "Informe um e-mail válido.");
+        mostrarToast("E-mail inválido", "Informe um e-mail válido.", "erro");
         return null;
     }
 
     if (novaSenha && novaSenha.length < 8) {
-        mostrarToast("erro", "Senha inválida", "A senha deve ter no mínimo 8 caracteres.");
+        mostrarToast("Senha inválida", "A senha deve ter no mínimo 8 caracteres.", "erro");
         return null;
     }
 
@@ -173,7 +173,7 @@ async function salvarAlteracoes() {
         const emailAlterado = email.toLowerCase() !== clienteAtual.email.toLowerCase();
 
         if (emailAlterado && await emailDeOutroCliente(email, clienteAtual.id)) {
-            mostrarToast("erro", "E-mail indisponível.", "Este e-mail já está cadastrado em outro cliente.");
+            mostrarToast("E-mail indisponível.", "Este e-mail já está cadastrado em outro cliente.", "erro");
             return null;
         }
 
@@ -191,11 +191,11 @@ async function salvarAlteracoes() {
         atualizarSessaoPerfil(clienteAtual);
         alternarModoEdicao(false);
 
-        mostrarToast("sucesso", "Edição dos dados de usuário", "Seus dados foram alternados com sucesso.");
+        mostrarToast("Edição dos dados de usuário", "Seus dados foram alternados com sucesso.", "sucesso");
 
     } catch (error) {
         console.error("Erro ao salvar as alterações:", error);
-        mostrarToast("erro", "Erro ao salvar", "Não foi possível atualizar os seus dados. Tente mais tarde.");
+        mostrarToast("Erro ao salvar", "Não foi possível atualizar os seus dados. Tente mais tarde.", "erro");
     } finally {
         el.botaoSalvar.disabled = false;
     }
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cliente = await buscarClientePorId(usuarioLogado.id);
 
     if (!cliente) {
-        mostrarToast("erro", "Erro ao carregar", "Não foi possível carregar os dados do seu perfil.");
+        mostrarToast("Erro ao carregar", "Não foi possível carregar os dados do seu perfil.", "erro");
         return null;
     }
 
