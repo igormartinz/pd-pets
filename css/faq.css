@@ -7,6 +7,16 @@ p {
     margin: 0 !important;
 }
 
+figcaption {
+    display: none;
+}
+
+p,
+h2,
+h3 {
+    margin-bottom: 0 !important;
+}
+
 
 #title-faq {
     font-family: var(--fonte-nunito);
