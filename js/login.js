@@ -157,4 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         await iniciarLogin(email, senha, perfil);
     });
+
+    
 });

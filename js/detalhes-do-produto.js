@@ -270,8 +270,6 @@ function criarEstrelasMedia(media) {
     for (let i = 1; i <= 5; i++) {
 
         const percentual = Math.max(0, Math.min(1, media - (i - 1))) * 100;
-        console.log(percentual);
-
 
         const estrelaContainer = document.createElement("div");
         estrelaContainer.classList.add("estrela-media");

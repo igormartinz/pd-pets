@@ -21,7 +21,7 @@ function pegarDashboardUsuario() {
     const usuario = pegarUsuarioLogado();
     if (!usuario) return "/pages/login.html";
     return DASHBOARDS[usuario.perfil] ?? "/pages/login.html";
-    
+
 }
 
 // Proteção de rota conforme o perfil do usuário
@@ -42,10 +42,15 @@ function verificarAut(perfilValido) {
         return null;
     }
 
-    return usuario
+    return usuario;
 }
 
 function logOut() {
     localStorage.removeItem(CHAVE_SESSAO);
     window.location.href = "/index.html";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const linkPerfil = document.getElementById("link-perfil");
+    if (linkPerfil) linkPerfil.href = pegarDashboardUsuario();
+});
