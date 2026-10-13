@@ -40,3 +40,21 @@ estrelas.forEach(function (estrela) {
 containerEstrelas.addEventListener('mouseleave', function () {
     pintarEstrelas(notaSelecionada);
 });
+
+const botoesVerDetalhes = document.querySelectorAll(".btn-ver-detalhes");
+const modalDetalhesChamado = new bootstrap.Modal(document.getElementById("modalDetalhesChamado"));
+
+botoesVerDetalhes.forEach(botao => {
+    botao.addEventListener("click", () => {
+        modalDetalhesChamado.show();
+    });
+});
+
+const botoesAvaliarChamado = document.querySelectorAll(".btn-avaliar-chamado");
+const modalAvaliarChamado = new bootstrap.Modal(document.getElementById("modalAvaliarChamado"));
+
+botoesAvaliarChamado.forEach(botao => {
+    botao.addEventListener("click", () => {
+        modalAvaliarChamado.show();
+    });
+});
