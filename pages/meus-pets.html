@@ -65,237 +65,13 @@
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Meus Pets</h1>
-            <button class="botao px-3" data-bs-toggle="modal" data-bs-target="#modalCriar">Cadastrar novo Pet</button>
+            <button class="botao px-3" data-bs-toggle="modal" data-bs-target="#modalCriarPet">Cadastrar novo
+                Pet</button>
         </div>
 
-        <section class="row g-3">
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
+        <p id="sem-pets" class="text-center d-none">Nenhum pet encontrado.</p>
 
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao" data-bs-toggle="modal" data-bs-target="#modalEditar"><i
-                                class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao" data-bs-toggle="modal" data-bs-target="#modalExcluir"><i
-                                class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pet">
-                    <h2 class="text-center nome-pet">Nome Pet</h2>
-                    <dl>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Espécie</dt>
-                            <dd>Espécie</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Raça</dt>
-                            <dd>Raça</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Idade</dt>
-                            <dd>0</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Peso</dt>
-                            <dd>0</dd>
-                        </div>
-                    </dl>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="botao-acao"><i class="ti ti-edit"></i></button>
-                        <button class="bg-danger botao-acao"><i class="ti ti-trash"></i></button>
-                    </div>
-                </article>
-            </div>
-        </section>
+        <section class="row g-3" id="lista-pets"></section>
     </main>
 
     <!-- RODAPE -->
@@ -339,7 +115,7 @@
     <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="modalExcluir" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content p-3 rounded-3">
-                <h2 class="modal-title fs-5 text-center" id="modalExcluir">Remover Pet</h2>
+                <h2 class="modal-title fs-5 text-center" id="titulo-modal-excluir">Remover Pet</h2>
                 <p class="text-center">Deseja remover esse pet?</p>
                 <div class="d-flex align-items-center justify-content-center gap-2">
                     <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Cancelar</button>
@@ -350,7 +126,7 @@
     </div>
 
     <!-- Modal Crir Pet-->
-    <div class="modal fade" id="modalCriar" tabindex="-1" aria-labelledby="modalCriar" aria-hidden="true">
+    <div class="modal fade" id="modalCriarPet" tabindex="-1" aria-labelledby="modalCriarPet" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-4 rounded-3">
                 <h2 class="modal-titulo mb-3">Cadastrar Pet</h2>
@@ -366,7 +142,7 @@
                         <div class="d-flex flex-column campo-input w-100">
                             <label for="especie">Espécie</label>
                             <div class="input-border">
-                                <input type="text" name="especie" class="form-control input-contato" id="especie"
+                                <input type="number" name="especie" class="form-control input-contato" id="especie"
                                     placeholder="Digite a espécie">
                             </div>
                         </div>
@@ -382,7 +158,7 @@
                         <div class="d-flex flex-column campo-input w-100">
                             <label for="idade">Idade</label>
                             <div class="input-border">
-                                <input type="text" name="idade" class="form-control input-contato" id="idade"
+                                <input type="number" name="idade" class="form-control input-contato" id="idade"
                                     placeholder="Digite a idade">
                             </div>
                         </div>
@@ -405,7 +181,7 @@
     </div>
 
     <!-- Modal Editar Pet-->
-    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditar" aria-hidden="true">
+    <div class="modal fade" id="modalEditarPet" tabindex="-1" aria-labelledby="modalEditarPet" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-4 rounded-3">
                 <h2 class="modal-titulo mb-3">Editar Pet</h2>
@@ -421,7 +197,7 @@
                         <div class="d-flex flex-column campo-input w-100">
                             <label for="especie">Espécie</label>
                             <div class="input-border">
-                                <input type="text" name="especie" class="form-control input-contato" id="especie"
+                                <input type="number" name="especie" class="form-control input-contato" id="especie"
                                     placeholder="Digite a espécie">
                             </div>
                         </div>
@@ -437,7 +213,7 @@
                         <div class="d-flex flex-column campo-input w-100">
                             <label for="idade">Idade</label>
                             <div class="input-border">
-                                <input type="text" name="idade" class="form-control input-contato" id="idade"
+                                <input type="number" name="idade" class="form-control input-contato" id="idade"
                                     placeholder="Digite a idade">
                             </div>
                         </div>
@@ -470,6 +246,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="/js/meus-pets.js"></script>
 </body>
 
 </html>
