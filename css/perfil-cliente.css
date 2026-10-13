@@ -339,8 +339,9 @@ h2, h3, p{
 
 .container-btns-modal-acoes {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
 }
 
 .form-control {
@@ -484,8 +485,9 @@ h2, h3, p{
     }
 
     .container-btns-modal-acoes {
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+        gap: 8px;
     }
 
     #modalNovoEndereco .modal-dialog,
