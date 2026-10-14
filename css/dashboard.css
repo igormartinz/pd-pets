@@ -110,10 +110,11 @@ body {
 
 .texto-indicador{
     font-size: 20px;
+    font-family: var(--fonte-nunito);
 }
 
 .valor-indicador{
-    font-size: 48px;
+    font-size: clamp(36px, 4.5vw, 48px);
     font-family: var(--fonte-poppins);
 }
 
@@ -205,6 +206,50 @@ body {
 .produto-status {
     text-align: center;
     font-size: 16px;
+}
+
+/* TABELA RELATORIO DE VENDAS */
+.tabela-vendas{
+    background-color: var(--cor-de-fundo);
+    color: var(--cor-branco);
+    border: none;
+}
+
+.cabecalho-tabela-vendas{
+    color: var(--cor-branco);
+    background-color: var(--cor-de-fundo);
+    padding-bottom: .8em;
+}
+
+.titulo-tabela-vendas{
+    font-family: var(--fonte-poppins);
+    font-size: 24px;
+}
+
+.numero-produto-vendas{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--cor-verde-escuro);
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    font-weight: bold;
+    margin-right: .5em;
+}
+
+.tabela-vendas tbody tr td, .tabela-vendas tbody tr th{
+    border-top: 2px solid var(--cor-branco);
+}
+
+.tabela-vendas tbody tr th{
+    font-weight: 500;
+}
+
+.tabela-vendas th, .tabela-vendas td{
+    background-color: var(--cor-de-fundo);
+    color: var(--cor-branco);
+    border: none;
 }
 
 @media (min-width: 992px) {
