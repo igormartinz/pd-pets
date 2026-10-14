@@ -428,13 +428,13 @@ a {
 }
 
 /* INPUT */
-.input-border {
+.input-border, .input-border-secundario {
     position: relative;
     border-radius: 20px;
     padding: 2px;
 }
 
-.input-border::before {
+.input-border::before, .input-border-secundario::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -453,6 +453,14 @@ a {
 .campo-input label {
     margin-left: 1em;
     font-weight: bold;
+}
+
+.input-border-secundario::before {
+    background: linear-gradient(20deg,
+            #000000 0%,
+            #00000030 25%,
+            #000000 50%,
+            #00000030 100%) border-box;
 }
 
 /* BOTÃO VOLTAR */
@@ -615,7 +623,7 @@ input[type="password"]::-ms-reveal {
     display: none;
 }
 
-.btn-exibir-senha{
+.btn-exibir-senha {
     color: var(--cor-cinza);
     font-size: 1.5em;
     top: 9px;
@@ -625,7 +633,7 @@ input[type="password"]::-ms-reveal {
     border: none;
 }
 
-.input-senha{
+.input-senha {
     padding-right: 3em;
 }
 
