@@ -31,7 +31,7 @@ h2, h3, p{
 
 main>h1 {
     font-family: var(--fonte-poppins);
-    font-weight: bold;
+    font-weight: 550;
     font-size: 32px;
     text-align: center;
 }
