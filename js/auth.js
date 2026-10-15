@@ -20,7 +20,6 @@ function verificarAut(perfilValido) {
         return null;
     }
 
-    console.log(usuario)
     // Autenticado mas com o perfil errado pra página, manda pro login
 
     if (!usuario.perfil.includes(perfilValido)) {
@@ -38,5 +37,5 @@ function logOut() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const linkPerfil = document.getElementById("link-perfil");
-    if (linkPerfil) linkPerfil.href = "pages/dashboard-cliente.html";
+    if (linkPerfil) linkPerfil.href = "dashboard-cliente.html";
 });
