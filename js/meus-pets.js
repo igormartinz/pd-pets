@@ -1,34 +1,34 @@
 import { mostrarToast } from "./toast.js";
 
-const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
+const API_URL_USUARIO = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
 
-let clienteAtual;
+let usuarioAtual;
 
 let idPetEmEdicao;
 
 let idPetParaExcluir;
 
-async function buscarClientePorId(id) {
+async function buscarUsuarioPorId(id) {
     try {
-        const resp = await fetch(`${API_URL_CLIENTE}/clientes/${id}`);
-        if (!resp.ok) throw new Error("Cliente não encontrado");
+        const resp = await fetch(`${API_URL_USUARIO}/usuarios/${id}`);
+        if (!resp.ok) throw new Error("Usuário não encontrado");
         return await resp.json();
     } catch (erro) {
-        console.error("Erro ao buscar cliente:", erro);
+        console.error("Erro ao buscar usuário:", erro);
         return null;
     }
 }
 
 async function salvarAnimais(novosAnimais) {
-    const resp = await fetch(`${API_URL_CLIENTE}/clientes/${clienteAtual.id}`, {
+    const resp = await fetch(`${API_URL_USUARIO}/usuarios/${usuarioAtual.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...clienteAtual, animais: novosAnimais })
+        body: JSON.stringify({ ...usuarioAtual, animais: novosAnimais })
     });
 
     if (!resp.ok) throw new Error("Erro ao salvar os pets");
 
-    clienteAtual = await resp.json();
+    usuarioAtual = await resp.json();
 }
 
 function criarLinhaInfo(info, valor) {
@@ -79,7 +79,7 @@ function criarCardPet(pet) {
     botaoExcluir.className = "bg-danger botao-acao";
     botaoExcluir.setAttribute("aria-label", `Excluir ${pet.nome}`);
     botaoExcluir.innerHTML = '<i class="ti ti-trash"></i>';
-    botaoExcluir.addEventListener("click", () => abrirModalExclusao(pet.id));
+    botaoExcluir.addEventListener("click", () => abrirModalExclusaoPet(pet.id));
 
     acoes.append(botaoEditar, botaoExcluir);
     card.append(nome, lista, acoes);
@@ -90,7 +90,7 @@ function criarCardPet(pet) {
 function renderizarPets() {
     const lista = document.getElementById("lista-pets");
     const mensagemVazia = document.getElementById("sem-pets");
-    const animais = clienteAtual ?? [];
+    const animais = usuarioAtual.animais ?? [];
     lista.innerHTML = "";
     mensagemVazia.classList.toggle("d-none", animais.length > 0);
     animais.forEach(pet => lista.append(criarCardPet(pet)));
@@ -113,11 +113,11 @@ function abrirModalCadastro() {
     campos.titulo.textContent = "Cadastrar Pet";
     document.getElementById("form-pet").reset();
 
-    bootstrap.Modal.getOrCreateInstance("#modalCriarPet").show();
+    bootstrap.Modal.getOrCreateInstance("#modalPet").show();
 }
 
 function abrirModalEdicao(idPet) {
-    const pet = clienteAtual.animais.find((animal) => String(animal.id) === String(idPet));
+    const pet = usuarioAtual.animais.find((animal) => String(animal.id) === String(idPet));
     if (!pet) return null;
 
     const campos = camposFormulario();
@@ -181,27 +181,79 @@ async function salvarPet() {
         especie: dados.especie,
         raca: dados.raca,
         idade: Number(dados.idade),
-        peso: Number(dados.peso),
-    }
+        peso: Number(dados.peso)
+    };
 
-    const animaisAtuais = clienteAtual.animais ?? [];
+    const animaisAtuais = usuarioAtual.animais ?? [];
     const estaEditando = idPetEmEdicao !== null;
 
     const novosAnimais = estaEditando
-        ? animais.map(animal => String(animal.id) === string(idPetEmEdicao) ? { ...animal, ...pet } : animal)
+        ? animaisAtuais.map(animal => String(animal.id) === String(idPetEmEdicao) ? { ...animal, ...pet } : animal)
 
         : [...animaisAtuais, { id: gerarNovoId(animaisAtuais), ...pet }];
 
     const botaoSalvar = document.getElementById("btn-salvar-pet");
-    botaoSalvar.disabled = true; 
+    botaoSalvar.disabled = true;
+
+    try {
+        await salvarAnimais(novosAnimais);
+        renderizarPets();
+        bootstrap.Modal.getOrCreateInstance("#modalPet").hide();
+        mostrarToast(estaEditando ? "Pet atualizado" : "Pet Cadastrado", `${pet.nome} foi ${estaEditando ? "atualizado" : "cadastrado"} com sucesso`, "sucesso");
+    } catch (erroSalvar) {
+        console.error(erroSalvar);
+        mostrarToast("Erro ao salvar", "Não foi possível salvar o pet", "erro");
+    } finally {
+        botaoSalvar.disabled = false;
+    }
 }
 
+function abrirModalExclusaoPet(idPet) {
+    idPetParaExcluir = idPet
+    bootstrap.Modal.getOrCreateInstance("#modalExcluir").show();
+}
 
+async function confirmarExclusaoPet() {
+    const animaisAtuais = usuarioAtual.animais ?? [];
+    const petRemovido = animaisAtuais.find(animal => String(animal.id) === String(idPetParaExcluir));
+    const novosAnimais = animaisAtuais.filter(animal => String(animal.id) !== String(idPetParaExcluir));
+    const botaoRemover = document.getElementById("btn-confirmar-exclusao");
+    botaoRemover.disabled = true;
 
+    try {
+        await salvarAnimais(novosAnimais);
+        renderizarPets();
+        bootstrap.Modal.getOrCreateInstance("#modalExcluir").hide();
+        mostrarToast("Pet removido", `${petRemovido?.nome ?? "O pet"} foi removido com sucesso.`, "sucesso");
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast("Erro ao remover", "Não foi possível desvincular o pet", "erro");
+    } finally {
+        botaoRemover.disabled = false;
+        idPetParaExcluir = null;
+    }
+}
 
+document.addEventListener("DOMContentLoaded", async () => {
+    const usuarioLogado = verificarAut("cliente");
+    if (!usuarioLogado) return null;
 
+    const usuario = await buscarUsuarioPorId(usuarioLogado.id);
 
+    if (!usuario) {
+        mostrarToast("Erro ao carregar", "Não foi possível carregar os seus pets.", "erro");
+        return;
+    }
 
+    usuarioAtual = usuario;
+    renderizarPets();
 
+    document.getElementById("btn-cadastrar-pet").addEventListener("click", abrirModalCadastro);
+    document.getElementById("btn-salvar-pet").addEventListener("click", salvarPet);
+    document.getElementById("btn-confirmar-exclusao").addEventListener("click", confirmarExclusaoPet);
+})
 
-
+document.getElementById("form-pet").addEventListener("submit", (e) => {
+    e.preventDefault();
+    salvarPet();
+})
