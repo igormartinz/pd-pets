@@ -19,9 +19,11 @@ function verificarAut(perfilValido) {
         window.location.href = "/pages/login.html";
         return null;
     }
+
+    console.log(usuario)
     // Autenticado mas com o perfil errado pra página, manda pro login
 
-    if (perfilValido && !usuario.perfis.includes(perfilValido)) {
+    if (!usuario.perfil.includes(perfilValido)) {
         window.location.href = "/pages/login.html";
         return null;
     }
