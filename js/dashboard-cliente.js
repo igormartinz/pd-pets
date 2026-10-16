@@ -1,3 +1,5 @@
+import { mostrarToast } from "./toast.js";
+
 const usuario = pegarUsuarioLogado();
 
 const nomeUsuarioPerfil = document.getElementById('nome-usuario-perfil');
@@ -13,7 +15,7 @@ async function buscaUsuario(id) {
     try {
         // Busca os dados do cliente e os pedidos dele em paralelo
         const [respostaCliente, respostaPedidos] = await Promise.all([
-            fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/clientes?id=${id}`),
+            fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios?id=${id}`),
             fetch(`https://6a98614f7160beda2292eff8.mockapi.io/pedidos`)
         ]);
 
@@ -24,7 +26,7 @@ async function buscaUsuario(id) {
 
         const quantidadeAnimais = document.getElementById('quantidade-animais');
         quantidadeAnimais.textContent = usuarioLogado[0].animais.length;
-        
+
         const quantidadePedidos = document.getElementById('quantidade-pedidos');
         quantidadePedidos.textContent = pedidosDoCliente.length;
 
@@ -65,10 +67,10 @@ async function carregarPedidosRecentes(clienteId) {
         const todosOsPedidos = await respostaPedidos.json();
         const produtos = await respostaProdutos.json();
 
-        
+
         // Filtra
         const pedidosDoCliente = todosOsPedidos.filter(pedido => pedido.clienteID == clienteId);
-        
+
         if (pedidosDoCliente.length === 0) {
             container.innerHTML = `
             <tr>
@@ -83,10 +85,10 @@ async function carregarPedidosRecentes(clienteId) {
         for (const produto of produtos) {
             mapaProdutos[produto.id] = produto.nome;
         }
-        
+
         // Ordena do mais recente pro mais antigo e pega só os 6 primeiros
         const pedidosRecentes = pedidosDoCliente.sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 6);
-        
+
         renderizarPedidosRecentes(pedidosRecentes, mapaProdutos);
 
     } catch (erro) {
@@ -121,4 +123,48 @@ function renderizarPedidosRecentes(pedidos, mapaProdutos) {
     }
 }
 
-buscaUsuario(usuario.id);
+export function exibeDashboardsSidebar() {
+
+    const perfis = usuario.perfil;
+    const linksDashboards = document.querySelectorAll('[data-perfil]');
+
+    linksDashboards.forEach(link => {
+        const perfilNecessario = link.dataset.perfil;
+        const possuiPerfil = perfis.includes(perfilNecessario);
+
+        const lojistaAtivo = perfilNecessario !== "Lojista" || usuario.status === "Ativo";
+
+        link.style.display = possuiPerfil && lojistaAtivo ? "" : "none";
+    });
+}
+
+function exibeCadastroLojista() {
+    const botao = document.getElementById('btn-cadastro-lojista');
+
+    if (usuario.perfil.includes('Lojista')) {
+        botao.style.display = 'none'
+    } else {
+        botao.style.display = 'block'
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const status = sessionStorage.getItem("statusLojista");
+
+    if (!status) return;
+
+    if (status === "Pendente") {
+        mostrarToast("Cadastro em análise", "Seu cadastro ainda está em análise. Você receberá acesso assim que for aprovado.", "erro");
+    } else if (status === "Inativo") {
+        mostrarToast("Loja desativada", "Sua loja está desativada.", "erro");
+    }
+
+    sessionStorage.removeItem("statusLojista");
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    exibeDashboardsSidebar();
+    exibeCadastroLojista();
+    buscaUsuario(usuario.id);
+});
