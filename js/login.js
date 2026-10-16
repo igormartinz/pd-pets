@@ -55,18 +55,6 @@ async function iniciarLogin(email, senha) {
         return null;
     }
 
-    if (!usuario.perfis.includes("Lojista")) {
-        if (usuario.status === "Pendente") {
-            mostrarToast("erro", "Cadastro em análise", "Seu cadastro ainda está em análise. Você receberá acesso assim que for aprovado.");
-            return null;
-        }
-
-        if (usuario.status === "Inativo") {
-            mostrarToast("erro", "Loja desativada", "Sua loja está desativada.");
-            return null;
-        }
-    }
-
     salvarSessao(usuario);
     window.location.href = "dashboard-cliente.html";
 }

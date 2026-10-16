@@ -20,10 +20,19 @@ function verificarAut(perfilValido) {
         return null;
     }
 
-    // Autenticado mas com o perfil errado pra página, manda pro login
+    // Verifica se possui o perfil exigido
 
     if (!usuario.perfil.includes(perfilValido)) {
         window.location.href = "/pages/login.html";
+        return null;
+    }
+    
+    // Verifica se o lojista foi aprovado
+    
+    if (perfilValido === "Lojista" && usuario.status !== "Ativo") {
+        sessionStorage.setItem("statusLojista", usuario.status);
+
+        window.location.href = "/pages/dashboard-cliente.html";
         return null;
     }
 

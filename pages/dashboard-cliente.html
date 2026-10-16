@@ -35,7 +35,14 @@
                             </li>
                             <li><a href="favoritos.html"><i class="ti ti-heart"></i> Favoritos</a></li>
                             <li><a href="suporte.html"><i class="ti ti-help"></i> Suporte</a></li>
-                            <li><a href="dashboard-lojista.html">Dashboard Lojista</a></li>
+                            <li data-perfil="Cliente"><a href="dashboard-cliente.html"><i
+                                        class="ti ti-layout-dashboard"></i> Área do Cliente</a></li>
+                            <li data-perfil="Lojista"><a href="dashboard-lojista.html"><i
+                                        class="ti ti-building-store"></i> Área do Lojista</a></li>
+                            <li data-perfil="Administrador"><a href="dashboard-administrador.html"><i
+                                        class="ti ti-user-cog"></i> </i> Administrativo</a></li>
+                            <li><a href="cadastro-lojista.html" id="btn-cadastro-lojista"
+                                    class="botao-secundario btn-lojista px-3">Seja um parceiro!</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -57,7 +64,8 @@
 
                 <div class="d-flex justify-content-between align-items-center gap-2 gap-md-3">
                     <a href="perfil-cliente.html" class="d-flex justify-content-between align-items-center gap-1"><i
-                            class="ti ti-user-circle"></i><span class="d-none d-lg-block" id="nome-usuario-perfil"></span></a>
+                            class="ti ti-user-circle"></i><span class="d-none d-lg-block"
+                            id="nome-usuario-perfil"></span></a>
                     <button onclick="logOut()"
                         class="botao-secundario px-4 btn-sair d-flex justify-content-between align-items-center gap-2">Sair
                         <i class="ti ti-logout"></i></button>
@@ -67,7 +75,8 @@
             <!-- CONTEUDO -->
             <main class="px-3 px-lg-5">
                 <h1 id="nome-usuario-titulo" class="m-0">Olá, <span id="nome-usuario"></span></h1>
-                <p class="descricao-pagina mb-2">Que bom ter você por aqui. Acompanhe seus pedidos e cuide ainda melhor dos
+                <p class="descricao-pagina mb-2">Que bom ter você por aqui. Acompanhe seus pedidos e cuide ainda melhor
+                    dos
                     seus melhores amigos.</p>
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
@@ -106,11 +115,23 @@
                     </div>
                     <table class="table tabela-pedidos align-middle m-0">
                         <tbody id="lista-pedidos-recentes">
-                        
+
                         </tbody>
                     </table>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded-1" id="toast-indicador" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2" id="toast-titulo"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-mensagem"></div>
         </div>
     </div>
 
