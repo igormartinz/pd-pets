@@ -3,24 +3,14 @@ mostrarSenha();
 
 
 // URLs base do MockAPI, cada recurso direcionado ao seus respectivos endpoints
-const API_URL_ADMINISTRADOR_CHAMADOS = "https://6a98675a7160beda2292f7f2.mockapi.io";
-const API_URL_CATEGORIA_LOJISTA = "https://6a9872a37160beda2292ff4f.mockapi.io";
 const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
 
 // Configuração de perfil
 
 const configPerfil = {
     cliente: {
-        url: `${API_URL_CLIENTE}/clientes`,
+        url: `${API_URL_CLIENTE}/usuarios`,
         dashboard: "dashboard-cliente.html"
-    },
-    lojista: {
-        url: `${API_URL_CATEGORIA_LOJISTA}/lojistas`,
-        dashboard: "dashboard-lojista.html",
-    },
-    administrador: {
-        url: `${API_URL_ADMINISTRADOR_CHAMADOS}/administradores`,
-        dashboard: "dashboard-administrador.html",
     }
 };
 
@@ -157,6 +147,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
         await iniciarLogin(email, senha, perfil);
     });
-
-    
 });

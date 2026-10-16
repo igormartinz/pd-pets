@@ -1,6 +1,6 @@
 import { mostrarToast } from "./toast.js";
 
-const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
+const API_URL_USUARIO = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
 
 const CHAVE_SESSAO = "usuarioLogado";
 
@@ -10,7 +10,7 @@ let clienteAtual
 
 async function buscarClientePorId(id) {
     try {
-        const resp = await fetch(`${API_URL_CLIENTE}/clientes/${id}`);
+        const resp = await fetch(`${API_URL_USUARIO}/usuarios/${id}`);
         if (!resp.ok) throw new Error("Cliente não encontrado");
         return await resp.json();
     } catch (erro) {
@@ -48,14 +48,14 @@ function camposEditaveis() {
 // Verifica se o o email que o cliente quer editar pertence a outro usuário
 
 async function emailDeOutroCliente(email, idClienteAtual) {
-    const resp = await fetch(`${API_URL_CLIENTE}/clientes?email=${encodeURIComponent(email)}`);
+    const resp = await fetch(`${API_URL_USUARIO}/usuarios?email=${encodeURIComponent(email)}`);
 
     if (resp.status === 404) return null;
     if (!resp.ok) throw new Error("Erro ao validar o e-mail.");
 
-    const clientes = await resp.json();
+    const usuarios = await resp.json();
 
-    return clientes.some(
+    return usuarios.some(
         (cliente) =>
             cliente.email?.toLowerCase() === email.toLowerCase() &&
             String(cliente.id) !== String(idClienteAtual)
@@ -63,7 +63,7 @@ async function emailDeOutroCliente(email, idClienteAtual) {
 }
 
 async function atualizarCliente(id, dadosAtualizados) {
-    const resp = await fetch(`${API_URL_CLIENTE}/clientes/${id}`, {
+    const resp = await fetch(`${API_URL_USUARIO}/usuarios/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosAtualizados)
@@ -184,9 +184,9 @@ async function salvarAlteracoes() {
             senha: novaSenha || clienteAtual.senha
         };
 
-        const clienteSalvo = await atualizarCliente(clienteAtual.id, dadosAtualizados);
+        const usuarioSalvo = await atualizarCliente(clienteAtual.id, dadosAtualizados);
 
-        clienteAtual = clienteSalvo;
+        clienteAtual = usuarioSalvo;
         preencherPerfil(clienteAtual);
         atualizarSessaoPerfil(clienteAtual);
         alternarModoEdicao(false);
@@ -203,9 +203,6 @@ async function salvarAlteracoes() {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const usuarioLogado = verificarAut("cliente");
-
-    if (!usuarioLogado) return null;
-
     const cliente = await buscarClientePorId(usuarioLogado.id);
 
     if (!cliente) {
