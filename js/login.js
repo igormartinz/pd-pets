@@ -40,7 +40,8 @@ function salvarSessao(usuario, perfil) {
         id: usuario.id,
         nome: usuario.nomeCompleto,
         email: usuario.email,
-        perfil: usuario.perfis
+        perfil: usuario.perfis,
+        status: usuario.status
     };
 
     localStorage.setItem(CHAVE_SESSAO, JSON.stringify(dadosSessao));

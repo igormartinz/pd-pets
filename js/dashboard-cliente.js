@@ -26,7 +26,7 @@ async function buscaUsuario(id) {
 
         const quantidadeAnimais = document.getElementById('quantidade-animais');
         quantidadeAnimais.textContent = usuarioLogado[0].animais.length;
-        
+
         const quantidadePedidos = document.getElementById('quantidade-pedidos');
         quantidadePedidos.textContent = pedidosDoCliente.length;
 
@@ -67,10 +67,10 @@ async function carregarPedidosRecentes(clienteId) {
         const todosOsPedidos = await respostaPedidos.json();
         const produtos = await respostaProdutos.json();
 
-        
+
         // Filtra
         const pedidosDoCliente = todosOsPedidos.filter(pedido => pedido.clienteID == clienteId);
-        
+
         if (pedidosDoCliente.length === 0) {
             container.innerHTML = `
             <tr>
@@ -85,10 +85,10 @@ async function carregarPedidosRecentes(clienteId) {
         for (const produto of produtos) {
             mapaProdutos[produto.id] = produto.nome;
         }
-        
+
         // Ordena do mais recente pro mais antigo e pega só os 6 primeiros
         const pedidosRecentes = pedidosDoCliente.sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 6);
-        
+
         renderizarPedidosRecentes(pedidosRecentes, mapaProdutos);
 
     } catch (erro) {
@@ -126,23 +126,24 @@ function renderizarPedidosRecentes(pedidos, mapaProdutos) {
 export function exibeDashboardsSidebar() {
 
     const perfis = usuario.perfil;
-
     const linksDashboards = document.querySelectorAll('[data-perfil]');
 
-    
     linksDashboards.forEach(link => {
         const perfilNecessario = link.dataset.perfil;
+        const possuiPerfil = perfis.includes(perfilNecessario);
 
-        link.style.display = perfis.includes(perfilNecessario) ? "" : "none";
+        const lojistaAtivo = perfilNecessario !== "Lojista" || usuario.status === "Ativo";
+
+        link.style.display = possuiPerfil && lojistaAtivo ? "" : "none";
     });
 }
 
-function exibeCadastroLojista(){
+function exibeCadastroLojista() {
     const botao = document.getElementById('btn-cadastro-lojista');
 
-    if(usuario.perfil.includes('Lojista')){
+    if (usuario.perfil.includes('Lojista')) {
         botao.style.display = 'none'
-    }else{
+    } else {
         botao.style.display = 'block'
     }
 
@@ -162,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.removeItem("statusLojista");
 });
 
-document.addEventListener('DOMContentLoaded', exibeDashboardsSidebar);
-document.addEventListener('DOMContentLoaded', exibeCadastroLojista());
-document.addEventListener('DOMContentLoaded', buscaUsuario(usuario.id));
+document.addEventListener('DOMContentLoaded', () => {
+    exibeDashboardsSidebar();
+    exibeCadastroLojista();
+    buscaUsuario(usuario.id);
+});
