@@ -1,21 +1,7 @@
 import { mostrarSenha } from "./mostrarSenha.js";
 mostrarSenha();
 
-
-// URLs base do MockAPI, cada recurso direcionado ao seus respectivos endpoints
-const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
-
-// Configuração de perfil
-
-const configPerfil = {
-    cliente: {
-        url: `${API_URL_CLIENTE}/usuarios`,
-        dashboard: "dashboard-cliente.html"
-    }
-};
-
 // Toasts reutilizados para a página de login
-
 function mostrarToast(tipo, título, mensagem) {
     const toastId = tipo === "sucesso" ? "toast-sucesso" : "toast-erro";
 
@@ -28,20 +14,10 @@ function mostrarToast(tipo, título, mensagem) {
     toast.show();
 }
 
-// Descobre qual perfil foi selecionado pelo usuário
-
-function pegarPerfilSelecionado() {
-    return document.querySelector('input[name="perfil"]:checked').value;
-}
-
 // busca o perfil pelo e-mail cadastrado no MockAPI
-
-async function BuscarUsuarioPorCredenciais(url, email, senha) {
+async function BuscarUsuarioPorCredenciais(email, senha) {
     try {
-        const resp = await fetch(url);
-
-        // Nessa linha estamos verificando se o status da resposta é 404, e se for, retorna nulo, porque quando utilizamos o login com o perfil de cliente utilizando o email do lojista como exemplo, ele retorna status 404 no console
-        if (resp.status === 404) return null;
+        const resp = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios`);
 
         if (!resp.ok) throw new Error("Erro ao consultar o usuário");
 
@@ -57,77 +33,34 @@ async function BuscarUsuarioPorCredenciais(url, email, senha) {
     }
 }
 
-// Obtém o nome do usuário conforme o seu perfil
-
-function nomeUsuario(usuario, perfil) {
-    if (perfil === "cliente") return usuario.nomeCompleto;
-    if (perfil === "lojista") return usuario.nomeResponsavel;
-    return usuario.nome;
-}
 
 // Salva a sessão do usuário no localStorage (Não salva a senha)
-
 function salvarSessao(usuario, perfil) {
     const dadosSessao = {
         id: usuario.id,
-        nome: nomeUsuario(usuario, perfil),
+        nome: usuario.nomeCompleto,
         email: usuario.email,
-        perfil: perfil
+        perfil: usuario.perfis,
+        status: usuario.status
     };
-
-    if (perfil === "lojista") {
-        dadosSessao.nomeEmpresa = usuario.nomeEmpresa;
-    }
 
     localStorage.setItem(CHAVE_SESSAO, JSON.stringify(dadosSessao));
 }
 
-async function iniciarLogin(email, senha, perfil) {
-    const config = configPerfil[perfil];
+async function iniciarLogin(email, senha) {
 
-    const usuario = await BuscarUsuarioPorCredenciais(config.url, email, senha);
+    const usuario = await BuscarUsuarioPorCredenciais(email, senha);
 
     if (!usuario) {
-        mostrarToast("erro", "Erro de login", "E-mail, senha ou perfil incorreto.");
+        mostrarToast("erro", "Erro de login", "E-mail, senha incorreto.");
         return null;
     }
 
-    if (perfil === "lojista") {
-        if (usuario.status === "Pendente") {
-            mostrarToast("erro", "Cadastro em análise", "Seu cadastro ainda está em análise. Você receberá acesso assim que for aprovado.");
-            return null;
-        }
-
-        if (usuario.status === "Inativo") {
-            mostrarToast("erro", "Loja desativada", "Sua loja está desativada.");
-            return null;
-        }
-    }
-
-    salvarSessao(usuario, perfil);
-    window.location.href = config.dashboard;
+    salvarSessao(usuario);
+    window.location.href = "dashboard-cliente.html";
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const radioCliente = document.getElementById('cliente');
-    const radiosVisiveis = document.querySelectorAll('#lojista, #administrador');
-
-    for (const radio of radiosVisiveis) {
-        radio.dataset.jaEstavaMarcado = radio.checked;
-
-        radio.addEventListener('click', function () {
-            if (this.dataset.jaEstavaMarcado === 'true') {
-                // já estava marcado: volta pro perfil Cliente
-                radioCliente.checked = true;
-            }
-
-            // atualiza o estado de todos pra próxima checagem
-            for (const r of radiosVisiveis) {
-                r.dataset.jaEstavaMarcado = r.checked;
-            }
-        });
-    }
-
     const form = document.querySelector(".entrar form");
 
     if (!form) return null;
@@ -137,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const email = document.getElementById("email").value.trim();
         const senha = document.getElementById("senha").value.trim();
-        const perfil = pegarPerfilSelecionado();
 
         // campos obrigatórios
         if (!email || !senha) {
@@ -145,6 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        await iniciarLogin(email, senha, perfil);
+        await iniciarLogin(email, senha);
     });
 });

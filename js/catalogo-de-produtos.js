@@ -26,19 +26,21 @@ async function carregarCatalogo() {
     try {
         // As 3 chamadas saem juntas, em vez de uma atrás da outra
         // reduz o tempo total de espera e o número de requisições sequenciais
-        const [respostaProdutos, respostaLojistas, respostaCategorias] = await Promise.all([
+        const [respostaProdutos, respostaUsuarios, respostaCategorias] = await Promise.all([
             fetch(`https://6a98614f7160beda2292eff8.mockapi.io/produtos`),
-            fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/lojistas`),
+            fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios`),
             fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/categorias`)
         ]);
 
         const produtos = await respostaProdutos.json();
-        const lojistas = await respostaLojistas.json();
+        const usuarios = await respostaUsuarios.json();
         const categorias = await respostaCategorias.json();
 
         // Monta os mapas id -> nome pra consulta
-        for (const lojista of lojistas) {
-            mapaLojistas[lojista.id] = lojista.nomeEmpresa;
+        for (const usuario of usuarios) {
+            if (usuario.nomeEmpresa) {
+                mapaLojistas[usuario.id] = usuario.nomeEmpresa;
+            }
         }
         for (const categoria of categorias) {
             mapaCategorias[categoria.id] = categoria.nome;
@@ -162,7 +164,7 @@ function aplicarFiltros() {
     atualizarTituloCatalogo();
 
     // Todo novo filtro/ordenação sempre volta pra página 1
-    renderizarPagina(1); 
+    renderizarPagina(1);
 }
 
 /* Renderiza a página especificada: fatia produtosExibidos de acordo com
@@ -235,7 +237,7 @@ function renderizarPaginacao() {
     paginacao.innerHTML = '';
 
     // Não mostra paginação se tudo cabe numa página só
-    if (totalPaginas <= 1) return; 
+    if (totalPaginas <= 1) return;
 
     paginacao.appendChild(criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Previous'));
 

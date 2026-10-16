@@ -1,4 +1,7 @@
 import { mostrarToast } from "./toast.js";
+import { mostrarSenha } from "./mostrarSenha.js";
+
+mostrarSenha();
 
 const formRecuperarSenha = document.getElementById('form-recuperar-senha');
 const formNovaSenha = document.getElementById('form-nova-senha');
@@ -19,33 +22,11 @@ formRecuperarSenha.addEventListener('submit', async function (evento) {
     }
 
     try {
-        // busca nos três recursos em paralelo
-        const [respostaClientes, respostaLojistas, respostaAdministradores] = await Promise.all([
-            fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/clientes`),
-            fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/lojistas`),
-            fetch(`https://6a98675a7160beda2292f7f2.mockapi.io/administradores`)
-        ]);
+        const respostaUsuarios = await fetch ("https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios");
 
-        const clientes = await respostaClientes.json();
-        const lojistas = await respostaLojistas.json();
-        const administradores = await respostaAdministradores.json();
+        const usuarios = await respostaUsuarios.json();
 
-        const usuarios = [...clientes.map(usuario => ({
-            urlBase: 'https://6aaac6cdff4dd5698b4f060c.mockapi.io/clientes',
-            dados: usuario
-        })),
-
-        ...lojistas.map(usuario => ({
-            urlBase: 'https://6a9872a37160beda2292ff4f.mockapi.io/lojistas',
-            dados: usuario
-        })),
-
-        ...administradores.map(usuario => ({ 
-            urlBase: 'https://6a98675a7160beda2292f7f2.mockapi.io/administradores',
-            dados: usuario
-        }))];
-
-        usuarioEncontrado = usuarios.find(usuario => usuario.dados.email.toLowerCase() === email.toLowerCase());
+        usuarioEncontrado = usuarios.find(usuario => usuario.email.toLowerCase() === email.toLowerCase());
 
         if (!usuarioEncontrado) {
             mostrarToast('E-mail não cadastrado', 'Não encontramos uma conta com esse e-mail.', 'erro');
@@ -66,9 +47,6 @@ formNovaSenha.addEventListener('submit', async function (evento) {
     const senha = document.getElementById('senha').value;
     const senhaConfirmacao = document.getElementById('senha-confirmacao').value;
 
-
-    console.log(usuarioEncontrado);
-
     if (!senha || !senhaConfirmacao) {
         mostrarToast('Campos obrigatórios', 'Preencha os dois campos de senha.', 'erro');
         return;
@@ -86,7 +64,7 @@ formNovaSenha.addEventListener('submit', async function (evento) {
 
     try {
         const resposta = await fetch(
-            `${usuarioEncontrado.urlBase}/${usuarioEncontrado.dados.id}`,
+            `https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${usuarioEncontrado.id}`,
             {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },

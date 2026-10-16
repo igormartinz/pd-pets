@@ -1,27 +1,11 @@
 // chave usada no localStorage
 const CHAVE_SESSAO = "usuarioLogado";
 
-// Direcionamento para os dashboards
-const DASHBOARDS = {
-    cliente: "/pages/dashboard-cliente.html",
-    lojista: "/pages/dashboard-lojista.html",
-    administrador: "/pages/dashboard-administrador.html"
-};
-
 // Recupera os dados do usuário autenticado, transformando os dados em formato JSON ou se não houver, nulo.
 
 function pegarUsuarioLogado() {
     const dados = localStorage.getItem(CHAVE_SESSAO);
     return dados ? JSON.parse(dados) : null;
-}
-
-// Retorna o dashboard do usuário conforme o seu devido perfil logado
-
-function pegarDashboardUsuario() {
-    const usuario = pegarUsuarioLogado();
-    if (!usuario) return "/pages/login.html";
-    return DASHBOARDS[usuario.perfil] ?? "/pages/login.html";
-
 }
 
 // Proteção de rota conforme o perfil do usuário
@@ -35,10 +19,20 @@ function verificarAut(perfilValido) {
         window.location.href = "/pages/login.html";
         return null;
     }
-    // Autenticado mas com o perfil errado pra página, manda pro login
 
-    if (perfilValido && usuario.perfil !== perfilValido) {
+    // Verifica se possui o perfil exigido
+
+    if (!usuario.perfil.includes(perfilValido)) {
         window.location.href = "/pages/login.html";
+        return null;
+    }
+    
+    // Verifica se o lojista foi aprovado
+    
+    if (perfilValido === "Lojista" && usuario.status !== "Ativo") {
+        sessionStorage.setItem("statusLojista", usuario.status);
+
+        window.location.href = "/pages/dashboard-cliente.html";
         return null;
     }
 
@@ -52,5 +46,5 @@ function logOut() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const linkPerfil = document.getElementById("link-perfil");
-    if (linkPerfil) linkPerfil.href = pegarDashboardUsuario();
+    if (linkPerfil) linkPerfil.href = "dashboard-cliente.html";
 });
