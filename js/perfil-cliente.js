@@ -1,7 +1,5 @@
 import { mostrarToast } from "./toast.js";
 
-const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
-
 const CHAVE_SESSAO = "usuarioLogado";
 
 // foi criada pra guardar os dados do cliente anterior e poder utilizar o botão "Cancelar"
@@ -10,7 +8,7 @@ let clienteAtual
 
 async function buscarClientePorId(id) {
     try {
-        const resp = await fetch(`${API_URL_CLIENTE}/clientes/${id}`);
+        const resp = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${id}`);
         if (!resp.ok) throw new Error("Cliente não encontrado");
         return await resp.json();
     } catch (erro) {
@@ -48,7 +46,7 @@ function camposEditaveis() {
 // Verifica se o o email que o cliente quer editar pertence a outro usuário
 
 async function emailDeOutroCliente(email, idClienteAtual) {
-    const resp = await fetch(`${API_URL_CLIENTE}/clientes?email=${encodeURIComponent(email)}`);
+    const resp = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios?email=${encodeURIComponent(email)}`);
 
     if (resp.status === 404) return null;
     if (!resp.ok) throw new Error("Erro ao validar o e-mail.");
@@ -63,7 +61,7 @@ async function emailDeOutroCliente(email, idClienteAtual) {
 }
 
 async function atualizarCliente(id, dadosAtualizados) {
-    const resp = await fetch(`${API_URL_CLIENTE}/clientes/${id}`, {
+    const resp = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosAtualizados)
@@ -202,7 +200,7 @@ async function salvarAlteracoes() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const usuarioLogado = verificarAut("cliente");
+    const usuarioLogado = verificarAut("Cliente");
 
     if (!usuarioLogado) return null;
 
