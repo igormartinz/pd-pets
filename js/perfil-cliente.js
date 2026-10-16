@@ -51,9 +51,9 @@ async function emailDeOutroCliente(email, idClienteAtual) {
     if (resp.status === 404) return null;
     if (!resp.ok) throw new Error("Erro ao validar o e-mail.");
 
-    const clientes = await resp.json();
+    const usuarios = await resp.json();
 
-    return clientes.some(
+    return usuarios.some(
         (cliente) =>
             cliente.email?.toLowerCase() === email.toLowerCase() &&
             String(cliente.id) !== String(idClienteAtual)
@@ -182,9 +182,9 @@ async function salvarAlteracoes() {
             senha: novaSenha || clienteAtual.senha
         };
 
-        const clienteSalvo = await atualizarCliente(clienteAtual.id, dadosAtualizados);
+        const usuarioSalvo = await atualizarCliente(clienteAtual.id, dadosAtualizados);
 
-        clienteAtual = clienteSalvo;
+        clienteAtual = usuarioSalvo;
         preencherPerfil(clienteAtual);
         atualizarSessaoPerfil(clienteAtual);
         alternarModoEdicao(false);
