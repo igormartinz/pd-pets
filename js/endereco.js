@@ -22,7 +22,7 @@ async function buscarEnderecos(id) {
 function criarCardEndereco(endereco) {
     const card = document.createElement("div");
     card.className = "container-item-endereco";
-    if (enderecos.principal) card.classList.add(principal);
+    if (endereco.principal) card.classList.add("principal");
 
     const info = document.createElement("div");
     info.className = "container-info-endereco";
@@ -40,11 +40,11 @@ function criarCardEndereco(endereco) {
 
     const bairroCidade = document.createElement("p");
     bairroCidade.className = "bairro-estado-UF-endereco";
-    bairroCidade.textContent = `${endereco.bairro} · ${endereco.cidade}`;
+    bairroCidade.textContent = `${endereco.bairro} · ${endereco.cidade} - ${endereco.estado}`;
 
     const cepCompleto = document.createElement("p");
     cepCompleto.className = "bairro-estado-UF-endereco";
-    cepCompleto.textContent = endereco.complemento ? `CEP ${endereco.cep} · ${endereco.complemento}` : `CEP ${endereco.cep}`;
+    cepCompleto.textContent = endereco.complemento ? `CEP ${formatarCEP(endereco.cep)} · ${endereco.complemento}` : `CEP ${formatarCEP(endereco.cep)}`;
 
     info.append(ruaNumero, bairroCidade, cepCompleto);
 
@@ -114,7 +114,7 @@ function abrirModalEdicao(idEndereco) {
     const campos = camposEndereco();
     idEnderecoEmEdicao = endereco.id;
     campos.titulo.textContent = "Editar Endereço";
-    campos.cep.value = endereco.cep;
+    campos.cep.value = formatarCEP(endereco.cep);
     campos.rua.value = endereco.rua;
     campos.numero.value = endereco.numero;
     campos.complemento.value = endereco.complemento ?? "";
@@ -125,19 +125,6 @@ function abrirModalEdicao(idEndereco) {
 
     bootstrap.Modal.getOrCreateInstance("#modalEndereco").show();
 }
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const usuarioLogado = verificarAut("cliente");
-    if (!usuarioLogado) return null;
-    idUsuario = usuarioLogado.id;
-
-    enderecos = await buscarEnderecos(idUsuario);
-    renderizarEnderecos();
-
-    document.getElementById("btn-novo-endereco").addEventListener("click", () => abrirModalNovo());
-
-    document.querySelector(".btn-pencil").addEventListener("click", () => abrirModalEdicao());
-});
 
 function lerFormularioEndereco() {
     const campos = camposEndereco();
@@ -153,3 +140,149 @@ function lerFormularioEndereco() {
     };
 }
 
+function validarEndereco(dados) {
+    const { cep, rua, numero, bairro, cidade, estado } = dados;
+
+    if (!cep || !rua || !numero || !bairro || !cidade || !estado) {
+        return "Preencha todos os campos obrigatórios. Só o complemento é opcional.";
+    }
+
+    if (!/^\d{5}-\d{3}$/.test(cep)) {
+        return "Informe um CEP válido, com 8 números.";
+    }
+
+    if (!Number.isInteger(Number(numero)) || Number(numero) <= 0) {
+        return "O número deve ser um número inteiro maior que zero.";
+    }
+
+    if (!/^[A-Z]{2}$/.test(estado)) {
+        return "Informe a sigla do estado.";
+    }
+
+    return null;
+}
+
+async function enviarEndereco(metodo, url, corpo) {
+    const resp = await fetch(url, {
+        method: metodo,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(corpo)
+    });
+    if (!resp.ok) throw new Error(`Erro na requisição ${metodo}`);
+    return await resp.json();
+}
+
+async function desmarcarOutrosPrincipais(idPrincipal) {
+    const outrosPrincipais = enderecos.filter(e => e.principal && String(e.id) !== String(idPrincipal));
+
+    for (const endereco of outrosPrincipais) {
+        await enviarEndereco("PUT", `${API_URL_USUARIO_ENDERECO}/enderecos/${endereco.id}`, { ...endereco, principal: false });
+    }
+}
+
+async function salvarEndereco() {
+    const dados = lerFormularioEndereco();
+    const erro = validarEndereco(dados);
+    if (erro) {
+        mostrarToast("Campos inválidos", erro, "erro");
+        return null;
+    }
+
+    const endereco = { ...dados, numero: Number(dados.numero), [CAMPO_CLIENTE_ID]: idUsuario };
+    const estaEditando = idEnderecoEmEdicao !== null;
+
+    const botaoSalvar = document.getElementById("btn-salvar-endereco");
+    botaoSalvar.disabled = true;
+
+    try {
+        const salvo = estaEditando
+            ? await enviarEndereco("PUT", `${API_URL_USUARIO_ENDERECO}/enderecos/${idEnderecoEmEdicao}`, endereco)
+            : await enviarEndereco("POST", `${API_URL_USUARIO_ENDERECO}/enderecos`, endereco);
+
+        if (salvo.principal) await desmarcarOutrosPrincipais(salvo.id);
+        enderecos = await buscarEnderecos(idUsuario);
+        renderizarEnderecos();
+        bootstrap.Modal.getOrCreateInstance("#modalEndereco").hide();
+        mostrarToast(estaEditando ? "Endereço atualizado" : "Endereço cadastrado", "Seu endereço foi salvo com sucesso.", "sucesso");
+    } catch (erroSalvar) {
+        console.error(erroSalvar);
+        mostrarToast("Erro ao salvar", "Não foi possível salvar o endereço informado.", "erro");
+    } finally {
+        botaoSalvar.disabled = false;
+    }
+}
+
+function abrirModalExclusao(idEndereco) {
+    if (enderecos.length <= 1) {
+        mostrarToast("Ação não permitida", "Você precisa ter pelomenos um endereço cadastrado.", "aviso");
+        return null;
+    }
+
+    idEnderecoParaExcluir = idEndereco;
+    bootstrap.Modal.getOrCreateInstance("#modalExcluirEndereco").show();
+}
+
+async function confirmarExclusao() {
+    const removido = enderecos.find(e => String(e.id) === String(idEnderecoParaExcluir));
+    const botaoRemover = document.getElementById("btn-confirmar-exclusao-endereco");
+    botaoRemover.disabled = true;
+
+    try {
+        const resp = await fetch(`${API_URL_USUARIO_ENDERECO}/enderecos/${idEnderecoParaExcluir}`, { method: "DELETE" });
+        if (!resp.ok) throw new Error("Erro ao excluir endereço");
+        enderecos = enderecos.filter(e => String(e.id) !== String(idEnderecoParaExcluir));
+
+        if (removido?.principal && enderecos.length > 0) {
+            const novoPrincipal = await enviarEndereco("PUT", `${API_URL_USUARIO_ENDERECO}/enderecos/${enderecos[0].id}`, { ...enderecos[0], principal: true });
+            enderecos[0] = novoPrincipal;
+        }
+
+        renderizarEnderecos();
+        bootstrap.Modal.getOrCreateInstance("#modalExcluirEndereco").hide();
+        mostrarToast("Endereço removido", "O endereço foi removido com sucesso.", "sucesso");
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast("Erro ao remover", "Não foi possível remover o endereço. Tente mais tarde.", "erro");
+    } finally {
+        botaoRemover.disabled = false;
+        idEnderecoParaExcluir = null;
+    }
+}
+
+function formatarCEP(valor) {
+    const numeros = String(valor).replace(/\D/g, "").slice(0.8);
+    if (numeros.length <= 5) return numeros;
+    return `${numeros.slice(0, 5)}-${numeros.slice(5)}`;
+}
+
+function maskCEP() {
+    const seletorCEP = document.getElementById("end-cep");
+    seletorCEP.addEventListener("input", () => {
+        seletorCEP.value = formatarCEP(seletorCEP.value);
+    })
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const usuarioLogado = verificarAut("Cliente");
+    if (!usuarioLogado) return null;
+    idUsuario = usuarioLogado.id;
+
+    try {
+        enderecos = await buscarEnderecos(idUsuario);
+        renderizarEnderecos();
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast("Erro ao carregar", "Não foi possível carregar os endereços.", "erro")
+    }
+
+    document.getElementById("btn-novo-endereco").addEventListener("click", () => abrirModalNovo());
+    document.getElementById("btn-salvar-endereco").addEventListener("click", () => salvarEndereco())
+    document.getElementById("form-endereco").addEventListener("submit", e => {
+        e.preventDefault();
+        salvarEndereco();
+    });
+    document.getElementById("btn-confirmar-exclusao-endereco").addEventListener("click", () => {
+        confirmarExclusao();
+    })
+    maskCEP();
+});

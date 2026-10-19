@@ -235,7 +235,7 @@ async function confirmarExclusaoPet() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const usuarioLogado = verificarAut("cliente");
+    const usuarioLogado = verificarAut("Cliente");
     if (!usuarioLogado) return null;
 
     const usuario = await buscarUsuarioPorId(usuarioLogado.id);

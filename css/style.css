@@ -64,6 +64,7 @@ figcaption {
     align-items: center;
     text-align: center;
     transition: .5s;
+    cursor: pointer;
 }
 
 .botao:hover {
