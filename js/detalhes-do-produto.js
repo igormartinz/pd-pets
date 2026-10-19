@@ -1,7 +1,3 @@
-const API_URL_PRODUTO = "https://6a98614f7160beda2292eff8.mockapi.io";
-const API_URL_CATEGORIA_LOJISTA = "https://6a9872a37160beda2292ff4f.mockapi.io";
-const API_URL_CLIENTE = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
-
 // Pegar o ID do produto a partir da URL
 
 function pegarProdutoIdUrl() {
@@ -14,7 +10,7 @@ function pegarProdutoIdUrl() {
 
 async function buscarProduto(id) {
     try {
-        const resp = await fetch(`${API_URL_PRODUTO}/produtos/${id}`);
+        const resp = await fetch(`https://6a98614f7160beda2292eff8.mockapi.io/produtos/${id}`);
         if (!resp.ok) {
             throw new Error("Produto não encontrado.");
         }
@@ -31,7 +27,7 @@ async function buscarProduto(id) {
 
 async function buscarCategoria(id) {
     try {
-        const resp = await fetch(`${API_URL_CATEGORIA_LOJISTA}/categorias/${id}`);
+        const resp = await fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/categorias/${id}`);
         if (!resp.ok) {
             throw new Error("categoria não encontrada.");
         }
@@ -48,7 +44,7 @@ async function buscarCategoria(id) {
 
 async function buscarLojista(id) {
     try {
-        const resp = await fetch(`${API_URL_CATEGORIA_LOJISTA}/lojistas/${id}`);
+        const resp = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${id}`);
         if (!resp.ok) {
             throw new Error("lojista não encontrado (a).");
         }
@@ -65,7 +61,7 @@ async function buscarLojista(id) {
 
 async function buscarCliente(id) {
     try {
-        const resposta = await fetch(`${API_URL_CLIENTE}/clientes/${id}`);
+        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${id}`);
         if (!resposta.ok) {
             throw new Error("Cliente não encontrado");
         }

@@ -47,14 +47,22 @@
                     <div class="d-flex flex-column campo-input">
                         <label for="senha">Nova senha</label>
                         <div class="input-border">
-                            <input type="password" name="senha" id="senha" class="form-control input-primario">
+                            <input type="password" name="senha" id="senha" class="form-control input-primario input-senha">
+                            <button type="button" data-mostrar-senha="senha"
+                                    class="btn-exibir-senha position-absolute">
+                                    <i class="ti ti-eye"></i>
+                                </button>
                         </div>
                     </div>
                     <div class="d-flex flex-column campo-input">
                         <label for="senha-confirmacao">Confirmar nova senha</label>
                         <div class="input-border">
                             <input type="password" name="senha-confirmacao" id="senha-confirmacao"
-                                class="form-control input-primario">
+                                class="form-control input-primario input-senha">
+                                <button type="button" data-mostrar-senha="senha-confirmacao"
+                                    class="btn-exibir-senha position-absolute">
+                                    <i class="ti ti-eye"></i>
+                                </button>
                         </div>
                     </div>
 

@@ -105,17 +105,17 @@ formCadastro.addEventListener('submit', async (e) => {
     try {
 
         // Faz uma requisição para clientes
-        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/clientes`);
-        const clientes = await resposta.json();
+        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios`);
+        const usuarios = await resposta.json();
 
         // Testa se já existe E-mail e CPF cadastrados
-        for (const cliente of clientes) {
-            if (cliente.email == email) {
+        for (const usuario of usuarios) {
+            if (usuario.email == email) {
                 mostrarToast('Campo E-mail', 'E-mail já cadastrado', 'erro');
                 return;
             }
 
-            if (cliente.cpf === cpf) {
+            if (usuario.cpf === cpf) {
                 mostrarToast('Compo CPF', 'CPF já cadastrado', 'erro');
                 return;
             }
@@ -123,7 +123,7 @@ formCadastro.addEventListener('submit', async (e) => {
 
         // Cria o cliente
         const respostaCliente = await fetch(
-            'https://6aaac6cdff4dd5698b4f060c.mockapi.io/clientes',
+            'https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios',
             {
                 method: 'POST',
                 headers: {
@@ -135,7 +135,12 @@ formCadastro.addEventListener('submit', async (e) => {
                     dataNascimento,
                     telefone,
                     email,
-                    senha
+                    senha,
+                    perfis: ["Cliente"],
+                    nomeEmpresa: "",
+                    cnpj: "",
+                    status: "",
+                    dataAprovacao: "",
                 })
             }
         );
