@@ -71,7 +71,8 @@ h2, h3, p{
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--cor-verde-escuro);
-    padding: 0px 20px 20px 20px;
+    padding: 0 0 20px 0;
+    margin: 0 20px;
 }
 
 .circulo-perfil {
@@ -293,8 +294,7 @@ h2, h3, p{
     border-radius: 5px;
 }
 
-#modalNovoEndereco .modal-dialog,
-#modalEditarEndereco .modal-dialog {
+#modalEndereco .modal-dialog {
     max-width: 630px;
 }
 
@@ -390,7 +390,7 @@ h2, h3, p{
     color: var(--cor-cinza);
 }
 
-#input-checkbox-principal {
+#end-principal {
     appearance: none;
     margin: 0;
     width: 16px;
@@ -402,7 +402,7 @@ h2, h3, p{
     cursor: pointer;
 }
 
-#input-checkbox-principal::before {
+#end-principal::before {
     content: "";
     width: 8px;
     height: 8px;
@@ -413,7 +413,7 @@ h2, h3, p{
     transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), opacity .2s ease;
 }
 
-#input-checkbox-principal:checked::before {
+#end-principal:checked::before {
     transform: scale(1);
     opacity: 1;
     display: flex;
@@ -421,7 +421,7 @@ h2, h3, p{
     align-items: center;
 }
 
-#input-checkbox-principal:focus-visible {
+#end-principal:focus-visible {
     outline: 2px solid var(--cor-verde);
     outline-offset: 2px;
 }
@@ -517,7 +517,7 @@ h2, h3, p{
 }
 
 #section-form-dados-perfil.editando .input-dados-perfil:not([readonly]) {
-    border-bottom: 1px solid var(--cor-verde-escuro);
+    border-bottom: 1px solid #c8c9c9;
     padding-bottom: 2px;
 }
 
