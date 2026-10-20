@@ -89,6 +89,10 @@ body {
 
 }
 
+.btn-cadastro-lojista{
+    display: none;
+}
+
 /* CARDS INDICADORES */
 .card-indicador{
     background-color: var(--cor-de-fundo);
