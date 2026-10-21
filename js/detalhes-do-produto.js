@@ -388,9 +388,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     }
 
+
     try {
-        const usuario = await buscarCliente(usuarioLogado.id);
-        const favoritado = usuario.favoritos.includes(produtoId) ? true : false;
+        let favoritado;
+
+        if (usuarioLogado?.id) {
+            const usuario = await buscarCliente(usuarioLogado.id);
+            favoritado = usuario.favoritos.includes(produtoId) ? true : false;
+        }
 
         const avaliacoesBrutas = (Array.isArray(produto.avaliacoesProduto) ? produto.avaliacoesProduto : [])
             .filter(avaliacao => !isNaN(new Date(avaliacao.data)));
