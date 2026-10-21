@@ -24,6 +24,25 @@ body {
     font-size: 20px;
 }
 
+#status-lojista{
+    display: inline-flex;
+    justify-content: start;
+    align-items: center;
+    gap: .5em;
+    padding: .2em 1.5em;
+    border-radius: 50px;
+    margin-bottom: .8em;
+    /* color: var(--cor-branco); */
+}
+
+.status-analise{
+    background-color: var(--cor-salmao);
+}
+
+.status-rejeitado{
+    background-color: #dc1508;
+}
+
 /* SIDEBAR */
 #sidebar {
     background-color: var(--cor-de-fundo);
