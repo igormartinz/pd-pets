@@ -1,3 +1,7 @@
+import { mostrarToast } from "./toast.js";
+
+const usuarioLogado = pegarUsuarioLogado()
+
 // Pegar o ID do produto a partir da URL
 
 function pegarProdutoIdUrl() {
@@ -290,7 +294,7 @@ function formatarData(dataIso) {
     return `${dia}/${mes}/${ano}`;
 }
 
-function popularInfoProduto(produto, categoria, lojista, avaliacoesProduto) {
+function popularInfoProduto(produto, categoria, lojista, avaliacoesProduto, favoritado) {
     document.getElementById("nome-produto").textContent = produto.nome;
     document.querySelector(".categoria-produto").textContent = categoria?.nome ?? "Sem categoria";
     document.getElementById("nome-loja").querySelector("strong").textContent = lojista?.nomeEmpresa ?? "PD Pets";
@@ -299,6 +303,8 @@ function popularInfoProduto(produto, categoria, lojista, avaliacoesProduto) {
     document.querySelectorAll("#nome-produto-descricao").forEach(el => {
         el.textContent = produto.nome
     })
+
+    botaoFavorito.classList.toggle("favoritado", Boolean(favoritado));
 
     formTextoEstoque(produto.estoque);
     popularImagens(produto.imagemURL);
@@ -382,7 +388,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     }
 
+
     try {
+        let favoritado;
+
+        if (usuarioLogado?.id) {
+            const usuario = await buscarCliente(usuarioLogado.id);
+            favoritado = usuario.favoritos.includes(produtoId) ? true : false;
+        }
 
         const avaliacoesBrutas = (Array.isArray(produto.avaliacoesProduto) ? produto.avaliacoesProduto : [])
             .filter(avaliacao => !isNaN(new Date(avaliacao.data)));
@@ -395,7 +408,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             configurarQuantidade(produto.estoque)
         ]);
 
-        popularInfoProduto(produto, categoria, lojista, avaliacoesProduto);
+        popularInfoProduto(produto, categoria, lojista, avaliacoesProduto, favoritado);
 
 
         statusPagina(null);
@@ -403,5 +416,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("Erro ao montar a página:", error);
         statusPagina("erro", "Ocorreu um erro ao carregar o produto.");
+    }
+});
+
+const botaoFavorito = document.getElementById('btn-favorito');
+
+botaoFavorito.addEventListener('click', async function () {
+
+    // Visitante: só quem está logado pode favoritar
+    if (!usuarioLogado) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const produtoId = pegarProdutoIdUrl();
+
+    try {
+        // Busca o usuário atualizado para conferir os favoritos atuais
+        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${usuarioLogado.id}`);
+        if (!resposta.ok) throw new Error('Falha ao buscar o usuário');
+
+        const usuario = await resposta.json();
+        const favoritos = (usuario.favoritos ?? []).map(String);
+
+        // Já é favorito: não remove, só avisa
+        if (favoritos.includes(produtoId)) {
+            botaoFavorito.classList.add('favoritado');
+            mostrarToast('Produto já favoritado', 'Produto já adicionado aos favoritos.', 'erro');
+            return;
+        }
+
+        // Ainda não é favorito: grava a lista com o novo id
+        const respostaAtualizacao = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${usuarioLogado.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ favoritos: [...favoritos, produtoId] })
+        });
+
+        if (!respostaAtualizacao.ok) throw new Error('Falha ao atualizar favoritos');
+
+        botaoFavorito.classList.add('favoritado');
+        mostrarToast('Favoritado', 'Produto adicionado aos favoritos.', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível atualizar seus favoritos. Tente novamente.', 'erro');
     }
 });
