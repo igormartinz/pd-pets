@@ -105,6 +105,11 @@ body {
     background-color: #22514B;
 }
 
+#btn-favorito.favoritado svg {
+    fill: currentColor;
+    color: var(--cor-branco);
+}
+
 .categoria-produto {
     font-family: var(--fonte-nunito);
     color: #F0885A;
