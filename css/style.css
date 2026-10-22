@@ -429,13 +429,15 @@ a {
 }
 
 /* INPUT */
-.input-border, .input-border-secundario {
+.input-border,
+.input-border-secundario {
     position: relative;
     border-radius: 20px;
     padding: 2px;
 }
 
-.input-border::before, .input-border-secundario::before {
+.input-border::before,
+.input-border-secundario::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -670,4 +672,11 @@ input[type="password"]::-ms-reveal {
     .produto-lojista {
         font-size: clamp(10px, .98vw, 14px);
     }
+}
+
+/* Carrinho */
+
+.adicionando {
+    pointer-events: none;
+    opacity: .5;
 }

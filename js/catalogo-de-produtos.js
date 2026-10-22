@@ -1,3 +1,7 @@
+import { ligarBotoesCarrinho } from "./carrinho-api.js";
+
+ligarBotoesCarrinho();
+
 // CATÁLOGO DE PRODUTOS - lógica de listagem, filtro, ordenação, paginação e busca
 import { mostrarToast } from "./toast.js";
 
@@ -210,7 +214,7 @@ function renderizarCards(produtos) {
         coluna.className = "col-12 col-md-6 col-xl-4";
 
         coluna.innerHTML = `
-                <article class="card-produto">
+                <article class="card-produto" data-produto-id="${produto.id}">
                     <a href="detalhes-do-produto.html?id=${produto.id}">
                         <div class="produto-avaliacao">
                             <i class="ti ti-star-filled"></i>
