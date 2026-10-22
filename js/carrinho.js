@@ -6,9 +6,27 @@ const API_URL_ENDERECO = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
 
 const API_URL_PEDIDO = "https://6a98614f7160beda2292eff8.mockapi.io";
 
+const API_URL_PRODUTO = "https://6a98614f7160beda2292eff8.mockapi.io";
+
+function copiarObjeto(objeto) {
+    return JSON.parse(JSON.stringify(objeto));
+}
+
+async function atualizarRecurso(url, dados) {
+    const resp = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+    });
+    if (!resp.ok) throw new Error(`Erro ao atualizar ${url}`);
+    return await resp.json();
+}
+
 let usuarioAtual = null;
 let produtosPorId = {};
 let idItemParaRemover = null;
+let pedidosPendentes = [];
+let enderecoSelecionado = null;
 
 function mostrarCarregando() {
     const lista = document.getElementById("lista-carrinho");
@@ -248,7 +266,7 @@ async function buscarEnderecoPrincipal(idUsuario) {
 
     const enderecos = await resp.json();
     const doUsuario = enderecos.filter(e => {
-        return e.clienteId === idUsuario;
+        return String(e.clienteId) === String(idUsuario);
     });
     const principal = doUsuario.find(e => {
         return e.principal === true;
@@ -308,9 +326,15 @@ async function finalizarCompra() {
 
         preencherModalFinalizacao(totais, quantidadeItens, endereco);
 
+        enderecoSelecionado = endereco;
+        pedidosPendentes = [];
+
         for (const item of itens) {
             const pedido = montarPedido(item, endereco.id);
-            await criarPedido(pedido);
+
+            const pedidoSalvo = await criarPedido(pedido);
+
+            pedidosPendentes.push(pedidoSalvo);
         }
 
         usuarioAtual = await salvarCarrinho(usuarioAtual, []);
@@ -325,11 +349,9 @@ async function finalizarCompra() {
 
 function continuarPagamento() {
     const selecionado = document.querySelector('input[name="pagamento"]:checked');
-    console.log(selecionado.value);
-
 
     if (!selecionado) {
-        mostrarToast("Forma de pagamento", "Selecione uma forma de pagamento para prosseguir", "aviso");
+        mostrarToast("Forma de pagamento", "Selecione uma forma de pagamento para prosseguir.", "aviso");
         return null;
     }
 
@@ -342,12 +364,105 @@ function continuarPagamento() {
     bootstrap.Modal.getOrCreateInstance(modalFinalizar).hide();
 }
 
+async function buscarProdutosDosPedidos() {
+    return await Promise.all(pedidosPendentes.map(pedido => {
+        return buscarProduto(pedido.produtoID);
+    }));
+}
+
+function temEstoqueSuficiente(produtos) {
+    for (let i = 0; i < pedidosPendentes.length; i++) {
+        const pedido = pedidosPendentes[i];
+        const produto = produtos[i];
+
+        if (Number(produto.estoque) < Number(pedido.quantidade)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+async function confirmarPagamento(e) {
+    const botao = e.currentTarget;
+    const modal = botao.closest(".modal");
+
+    if (pedidosPendentes.length === 0) {
+        mostrarToast("Nenhum pedido pendente", "Nenhum pedido aguardando pagamento.", "erro");
+        return null;
+    }
+
+    botao.disabled = true;
+
+    const alteracoes = [];
+
+    try {
+        const produtos = await buscarProdutosDosPedidos();
+
+        if (!temEstoqueSuficiente(produtos)) {
+            mostrarToast("Estoque insuficiente", "Estoque insuficiente para concluir o pagamento.", "erro");
+            return null;
+        }
+
+        for (let i = 0; i < pedidosPendentes.length; i++) {
+            const pedido = pedidosPendentes[i];
+            const produto = produtos[i];
+            const url = `${API_URL_PRODUTO}/produtos/${produto.id}`;
+
+            const atualizado = copiarObjeto(produto);
+
+            atualizado.estoque = Number(produto.estoque) - Number(pedido.quantidade);
+
+            await atualizarRecurso(url, atualizado);
+            alteracoes.push({ url: url, original: produto });
+        }
+
+        for (const pedido of pedidosPendentes) {
+            const url = `${API_URL_PEDIDO}/pedidos/${pedido.id}`;
+
+            const atualizado = copiarObjeto(pedido);
+            atualizado.enderecoID = Number(enderecoSelecionado.id);
+            atualizado.status = "Pago";
+
+            await atualizarRecurso(url, atualizado);
+            alteracoes.push({ url: url, original: pedido });
+        }
+
+        pedidosPendentes = [];
+        bootstrap.Modal.getOrCreateInstance(modal).hide();
+        mostrarToast("Pagamento concluído", "Seu pedido foi pago com sucesso. Veja em Meus Pedidos.", "sucesso");
+
+    } catch (erro) {
+        console.error(erro);
+        await desfazerAlteracoes(alteracoes);
+        mostrarToast("Erro no pagamento", "Não foi possível concluir o pagamento. Tente novamente.", "erro");
+    } finally {
+        botao.disabled = false;
+    }
+}
+
+async function desfazerAlteracoes(alteracoes) {
+    for (const alteracao of alteracoes) {
+        try {
+            await atualizarRecurso(alteracao.url, alteracao.original);
+        } catch (erro) {
+            console.error("Não foi possível desfazer", alteracao.url, erro);
+
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const usuarioLogado = verificarAut("Cliente");
     if (!usuarioLogado) return null;
 
     mostrarCarregando();
     try {
+        const botoesPagamento = document.querySelectorAll(".btn-confirmar-pagamento");
+        for (const botaoPagamento of botoesPagamento) {
+            botaoPagamento.addEventListener("click", confirmarPagamento);
+        }
+
         usuarioAtual = await buscarUsuario(usuarioLogado.id);
         await carregarProdutos(usuarioAtual.carrinho || []);
         renderizarCarrinho();
