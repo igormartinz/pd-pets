@@ -1,3 +1,5 @@
+import { addProdutoCarrinho } from "./carrinho-api.js";
+
 // Pegar o ID do produto a partir da URL
 
 function pegarProdutoIdUrl() {
@@ -375,6 +377,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Requisição para retornar o id do Produto com suas informações
     const produto = await buscarProduto(produtoId);
+
+
+    document.getElementById("botao-estoque").addEventListener("click", (e) => {
+        const quantidade = Number(document.getElementById("input-quantidade").value);
+        addProdutoCarrinho(produto, quantidade, e.currentTarget);
+    })
 
     // Mensagem de erro caso o produto não seja encontrado
     if (!produto) {

@@ -1,3 +1,7 @@
+import { ligarBotoesCarrinho } from "./carrinho-api.js";
+
+ligarBotoesCarrinho();
+
 document.getElementById('form-contato').addEventListener('submit', function (evento) {
     evento.preventDefault(); // impede o recarregamento da página
 

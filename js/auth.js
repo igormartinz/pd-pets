@@ -26,9 +26,9 @@ function verificarAut(perfilValido) {
         window.location.href = "/pages/login.html";
         return null;
     }
-    
+
     // Verifica se o lojista foi aprovado
-    
+
     if (perfilValido === "Lojista" && usuario.status !== "Ativo") {
         sessionStorage.setItem("statusLojista", usuario.status);
 
