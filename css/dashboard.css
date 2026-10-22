@@ -164,8 +164,13 @@ body {
 }
 
 .cabecalho-tabela{
+    width: 100%;
     padding: 1em;
     background-color: var(--cor-branco);
+}
+
+.cabecalho-tabela > div {
+    min-width: 0;
 }
 
 .cabecalho-tabela a{
@@ -199,7 +204,7 @@ body {
 
 .pedido-linha {
     display: grid;
-    grid-template-columns: 1fr 120px 140px;
+    grid-template-columns: 1fr 120px 220px;
     align-items: center;
     gap: 1rem;
     color: var(--cor-cinza);
@@ -229,6 +234,10 @@ body {
 .produto-status {
     text-align: center;
     font-size: 16px;
+}
+
+.badge-aguardando-pagamento{
+    background-color: var(--cor-salmao);
 }
 
 /* TABELA RELATORIO DE VENDAS */
