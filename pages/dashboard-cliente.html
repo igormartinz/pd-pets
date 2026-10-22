@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Cliente");</script>
     <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -74,6 +76,10 @@
 
             <!-- CONTEUDO -->
             <main class="px-3 px-lg-5">
+                <div id="status-lojista" class="alert d-none">
+                    <i class="ti"></i>
+                    <p class="m-0"></p>
+                </div>
                 <h1 id="nome-usuario-titulo" class="m-0">Olá, <span id="nome-usuario"></span></h1>
                 <p class="descricao-pagina mb-2">Que bom ter você por aqui. Acompanhe seus pedidos e cuide ainda melhor
                     dos
@@ -136,12 +142,12 @@
     </div>
 
     <script type="module" src="../js/dashboard-cliente.js"></script>
-    <script src="/js/auth.js"></script>
+    <!-- <script src="/js/auth.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const usuarioLogado = verificarAut("Cliente");
         });
-    </script>
+    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
