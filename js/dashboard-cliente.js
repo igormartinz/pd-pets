@@ -39,6 +39,7 @@ async function buscaUsuario(id) {
 }
 
 const CLASSE_STATUS = {
+    'Aguardando pagamento': 'badge-aguardando-pagamento',
     'Pago': 'text-bg-success',
     'Entregue': 'text-bg-primary',
     'Separando': 'text-bg-warning',
@@ -123,21 +124,6 @@ function renderizarPedidosRecentes(pedidos, mapaProdutos) {
     }
 }
 
-export function exibeDashboardsSidebar() {
-
-    const perfis = usuario.perfil;
-    const linksDashboards = document.querySelectorAll('[data-perfil]');
-
-    linksDashboards.forEach(link => {
-        const perfilNecessario = link.dataset.perfil;
-        const possuiPerfil = perfis.includes(perfilNecessario);
-
-        const lojistaAtivo = perfilNecessario !== "Lojista" || usuario.status === "Ativo";
-
-        link.style.display = possuiPerfil && lojistaAtivo ? "" : "none";
-    });
-}
-
 function exibeCadastroLojista() {
     const botao = document.getElementById('btn-cadastro-lojista');
 
@@ -189,9 +175,25 @@ function exibeStatusLojista() {
     }
 }
 
+export function exibeDashboardsSidebar() {
+
+    const perfis = usuario.perfil;
+    const linksDashboards = document.querySelectorAll('[data-perfil]');
+
+    linksDashboards.forEach(link => {
+        const perfilNecessario = link.dataset.perfil;
+        const possuiPerfil = perfis.includes(perfilNecessario);
+
+        const lojistaAtivo = perfilNecessario !== "Lojista" || usuario.status === "Ativo";
+
+        link.style.display = possuiPerfil && lojistaAtivo ? "" : "none";
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    exibeDashboardsSidebar();
     exibeCadastroLojista();
+    exibeDashboardsSidebar();
     buscaUsuario(usuario.id);
     exibeStatusLojista()
 });
