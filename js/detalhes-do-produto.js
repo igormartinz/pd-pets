@@ -1,5 +1,8 @@
 import { addProdutoCarrinho } from "./carrinho-api.js";
 
+const usuarioLogado = pegarUsuarioLogado()
+
+
 // Pegar o ID do produto a partir da URL
 
 function pegarProdutoIdUrl() {
