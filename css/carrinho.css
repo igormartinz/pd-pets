@@ -255,3 +255,7 @@ main {
 .link-ver-produtos:hover::before {
     transform: scaleX(1);
 }
+
+.nome-produto-esgotado {
+    font-weight: bold;
+}
