@@ -1,3 +1,5 @@
+import {mostrarToast} from "./toast.js"
+
 const URL_PEDIDOS = 'https://6a98614f7160beda2292eff8.mockapi.io/pedidos';
 const URL_PRODUTOS = 'https://6a98614f7160beda2292eff8.mockapi.io/produtos';
 
@@ -244,4 +246,92 @@ containerEstrelas.addEventListener('mouseleave', function () {
     pintarEstrelas(notaSelecionada);
 });
 
-document.addEventListener('DOMContentLoaded', carregarPedidos);
+let idPedidoParaCancelar = null;
+
+// Atalho para os PUTs desta funcionalidade
+function atualizarRecurso(url, dados) {
+    return fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+    });
+}
+
+function conectarCancelamento() {
+    const modalElemento = document.getElementById('modalCancelarPedido');
+    const botaoConfirmar = document.getElementById('btn-confirmar-cancelamento');
+
+    // Ao abrir, relatedTarget é o botão "Cancelar pedido" que foi clicado dele sai o id do pedido
+    modalElemento.addEventListener('show.bs.modal', function (evento) {
+        idPedidoParaCancelar = evento.relatedTarget?.dataset.pedidoId ?? null;
+    });
+
+    botaoConfirmar.addEventListener('click', () => cancelarPedido(modalElemento, botaoConfirmar));
+}
+
+async function cancelarPedido(modalElemento, botaoConfirmar) {
+    if (!idPedidoParaCancelar) return;
+
+    const pedidoLocal = pedidosDoCliente.find(pedido => pedido.id == idPedidoParaCancelar);
+    if (!pedidoLocal) return;
+
+    let statusParaRestaurar = null; // Só preenchido depois que o pedido foi marcado como cancelado
+
+    try {
+        // Lê o estado atual do pedido e do produto antes de alterar qualquer coisa
+        const [respostaPedido, respostaProduto] = await Promise.all([
+            fetch(`${URL_PEDIDOS}/${pedidoLocal.id}`),
+            fetch(`${URL_PRODUTOS}/${pedidoLocal.produtoID}`)
+        ]);
+
+        if (!respostaPedido.ok || !respostaProduto.ok) {
+            throw new Error('Falha ao consultar o pedido ou o produto');
+        }
+
+        const pedidoAtual = await respostaPedido.json();
+        const produtoAtual = await respostaProduto.json();
+
+        // Marca o pedido como cancelado
+        const respostaCancelamento = await atualizarRecurso(
+            `${URL_PEDIDOS}/${pedidoLocal.id}`,
+            { status: 'Cancelado' }
+        );
+
+        if (!respostaCancelamento.ok) throw new Error('Falha ao cancelar o pedido');
+        statusParaRestaurar = pedidoAtual.status;
+
+        // Devolve a quantidade ao estoque, somando ao valor ATUAL do produto
+        const novoEstoque = Number(produtoAtual.estoque) + Number(pedidoAtual.quantidade);
+        const respostaEstoque = await atualizarRecurso(
+            `${URL_PRODUTOS}/${pedidoAtual.produtoID}`,
+            { estoque: novoEstoque }
+        );
+        if (!respostaEstoque.ok) throw new Error('Falha ao devolver o estoque');
+        statusParaRestaurar = null;
+
+        // Atualiza a tela sem recarregar a página
+        pedidoLocal.status = 'Cancelado';
+        renderizarPagina(paginaAtual);
+        bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+        mostrarToast('Pedido cancelado', `Pedido cancelado com sucesso.`, 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+
+        // O pedido chegou a ser cancelado, mas o estoque não foi devolvido: desfaz o cancelamento
+        if (statusParaRestaurar) {
+            try {
+                await atualizarRecurso(`${URL_PEDIDOS}/${pedidoLocal.id}`, { status: statusParaRestaurar });
+            } catch (erroRestauracao) {
+                console.error(erroRestauracao);
+            }
+        }
+
+        mostrarToast('Erro', 'Não foi possível cancelar o pedido. Tente novamente.', 'erro');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    carregarPedidos();
+    conectarCancelamento();
+});
