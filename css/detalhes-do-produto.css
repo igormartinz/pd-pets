@@ -89,7 +89,6 @@ h3 {
 
 .container-informacoes-superior {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     gap: 12px;
 }
@@ -99,25 +98,22 @@ h3 {
     color: #000000;
     font-weight: bold;
     font-size: clamp(12px, 1.6vw, 18px);
-    min-width: 0;
     overflow-wrap: anywhere;
 }
 
 #btn-favorito {
     outline: none;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 40px;
     height: 40px;
     flex: 0 0 40px;
-    border-radius: 50%;
+    border-radius: 50%; 
     background: #173B37;
     color: #FFFFFF;
     padding: 0;
     cursor: pointer;
     transition: .3s ease;
+    position: relative;
 }
 
 #btn-favorito:hover {
@@ -130,10 +126,10 @@ h3 {
 }
 
 #btn-favorito svg {
-    display: block;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 36%);
 }
 
 .categoria-produto {
@@ -437,7 +433,6 @@ h3 {
     }
 
     .container-informacoes-superior {
-        justify-content: space-between;
         align-items: center;
     }
 
