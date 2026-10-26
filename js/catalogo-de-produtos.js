@@ -3,6 +3,7 @@ import { ligarBotoesCarrinho } from "./carrinho-api.js";
 ligarBotoesCarrinho();
 
 // CATÁLOGO DE PRODUTOS - lógica de listagem, filtro, ordenação, paginação e busca
+import { mostrarToast } from "./toast.js";
 
 const PRODUTOS_POR_PAGINA = 12;
 
@@ -13,6 +14,8 @@ let mapaCategorias = {};
 let paginaAtual = 1;
 let criterioOrdenacaoAtual = null; // guarda a última ordenação escolhida, pra reaplicar após novo filtro
 let termoPesquisaAtual = '';
+let usuarioLogado = null;        // registro completo do usuário logado (ou null se visitante)
+let favoritosUsuario = [];
 
 // Formata um número para o padrão brasileiro.
 function formatarMoeda(valor) {
@@ -50,12 +53,20 @@ async function carregarCatalogo() {
             mapaCategorias[categoria.id] = categoria.nome;
         }
 
+        const sessao = pegarUsuarioLogado();
+
+        if(sessao){
+            usuarioLogado = usuarios.find(usuario => usuario.id == sessao.id);
+            favoritosUsuario = (usuarioLogado?.favoritos ?? []).map(String); 
+        }
+
         // Só produtos "Ativo" entram no catálogo
         todosOsProdutos = produtos.filter(produto => produto.status === 'Ativo');
 
         // Cópia inicial, sem filtro nenhum aplicado ainda
         produtosExibidos = [...todosOsProdutos];
-
+        
+        conectarEventosDeFavoritos();
         popularCategorias(categorias);
         conectarEventosDeFiltro();
         conectarEventosDeOrdenacao();
@@ -126,9 +137,7 @@ function aplicarFiltros() {
     ).map(input => parseInt(input.dataset.estrelas));
 
     // Se várias notas estiverem marcadas, usa a menor como corte mínimo
-    const avaliacaoMinima = avaliacoesSelecionadas.length > 0
-        ? Math.min(...avaliacoesSelecionadas)
-        : null;
+    const avaliacaoMinima = avaliacoesSelecionadas.length > 0 ? Math.min(...avaliacoesSelecionadas) : null;
 
     const termoNormalizado = normalizarTexto(termoPesquisaAtual);
 
@@ -198,6 +207,7 @@ function renderizarCards(produtos) {
     }
 
     for (const produto of produtos) {
+        const favoritado = favoritosUsuario.includes(produto.id);
         const mediaAvaliacoes = calcularMediaAvaliacoes(produto.avaliacoesProduto);
 
         const coluna = document.createElement('div');
@@ -210,7 +220,7 @@ function renderizarCards(produtos) {
                             <i class="ti ti-star-filled"></i>
                             <span>${mediaAvaliacoes ?? ''}</span>
                         </div>
-                        <i class="ti ti-heart ti-heart-icon"></i>
+                        <i class="ti ${favoritado ? 'ti-heart-filled' : 'ti-heart'} ti-heart-icon" data-produto-id="${produto.id}"></i>
 
                         <img src="../img-produtos/${produto.imagemURL[0]}" class="produto-img" alt="${produto.nome}">
 
@@ -230,6 +240,56 @@ function renderizarCards(produtos) {
             `;
 
         container.appendChild(coluna);
+    }
+}
+
+// Um único listener no container cobre todos os cards, inclusive os recriados a cada filtro/página
+function conectarEventosDeFavoritos() {
+    document.getElementById('lista-produtos').addEventListener('click', function (evento) {
+        const coracao = evento.target.closest('.ti-heart-icon');
+        if (!coracao) return;
+
+        evento.preventDefault(); // o coração está dentro do <a>: impede a navegação pros detalhes
+        alternarFavorito(coracao);
+    });
+}
+
+async function alternarFavorito(coracao) {
+    // Visitante: manda pro login
+    if (!usuarioLogado) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const produtoId = String(coracao.dataset.produtoId);
+    const jaFavoritado = favoritosUsuario.includes(produtoId);
+    
+    if(jaFavoritado){
+        mostrarToast('Produto já favoritado', 'Produto já adicionado aos favoritos.', 'erro');
+        return
+    }
+
+    // Monta a nova lista
+    const novaLista = [...favoritosUsuario, produtoId];
+
+    try {
+        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${usuarioLogado.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ favoritos: novaLista })
+        });
+
+        if (!resposta.ok) throw new Error('Falha ao atualizar favoritos');
+
+        // Só atualiza o estado local e o ícone depois que a API confirmou
+        favoritosUsuario = novaLista;
+        coracao.classList.toggle('ti-heart-filled');
+
+        mostrarToast('Favoritado', 'Produto adicionado aos favoritos.', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível atualizar seus favoritos. Tente novamente.', 'erro');
     }
 }
 

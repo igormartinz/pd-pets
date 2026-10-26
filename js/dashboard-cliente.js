@@ -39,6 +39,7 @@ async function buscaUsuario(id) {
 }
 
 const CLASSE_STATUS = {
+    'Aguardando pagamento': 'badge-aguardando-pagamento',
     'Pago': 'text-bg-success',
     'Entregue': 'text-bg-primary',
     'Separando': 'text-bg-warning',
@@ -123,21 +124,6 @@ function renderizarPedidosRecentes(pedidos, mapaProdutos) {
     }
 }
 
-export function exibeDashboardsSidebar() {
-
-    const perfis = usuario.perfil;
-    const linksDashboards = document.querySelectorAll('[data-perfil]');
-
-    linksDashboards.forEach(link => {
-        const perfilNecessario = link.dataset.perfil;
-        const possuiPerfil = perfis.includes(perfilNecessario);
-
-        const lojistaAtivo = perfilNecessario !== "Lojista" || usuario.status === "Ativo";
-
-        link.style.display = possuiPerfil && lojistaAtivo ? "" : "none";
-    });
-}
-
 function exibeCadastroLojista() {
     const botao = document.getElementById('btn-cadastro-lojista');
 
@@ -163,8 +149,51 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.removeItem("statusLojista");
 });
 
+function exibeStatusLojista() {
+    const badge = document.getElementById("status-lojista");
+
+    const icone = badge.querySelector("i");
+    const mensagem = badge.querySelector("p");
+
+    // Oculta o badge por padrão
+    badge.classList.add("d-none");
+    badge.classList.remove("alert-warning", "alert-danger");
+
+    if (usuario.status === "Pendente") {
+        badge.classList.remove("d-none");
+        badge.classList.add("alert-warning");
+
+        icone.className = "ti ti-clock";
+        mensagem.textContent = "Cadastro de lojista em análise";
+
+    } else if (usuario.status === "Inativo") {
+        badge.classList.remove("d-none");
+        badge.classList.add("alert-danger");
+
+        icone.className = "ti ti-alert-circle";
+        mensagem.textContent = "Seu cadastro de lojista está inativo";
+    }
+}
+
+export function exibeDashboardsSidebar() {
+
+    const perfis = usuario.perfil;
+    const linksDashboards = document.querySelectorAll('[data-perfil]');
+
+    linksDashboards.forEach(link => {
+        const perfilNecessario = link.dataset.perfil;
+        const possuiPerfil = perfis.includes(perfilNecessario);
+
+        const lojistaAtivo = perfilNecessario !== "Lojista" || usuario.status === "Ativo";
+
+        link.style.display = possuiPerfil && lojistaAtivo ? "" : "none";
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    exibeDashboardsSidebar();
     exibeCadastroLojista();
+    exibeDashboardsSidebar();
     buscaUsuario(usuario.id);
+    exibeStatusLojista()
 });

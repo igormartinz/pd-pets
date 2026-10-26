@@ -1,12 +1,4 @@
 /* PÁGINA DE PEDIDOS DO CLIENTE */
-
-body {
-    min-height: 100vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 main {
     width: 100%;
     max-width: 1080px;
@@ -41,12 +33,17 @@ main>h1 {
     left: 40px;
 }
 
-#pedidos-cliente {
+#lista-pedidos {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+.link-catalogo{
+    color: var(--cor-salmao);
+    text-decoration: underline;
 }
 
 .container-pedidos-info {
@@ -105,7 +102,7 @@ main>h1 {
 }
 
 .pago {
-    background-color: var(--cor-verde-escuro);
+    background-color: #198754;
 }
 
 .separando {
@@ -168,6 +165,9 @@ main>h1 {
     font-size: 16px;
     color: var(--cor-verde-escuro);
     text-decoration: underline;
+    background-color: transparent;
+    border: none;
+    display: inline-flex;
 }
 
 .container-btns-pedidos-cliente {
@@ -215,7 +215,7 @@ main>h1 {
     background-color: #22514B;
 }
 
-#btnAvaliarProduto {
+.btnAvaliarProduto {
     width: 100%;
     outline: none;
     border: none;
@@ -229,7 +229,7 @@ main>h1 {
     transition: .3s ease;
 }
 
-#btnAvaliarProduto:hover {
+.btnAvaliarProduto:hover {
     background-color: #CF6536;
 }
 
@@ -260,14 +260,14 @@ main>h1 {
 }
 
 @media (min-width: 768px) {
-    #pedidos-cliente {
+    #lista-pedidos{
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media(min-width: 1200px) {
-    #pedidos-cliente {
+    #lista-pedidos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
     }

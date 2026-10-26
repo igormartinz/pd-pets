@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Cliente");</script>
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -20,247 +22,15 @@
 
         <h1>Meus Pedidos</h1>
 
-        <section id="pedidos-cliente">
-            <div class="container-pedidos-info">
-                <div class="header-pedidos-info">
-                    <div class="Id-data-pedidos-info">
-                        <p id="idPedido">#20</p>
+        <!-- LISTAGEM DE PEDIDOS -->
+        <section id="lista-pedidos">
 
-                        <p>Realizado em
-                            <span id="dataPedido">28/08/2026</span>
-                        </p>
-                    </div>
-
-                    <span id="statusProduto" class="aguardando-pagamento">Aguardando pagamento</span>
-                </div>
-
-                <div class="container-central-pedidos-info">
-                    <h2 id="tituloProduto">
-                        Ração Úmida GranPlus Gourmet Sachê
-                    </h2>
-
-                    <div class="container-valor-quantidade">
-                        <div class="valor-produto">
-                            <p>Valor:</p>
-                            <span id="valorProduto">R$ 26,95</span>
-                        </div>
-
-                        <div class="quantidade-produto">
-                            <p>Quantidade:</p>
-                            <span id="quantidadeProduto">5</span>
-                        </div>
-                    </div>
-
-                    <a href="" class="link-fazer-pagamento">Fazer Pagamento</a>
-
-                    <div class="container-btns-pedidos-cliente">
-                        <button id="btnCancelar" data-bs-target="#modalCancelarPedido" data-bs-toggle="modal">Cancelar
-                            pedido</button>
-                        <a href="detalhes-do-produto.html?id=1" id="btnVerDetalhes">Ver detalhes</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="container-pedidos-info">
-                <div class="header-pedidos-info">
-                    <div class="Id-data-pedidos-info">
-                        <p id="idPedido">#28</p>
-
-                        <p>Realizado em
-                            <span id="dataPedido">26/08/2026</span>
-                        </p>
-                    </div>
-
-                    <span id="statusProduto" class="pago">Pago</span>
-                </div>
-
-                <div class="container-central-pedidos-info">
-                    <h2 id="tituloProduto">
-                        Catnip Cansei de Ser Gato Spray 100 ml
-                    </h2>
-
-                    <div class="container-valor-quantidade">
-                        <div class="valor-produto">
-                            <p>Valor:</p>
-                            <span id="valorProduto">R$ 41,99</span>
-                        </div>
-
-                        <div class="quantidade-produto">
-                            <p>Quantidade:</p>
-                            <span id="quantidadeProduto">1</span>
-                        </div>
-                    </div>
-
-                    <div class="container-btns-pedidos-cliente">
-                        <button id="btnCancelar" data-bs-target="#modalCancelarPedido" data-bs-toggle="modal">Cancelar
-                            pedido</button>
-                        <a href="detalhes-do-produto.html?id=1" id="btnVerDetalhes">Ver detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-pedidos-info">
-                <div class="header-pedidos-info">
-                    <div class="Id-data-pedidos-info">
-                        <p id="idPedido">#34</p>
-
-                        <p>Realizado em
-                            <span id="dataPedido">20/08/2026</span>
-                        </p>
-                    </div>
-
-                    <span id="statusProduto" class="separando">Separando</span>
-                </div>
-
-                <div class="container-central-pedidos-info">
-                    <h2 id="tituloProduto">
-                        Coleira Zee.Cat NeoPro Bubblegum Rosa para Gatos
-                    </h2>
-
-                    <div class="container-valor-quantidade">
-                        <div class="valor-produto">
-                            <p>Valor:</p>
-                            <span id="valorProduto">R$ 138,00</span>
-                        </div>
-
-                        <div class="quantidade-produto">
-                            <p>Quantidade:</p>
-                            <span id="quantidadeProduto">2</span>
-                        </div>
-                    </div>
-
-                    <div class="container-btns-pedidos-cliente">
-                        <a href="detalhes-do-produto.html?id=1" id="btnVerDetalhes">Ver detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-pedidos-info">
-                <div class="header-pedidos-info">
-                    <div class="Id-data-pedidos-info">
-                        <p id="idPedido">#46</p>
-
-                        <p>Realizado em
-                            <span id="dataPedido">18/07/2026</span>
-                        </p>
-                    </div>
-
-                    <span id="statusProduto" class="enviado">Enviado</span>
-                </div>
-
-                <div class="container-central-pedidos-info">
-                    <h2 id="tituloProduto">
-                        Cama Caixa Cansei de Ser Gato Preto com Cinza
-                    </h2>
-
-                    <div class="container-valor-quantidade">
-                        <div class="valor-produto">
-                            <p>Valor:</p>
-                            <span id="valorProduto">R$ 249,99</span>
-                        </div>
-
-                        <div class="quantidade-produto">
-                            <p>Quantidade:</p>
-                            <span id="quantidadeProduto">2</span>
-                        </div>
-                    </div>
-
-                    <div class="container-btns-pedidos-cliente">
-                        <a href="detalhes-do-produto.html?id=1" id="btnVerDetalhes">Ver detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-pedidos-info">
-                <div class="header-pedidos-info">
-                    <div class="Id-data-pedidos-info">
-                        <p id="idPedido">#47</p>
-
-                        <p>Realizado em
-                            <span id="dataPedido">10/07/2026</span>
-                        </p>
-                    </div>
-
-                    <span id="statusProduto" class="entregue">Entregue</span>
-                </div>
-                <div class="container-central-pedidos-info">
-
-                    <h2 id="tituloProduto">
-                        Disfarça Comprimido Moldável Happy Med com 12 Unidades
-                    </h2>
-
-                    <div class="container-valor-quantidade">
-                        <div class="valor-produto">
-                            <p>Valor:</p>
-                            <span id="valorProduto">R$ 25,99</span>
-                        </div>
-
-                        <div class="quantidade-produto">
-                            <p>Quantidade:</p>
-                            <span id="quantidadeProduto">1</span>
-                        </div>
-                    </div>
-
-                    <div class="container-btns-pedidos-cliente">
-                        <button id="btnAvaliarProduto" data-bs-toggle="modal" data-bs-target="#modalAvaliarProduto">Avaliar produto</button>
-                        <a href="detalhes-do-produto.html?id=1" id="btnVerDetalhes">Ver detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-pedidos-info">
-                <div class="header-pedidos-info">
-                    <div class="Id-data-pedidos-info">
-                        <p id="idPedido">#56</p>
-
-                        <p>Realizado em
-                            <span id="dataPedido">07/07/2026</span>
-                        </p>
-                    </div>
-
-                    <span id="statusProduto" class="cancelado">Cancelado</span>
-                </div>
-
-                <div class="container-central-pedidos-info">
-                    <h2 id="tituloProduto">
-                        Apoquel Zoetis Dermatológico para Cães 3,6 mg
-                    </h2>
-
-                    <div class="container-valor-quantidade">
-                        <div class="valor-produto">
-                            <p>Valor:</p>
-                            <span id="valorProduto">R$ 164,49</span>
-                        </div>
-
-                        <div class="quantidade-produto">
-                            <p>Quantidade:</p>
-                            <span id="quantidadeProduto">1</span>
-                        </div>
-                    </div>
-
-                    <div class="container-btns-pedidos-cliente">
-                        <a href="detalhes-do-produto.html?id=1" id="btnVerDetalhes">Ver detalhes</a>
-                    </div>
-                </div>
-            </div>
         </section>
 
+        <!-- PAGINAÇÃO -->
         <nav class="mt-4" aria-label="Paginação">
-            <ul class="pagination justify-content-end">
-                <li class="page-item">
-                    <a class="page-link paginacao-seta" href="#" aria-label="Previous">
-                        <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
-                    </a>
-                </li>
-                <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
-                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
-                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link paginacao-seta" href="#" aria-label="Next">
-                        <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
-                    </a>
-                </li>
+            <ul class="pagination justify-content-end rounded-2" id="paginacao">
+
             </ul>
         </nav>
     </main>
@@ -270,11 +40,14 @@
             <div class="modal-content modal-content-cancelar-pedido">
                 <h2 class="modal-titulo">Cancelar pedido</h2>
 
-                <p class="texto-modal-cancelar-pedido">Deseja cancelar esse pedido?</p>
+                <div>
+                    <p class="texto-modal-cancelar-pedido text-center">Deseja cancelar esse pedido?</p>
+                    <p class="texto-modal-cancelar-pedido text-center">Essa ação não pode ser desfeita!</p>
+                </div>
 
                 <div class="container-btns-modal-acoes">
-                    <button type="button" class="btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn-remover">Remover</button>
+                    <button type="button" class="btn-cancelar" data-bs-dismiss="modal">Voltar</button>
+                    <button type="button" id="btn-confirmar-cancelamento" class="btn-remover">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -309,13 +82,19 @@
         </div>
     </div>
 
-    <script src="/js/auth.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const usuarioLogado = verificarAut("Cliente");
-        });
-    </script>
-    <script src="/js/suporte.js"></script>
+    <!-- TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded-1" id="toast-indicador" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2" id="toast-titulo"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-mensagem"></div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/pedidos-cliente.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
