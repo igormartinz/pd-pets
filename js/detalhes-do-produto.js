@@ -1,7 +1,7 @@
 import { addProdutoCarrinho } from "./carrinho-api.js";
+import { mostrarToast } from "./toast.js";
 
 const usuarioLogado = pegarUsuarioLogado()
-
 
 // Pegar o ID do produto a partir da URL
 

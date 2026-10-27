@@ -1,4 +1,5 @@
 import { ligarBotoesCarrinho } from "./carrinho-api.js";
+import { mostrarToast } from "./toast.js";
 
 ligarBotoesCarrinho();
 

@@ -680,3 +680,11 @@ input[type="password"]::-ms-reveal {
     pointer-events: none;
     opacity: .5;
 }
+
+.is-invalid {
+    border-radius: 30px;
+}
+
+.form-control {
+    border-radius: 30px;
+}
