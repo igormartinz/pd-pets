@@ -1,4 +1,4 @@
-import {mostrarToast} from "./toast.js"
+import { mostrarToast } from "./toast.js"
 
 const URL_PEDIDOS = 'https://6a98614f7160beda2292eff8.mockapi.io/pedidos';
 const URL_PRODUTOS = 'https://6a98614f7160beda2292eff8.mockapi.io/produtos';
@@ -114,17 +114,17 @@ async function carregarPedidos() {
             container.innerHTML = '<p class="text-center w-100">Você ainda não realizou um pedido. Aproveite as ofertas e faça já o seu no <a href="/pages/catalogo-de-produtos.html" class="link-catalogo">Catálogo de Produtos</a></p>';
             return;
         }
-        
+
         nomesProdutos = {};
         for (const produto of produtos) {
             nomesProdutos[produto.id] = produto.nome;
         }
-        
+
         // Mais recentes primeiro (data ISO ordena como texto); empate decidido pelo id
         pedidosDoCliente.sort((a, b) => b.data.localeCompare(a.data) || Number(b.id) - Number(a.id));
-        
+
         renderizarPagina(1);
-        
+
     } catch (erro) {
         console.error(erro);
         container.style.display = 'flex';
