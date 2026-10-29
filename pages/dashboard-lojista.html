@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Lojista");</script>
     <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -35,6 +37,12 @@
                             <li><a href="avaliacao-produtos.html"><i class="ti ti-thumb-up"></i></i> Avaliações</a>
                             </li>
                             <li><a href="perfil-loja.html"><i class="ti ti-user"></i> Perfil</a></li>
+                            <li data-perfil="Cliente"><a href="dashboard-cliente.html"><i
+                                        class="ti ti-layout-dashboard"></i> Área do Cliente</a></li>
+                            <li data-perfil="Lojista"><a href="dashboard-lojista.html"><i
+                                        class="ti ti-building-store"></i> Área do Lojista</a></li>
+                            <li data-perfil="Administrador"><a href="dashboard-administrador.html"><i
+                                        class="ti ti-user-cog"></i> </i> Administrativo</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -143,31 +151,36 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">1</span> Bebedouro Fonte de Porcelana Cansei de Ser Gato</th>
+                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">1</span>
+                                    Bebedouro Fonte de Porcelana Cansei de Ser Gato</th>
                                 <td class="text-center">71</td>
                                 <td class="text-center">R$ 21.086,29</td>
                                 <td class="text-center">R$ 296,99</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">2</span> Ração Fórmula Natural Life para Cães</th>
+                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">2</span> Ração
+                                    Fórmula Natural Life para Cães</th>
                                 <td class="text-center">62</td>
                                 <td class="text-center">R$ 14.193,04</td>
                                 <td class="text-center">R$ 228,92</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">3</span> Antipulgas Simparic Trio 6 mg para Cães</th>
+                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">3</span>
+                                    Antipulgas Simparic Trio 6 mg para Cães</th>
                                 <td class="text-center">58</td>
                                 <td class="text-center">R$ 5.422,42</td>
                                 <td class="text-center">R$ 93,49</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">4</span> Brinquedo PD Pets Varinha para Gatos</th>
+                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">4</span>
+                                    Brinquedo PD Pets Varinha para Gatos</th>
                                 <td class="text-center">46</td>
                                 <td class="text-center">R$ 1.149,54</td>
                                 <td class="text-center">R$ 24,99</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">5</span> Fantasia de Coelho Branco Cansei de Ser Gato</th>
+                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">5</span>
+                                    Fantasia de Coelho Branco Cansei de Ser Gato</th>
                                 <td class="text-center">37</td>
                                 <td class="text-center">R$ 1.665,00</td>
                                 <td class="text-center">R$ 45,00</td>
@@ -179,12 +192,7 @@
         </div>
     </div>
 
-    <script src="/js/auth.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const usuarioLogado = verificarAut("lojista");
-        });
-    </script>
+    <script src="/js/dashboard-lojista.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>

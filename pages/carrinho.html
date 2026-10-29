@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Cliente");</script>
     <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -67,124 +69,29 @@
 
         <div class="row g-3">
             <div class="col-12 col-lg-8">
-                <section class="lista-produtos row g-2">
-                    <div class="col-12">
-                        <article class="item-carrinho d-flex gap-2 w-100">
-                            <img src="/img/ração-granplus-choice.png" class="img-item" alt="Ração">
-                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="min-w-0">
-                                        <h3 class="nome-produto text-truncate mb-1">Ração Úmida GranPlus</h3>
-                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
-                                                5,39</span></p>
-                                    </div>
-                                    <button class="align-self-start botao-lixeira" data-bs-toggle="modal"
-                                        data-bs-target="#modalExcluir"><i class="ti ti-trash"></i></button>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="preco-total-produto m-0">R$ 26,95</p>
-                                    <div class="d-flex gap-3 align-items-center">
-                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
-                                        <p class="quantidade-produto m-0">5</p>
-                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-12">
-                        <article class="item-carrinho d-flex gap-2 w-100">
-                            <img src="/img/arranhador-lilopety-retangular.png" class="img-item" alt="Ração">
-                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="min-w-0">
-                                        <h3 class="nome-produto text-truncate mb-1">Catnip Cansei de Ser Gato</h3>
-                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
-                                                41,99</span></p>
-                                    </div>
-                                    <button class="align-self-start botao-lixeira"><i class="ti ti-trash"></i></button>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="preco-total-produto m-0">R$ 41,99</p>
-                                    <div class="d-flex gap-3 align-items-center">
-                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
-                                        <p class="quantidade-produto m-0">1</p>
-                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-12">
-                        <article class="item-carrinho d-flex gap-2 w-100">
-                            <img src="/img/fortekor-mg-elanco.png" class="img-item" alt="Ração">
-                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="min-w-0">
-                                        <h3 class="nome-produto text-truncate mb-1">Coleira Zee.Cat NeoPro</h3>
-                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
-                                                69,00</span></p>
-                                    </div>
-                                    <button class="align-self-start botao-lixeira"><i class="ti ti-trash"></i></button>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="preco-total-produto m-0">R$ 138,00</p>
-                                    <div class="d-flex gap-3 align-items-center">
-                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
-                                        <p class="quantidade-produto m-0">2</p>
-                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-12">
-                        <article class="item-carrinho d-flex gap-2 w-100">
-                            <img src="/img/cabana-fabrica-pet.png" class="img-item" alt="Ração">
-                            <div class="conteudo-item d-flex flex-column justify-content-between w-100">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="min-w-0">
-                                        <h3 class="nome-produto text-truncate mb-1">Cama Caixa Cansei</h3>
-                                        <p class="preco-unitario-produto text-truncate m-0">Preço unitário: <span>R$
-                                                249,99</span></p>
-                                    </div>
-                                    <button class="align-self-start botao-lixeira"><i class="ti ti-trash"></i></button>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="preco-total-produto m-0">R$ 249,99</p>
-                                    <div class="d-flex gap-3 align-items-center">
-                                        <button class="botao-quantidade"><i class="ti ti-plus"></i></button>
-                                        <p class="quantidade-produto m-0">1</p>
-                                        <button class="botao-quantidade"><i class="ti ti-minus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                <section class="lista-produtos row g-2" id="lista-carrinho">
                 </section>
             </div>
+
             <div class="col-12 col-lg-4">
                 <section class="resumo-compra">
                     <h2 class="titulo-resumo-compra">Resumo da compra</h2>
 
                     <dl>
                         <div class="d-flex align-items-center justify-content-between">
-                            <dt class="produtos-totais">Produtos (4)</dt>
-                            <dd class="valor-total-produtos">R$456,93</dd>
+                            <dt class="produtos-totais" id="resumo-produtos-titulo">Produtos ()</dt>
+                            <dd class="valor-total-produtos" id="resumo-produtos-valor"></dd>
                         </div>
                         <div class="d-flex alignx-items-center justify-content-between">
-                            <dt class="taxa-servicos">Taxa de serviço</dt>
-                            <dd class="taxa-servicos">R$ 2,00</dd>
                         </div>
                     </dl>
                     <hr>
                     <div class="d-flex align-items-center justify-content-between">
                         <dt class="valor-total">Total</dt>
-                        <dd class="valor-total-final">R$458,93</dd>
+                        <dd class="valor-total-final" id="resumo-total"></dd>
                     </div>
 
-                    <button class="botao w-100 mt-3 px-1" data-bs-toggle="modal"
-                        data-bs-target="#modalFinalizar">Continuar
+                    <button class="botao w-100 mt-3 px-1" data-bs-target="#modalFinalizar" id="btn-finalizar">Continuar
                         para finalização</button>
                 </section>
             </div>
@@ -232,11 +139,11 @@
     <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="modalExcluir" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content p-3 rounded-3">
-                <h2 class="modal-titulo-excluir fs-5 text-center" id="modalExcluir">Excluir produto</h2>
-                <p class="text-center">Tem certeza que quer excluir este produto do seu carrinho?</p>
+                <h2 class="modal-titulo-excluir fs-5 text-center" id="titulo-modal-excluir">Excluir produto</h2>
+                <p class="text-center">Desejo remover esse produto?</p>
                 <div class="d-flex align-items-center justify-content-center gap-2">
                     <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="botao px-0 w-50">Remover</button>
+                    <button type="button" class="botao px-0 w-50" id="btn-confirmar-remocao">Remover</button>
                 </div>
             </div>
         </div>
@@ -250,20 +157,16 @@
                 <article>
                     <dl class="m-0">
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                            <dt class="finalizacao-texto-destaque">Produtos (4)</dt>
-                            <dd class="m-0">R$456,93</dd>
+                            <dt class="finalizacao-texto-destaque" id="finalizar-produtos-titulo">Produtos ()</dt>
+                            <dd class="m-0" id="finalizar-produtos-valor"></dd>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-1">
                             <dt class="finalizacao-texto-destaque">Frete</dt>
                             <dd class="m-0">Grátis</dd>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt class="finalizacao-texto-destaque">Taxa de serviço</dt>
-                            <dd class="m-0">R$ 2,00</dd>
-                        </div>
                         <div class="d-flex align-items-center justify-content-between  mt-3">
                             <dt class="finalizacao-texto-destaque">Total da compra</dt>
-                            <dd class="finalizacao-texto-destaque">R$ 458,93</dd>
+                            <dd class="finalizacao-texto-destaque" id="finalizar-total"></dd>
                         </div>
                     </dl>
                 </article>
@@ -271,8 +174,8 @@
                 <article>
                     <h3 class="finalizacao-texto-destaque">Endereço principal</h3>
                     <div>
-                        <p class="m-0">Rua das Acácias, 145 Vila Madalena</p>
-                        <p>São Paulo - São Paulo, 05433-010</p>
+                        <p class="m-0" id="finalizar-endereco-linha-1">Rua das Acácias, 145 Vila Madalena</p>
+                        <p id="finalizar-endereco-linha-2">São Paulo - São Paulo, 05433-010</p>
                     </div>
                     <a href="perfil-cliente.html" class="link-gerenciar-enderecos">Gerenciar endereços</a>
                 </article>
@@ -281,33 +184,31 @@
                     <h3 class="finalizacao-texto-destaque">Forma de pagamento</h3>
                     <form class="d-flex flex-column gap-2">
                         <div class="d-flex align-items-center justify-content-start gap-2">
-                            <input type="radio" name="pagamento" id="pix">
-                            <label data-bs-toggle="modal" data-bs-target="#modalPix" class="finalizacao-texto-destaque"
-                                for="pix"><img src="../img/pix.svg" alt="Símbolo de pix"> Pix</label>
+                            <input type="radio" name="pagamento" id="pix" value="modalPix">
+                            <label class="finalizacao-texto-destaque" for="pix"><img src="../img/pix.svg"
+                                    alt="Símbolo de pix"> Pix</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-start gap-2">
-                            <input type="radio" name="pagamento" id="credito">
-                            <label data-bs-toggle="modal" data-bs-target="#modalCredito"
-                                class="finalizacao-texto-destaque" for="credito"><img src="../img/credito.svg"
+                            <input type="radio" name="pagamento" id="credito" value="modalCredito">
+                            <label class="finalizacao-texto-destaque" for="credito"><img src="../img/credito.svg"
                                     alt="Símbolo de cartão de crédito">
                                 Cartão de Crédito</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-start gap-2">
-                            <input type="radio" name="pagamento" id="debito">
-                            <label data-bs-toggle="modal" data-bs-target="#modalDebito"
-                                class="finalizacao-texto-destaque" for="debito"><img src="../img/debito.svg"
+                            <input type="radio" name="pagamento" id="debito" value="modalDebito">
+                            <label class="finalizacao-texto-destaque" for="debito"><img src="../img/debito.svg"
                                     alt="Símbolo de cartão de débito"> Cartão
                                 de Débito</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-start gap-2">
-                            <input type="radio" name="pagamento" id="boleto">
-                            <label data-bs-toggle="modal" data-bs-target="#modalBoleto"
-                                class="finalizacao-texto-destaque" for="boleto"><img src="../img/boleto.svg"
+                            <input type="radio" name="pagamento" id="boleto" value="modalBoleto">
+                            <label class="finalizacao-texto-destaque" for="boleto"><img src="../img/boleto.svg"
                                     alt="Símbolo de boleto"> Boleto</label>
                         </div>
 
                         <div class="d-flex flex-column gap-2 mt-4">
-                            <button type="button" class="botao px-0 w-100">Continuar pagamento</button>
+                            <button type="button" class="botao px-0 w-100" id="btn-continuar-pagamento">Continuar
+                                pagamento</button>
                             <button type="button" class="botao-secundario px-0 w-100"
                                 data-bs-dismiss="modal">Cancelar</button>
                         </div>
@@ -330,7 +231,7 @@
                         readonly>
                 </div>
                 <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
-                    <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                    <button type="button" class="botao px-0 w-100 btn-confirmar-pagamento">Confirmar pagamento</button>
                     <button type="button" class="botao-secundario px-0 w-100" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -345,11 +246,11 @@
                 <img src="../img/codigo-barras.png" class="img-qr-code my-4" alt="QR Code">
                 <p class="text-center my-2">Escaneie o código de barras ou copie o código</p>
                 <div class="input-border">
-                    <input type="text" id="codigo-pix" class="p-2 form-control input-contato"
+                    <input type="text" id="codigo-boleto" class="p-2 form-control input-contato"
                         value="34191.09008 12345.678901 23456.789012 3" readonly>
                 </div>
                 <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
-                    <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                    <button type="button" class="botao px-0 w-100 btn-confirmar-pagamento">Confirmar pagamento</button>
                     <button type="button" class="botao-secundario px-0 w-100" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -363,41 +264,42 @@
                 <h2 class="modal-titulo-pagamento mb-3">Pagamento via Cartão de Crédito</h2>
                 <form class="d-flex flex-column gap-2">
                     <div class="d-flex flex-column campo-input w-100">
-                        <label for="numero">Número do cartão</label>
+                        <label for="credito-numero">Número do cartão</label>
                         <div class="input-border">
-                            <input type="text" name="numero" class="form-control input-contato" id="numero"
-                                placeholder="0000 0000 0000 0000">
+                            <input type="text" name="numero" class="form-control input-contato" id="credito-numero"
+                                placeholder="0000 0000 0000 0000" required>
                         </div>
                     </div>
                     <div class="d-flex flex-column campo-input w-100">
-                        <label for="nome-impresso">Nome impresso no cartão</label>
+                        <label for="credito-nome-impresso">Nome impresso no cartão</label>
                         <div class="input-border">
                             <input type="text" name="nome-impresso" class="form-control input-contato"
-                                id="nome-impresso" placeholder="Digite o nome impresso no cartão">
+                                id="credito-nome-impresso" placeholder="Digite o nome impresso no cartão" required>
                         </div>
                     </div>
                     <div class="row gy-2">
                         <div class="col-12 col-md-6">
                             <div class="d-flex flex-column campo-input w-100">
-                                <label for="validade">Data de validade</label>
+                                <label for="credito-validade">Data de validade</label>
                                 <div class="input-border">
-                                    <input type="text" name="validade" class="form-control input-contato" id="validade"
-                                        placeholder="MM/AA">
+                                    <input type="text" name="validade" class="form-control input-contato"
+                                        id="credito-validade" placeholder="MM/AA" required>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="d-flex flex-column campo-input w-100">
-                                <label for="cvv">CVV</label>
+                                <label for="credito-cvv">CVV</label>
                                 <div class="input-border">
-                                    <input type="text" name="cvv" class="form-control input-contato" id="cvv"
-                                        placeholder="000">
+                                    <input type="text" name="cvv" class="form-control input-contato" id="credito-cvv"
+                                        placeholder="000" required>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
-                        <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                        <button type="button" class="botao px-0 w-100 btn-confirmar-pagamento">Confirmar
+                            pagamento</button>
                         <button type="button" class="botao-secundario px-0 w-100"
                             data-bs-dismiss="modal">Cancelar</button>
                     </div>
@@ -413,41 +315,42 @@
                 <h2 class="modal-titulo-pagamento mb-3">Pagamento via Cartão de Débito</h2>
                 <form class="d-flex flex-column gap-2">
                     <div class="d-flex flex-column campo-input w-100">
-                        <label for="numero">Número do cartão</label>
+                        <label for="debito-numero">Número do cartão</label>
                         <div class="input-border">
-                            <input type="text" name="numero" class="form-control input-contato" id="numero"
-                                placeholder="0000 0000 0000 0000">
+                            <input type="text" name="numero" class="form-control input-contato" id="debito-numero"
+                                placeholder="0000 0000 0000 0000" required>
                         </div>
                     </div>
                     <div class="d-flex flex-column campo-input w-100">
-                        <label for="nome-impresso">Nome impresso no cartão</label>
+                        <label for="debito-nome-impresso">Nome impresso no cartão</label>
                         <div class="input-border">
                             <input type="text" name="nome-impresso" class="form-control input-contato"
-                                id="nome-impresso" placeholder="Digite o nome impresso no cartão">
+                                id="debito-nome-impresso" placeholder="Digite o nome impresso no cartão" required>
                         </div>
                     </div>
                     <div class="row gy-2">
                         <div class="col-12 col-md-6">
                             <div class="d-flex flex-column campo-input w-100">
-                                <label for="validade">Data de validade</label>
+                                <label for="debito-validade">Data de validade</label>
                                 <div class="input-border">
-                                    <input type="text" name="validade" class="form-control input-contato" id="validade"
-                                        placeholder="MM/AA">
+                                    <input type="text" name="validade" class="form-control input-contato"
+                                        id="debito-validade" placeholder="MM/AA" required>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="d-flex flex-column campo-input w-100">
-                                <label for="cvv">CVV</label>
+                                <label for="debito-cvv">CVV</label>
                                 <div class="input-border">
-                                    <input type="text" name="cvv" class="form-control input-contato" id="cvv"
-                                        placeholder="000">
+                                    <input type="text" name="cvv" class="form-control input-contato" id="debito-cvv"
+                                        placeholder="000" required>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex flex-column flex-md-row-reverse gap-2 mt-4">
-                        <button type="button" class="botao px-0 w-100">Confirmar pagamento</button>
+                        <button type="button" class="botao px-0 w-100 btn-confirmar-pagamento">Confirmar
+                            pagamento</button>
                         <button type="button" class="botao-secundario px-0 w-100"
                             data-bs-dismiss="modal">Cancelar</button>
                     </div>
@@ -456,11 +359,24 @@
         </div>
     </div>
 
-    <script src="/js/auth.js"></script>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div id="toast-indicador" class="rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong id="toast-titulo" class="me-auto ms-2"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+            </div>
+            <div id="toast-mensagem" class="toast-body"></div>
+        </div>
+    </div>
+
     <script src="../js/pesquisa-catalogo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="../js/pesquisa-catalogo.js"></script>
+    <script type="module" src="/js/carrinho.js"></script>
+    <script type="module" src="/js/carrinho-api.js"></script>
 </body>
 
 </html>

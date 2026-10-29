@@ -1,12 +1,8 @@
 // chave usada no localStorage
 const CHAVE_SESSAO = "usuarioLogado";
 
-// Direcionamento para os dashboards
-const DASHBOARDS = {
-    cliente: "/pages/dashboard-cliente.html",
-    lojista: "/pages/dashboard-lojista.html",
-    administrador: "/pages/dashboard-administrador.html"
-};
+const LOGIN = "/pages/login.html";
+const DASHBOARD_CLIENTE = "/pages/dashboard-cliente.html";
 
 // Recupera os dados do usuário autenticado, transformando os dados em formato JSON ou se não houver, nulo.
 
@@ -15,18 +11,21 @@ function pegarUsuarioLogado() {
     return dados ? JSON.parse(dados) : null;
 }
 
-// Retorna o dashboard do usuário conforme o seu devido perfil logado
+// replace() não deixa a página no histórico, o botão Voltar não leva de volta a ela.
+function redirecionar(destino) {
+    window.location.replace(destino);
+    return null;
+}
 
-function pegarDashboardUsuario() {
-    const usuario = pegarUsuarioLogado();
-    if (!usuario) return "/pages/login.html";
-    return DASHBOARDS[usuario.perfil] ?? "/pages/login.html";
-
+// Destino padrão de quem tentou acessar uma página sem permissão, o dashboard de cliente, caso não houver usuario, vai para Login
+function irParaDashboardCliente(usuario) {
+    return redirecionar(usuario.perfil.includes("Cliente") ? DASHBOARD_CLIENTE : LOGIN);
 }
 
 // Proteção de rota conforme o perfil do usuário
 
 function verificarAut(perfilValido) {
+
     const usuario = pegarUsuarioLogado();
 
     // Não autenticado manda pra página de login
@@ -35,11 +34,19 @@ function verificarAut(perfilValido) {
         window.location.href = "/pages/login.html";
         return null;
     }
-    // Autenticado mas com o perfil errado pra página, manda pro login
 
-    if (perfilValido && usuario.perfil !== perfilValido) {
-        window.location.href = "/pages/login.html";
-        return null;
+    // Verifica se possui o perfil exigido
+
+    if (!usuario.perfil.includes(perfilValido)) {
+        return irParaDashboardCliente(usuario);
+    }
+
+    // Verifica se o lojista foi aprovado
+
+    if (perfilValido === "Lojista" && usuario.status !== "Ativo") {
+        sessionStorage.setItem("statusLojista", usuario.status);
+
+        return irParaDashboardCliente(usuario);
     }
 
     return usuario;
@@ -52,5 +59,5 @@ function logOut() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const linkPerfil = document.getElementById("link-perfil");
-    if (linkPerfil) linkPerfil.href = pegarDashboardUsuario();
+    if (linkPerfil) linkPerfil.href = "dashboard-cliente.html";
 });

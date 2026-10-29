@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Lojista");</script>
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/perfil-loja.css">
+    <title>PD Pets | Perfil</title>
+</head>
+
+<body>
+    <main>
+        <a href="dashboard-lojista.html" class="botao-secundario btn-voltar px-5">Voltar</a>
+
+        <section id="section-perfil-loja">
+            <h2>Perfil da Loja</h2>
+
+            <section id="section-perfil-loja-conteudo">
+                <section id="section-form-dados-perfil">
+                    <div class="perfil-header">
+                        <div class="circulo-perfil">
+                            <p class="abrev-nome">CG</p>
+                        </div>
+
+                        <div class="nome-e-email-perfil">
+                            <h3 class="nome-loja">Cansei de Ser Gato</h3>
+                            <p class="email-loja">empresa@gmail.com</p>
+                        </div>
+
+                        <div class="container-btns-perfil">
+                            <button class="botao" id="btn-editar-perfil">Editar</button>
+                            <button type="button" class="botao d-none" id="btn-salvar-perfil">Salvar</button>
+                        </div>
+                    </div>
+
+
+                    <form class="d-flex flex-column form-perfil-loja">
+                        <div class="campo-dados-perfil">
+                            <label for="nome-empresa">Nome da empresa</label>
+                            <div>
+                                <input class="input-dados-perfil" type="text" id="nome-empresa"
+                                    placeholder="Cansei de Ser Gato" readonly="true">
+                            </div>
+                        </div>
+
+                        <div class="campo-dados-perfil">
+                            <label for="nome-responsavel">Nome do responsável</label>
+                            <div>
+                                <input class="input-dados-perfil" type="text" id="nome-responsavel"
+                                    placeholder="Mateus Cristiano" readonly="true">
+                            </div>
+                        </div>
+
+                        <div class="campo-dados-perfil">
+                            <label for="CNPJ">CNPJ</label>
+                            <div>
+                                <input class="input-dados-perfil" type="text" id="CNPJ" placeholder="38.519.484/0001-52"
+                                    readonly="true">
+                            </div>
+                        </div>
+
+                        <div class="campo-dados-perfil">
+                            <label for="telefone">Telefone</label>
+                            <div>
+                                <input class="input-dados-perfil" type="tel" id="telefone" placeholder="(31) 99999-0000"
+                                    readonly="true">
+                            </div>
+                        </div>
+
+                        <div class="campo-dados-perfil">
+                            <label for="email">E-mail</label>
+                            <div>
+                                <input class="input-dados-perfil" type="password" id="email"
+                                    placeholder="empresa@gmail.com" readonly="true">
+                            </div>
+                        </div>
+
+                        <button type="button" class="d-none" id="btn-cancelar-perfil">Cancelar</button>
+                    </form>
+                </section>
+
+                <div class="container-image-perfil-loja">
+                    <figure>
+                        <img src="/img/img-background-perfil-loja.webp" alt="Imagem de fundo com a pata de um cachorro"
+                            class="img-background-perfil-loja">
+                        <figcaption>Imagem de fundo com a pata de um cachorro</figcaption>
+                    </figure>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script type="module" src="/js/perfil-loja.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

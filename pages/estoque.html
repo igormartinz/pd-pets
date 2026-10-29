@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Lojista");</script>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/estoque.css">
+    <title>PD Pets | Estoque</title>
+</head>
+
+<body>
+    <main>
+        <a href="dashboard-lojista.html" class="botao-secundario btn-voltar px-5">Voltar</a>
+
+        <section id="section-estoque">
+            <div class="container-header-estoque">
+                <h2>Estoque</h2>
+
+                <form class="d-flex" role="search" id="form-pesquisa">
+                    <input type="search" class="input-pesquisa" id="input-pesquisa"
+                        placeholder="O que você procura hoje?">
+                    <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
+                </form>
+
+                <div class="container-tabela-btns-header">
+                    <button class="botao" id="btn-categorias">
+                        Categorias
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-category">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 4h6v6h-6l0 -6" />
+                            <path d="M14 4h6v6h-6l0 -6" />
+                            <path d="M4 14h6v6h-6l0 -6" />
+                            <path d="M14 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                        </svg>
+                    </button>
+
+                    <button class="botao" id="btn-cadastrar-produto" data-bs-target="#modalCriarProduto"
+                        data-bs-toggle="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 5l0 14" />
+                            <path d="M5 12l14 0" />
+                        </svg>
+
+                        Cadastrar produto
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive tabela-estoque">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="titulos-tabela-estoque">Nome do produto</th>
+                            <th scope="col" class="titulos-tabela-estoque">Categoria</th>
+                            <th scope="col" class="titulos-tabela-estoque">Preço</th>
+                            <th scope="col" class="titulos-tabela-estoque">Estoque</th>
+                            <th scope="col" class="titulos-tabela-estoque">Status</th>
+                            <th scope="col" class="titulos-tabela-estoque">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Ração Úmida GranPlus Gourmet Sachê
+                            </td>
+                            <td>Ração e Petiscos</td>
+                            <td>R$ 3,39</td>
+                            <td class="coluna-tabela-centro">23</td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Catnip Chalesco Erva para Gatos
+                            </td>
+                            <td>Medicamentos</td>
+                            <td>R$ 22,87</td>
+                            <td class="coluna-tabela-centro">45</td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Cama Caixa Cansei de Ser Gato Cinza com Amarelo
+                            </td>
+                            <td>Camas e Casinhas</td>
+                            <td>R$ 249,99</td>
+                            <td class="coluna-tabela-centro"><span class="estoque-esgotado">Esgotado</span></td>
+                            <td class="coluna-tabela-centro"><span class="status-inativo">Inativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Baytril Flavour 15mg com 10 comprimidoss
+                            </td>
+                            <td>Medicamentos</td>
+                            <td>R$ 25,99</td>
+                            <td class="coluna-tabela-centro">33</td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Coleira Zee.Cat NeoPro Bubblegum Rosa para Gatos
+                            </td>
+                            <td>Acessórios</td>
+                            <td>R$ 69,00</td>
+                            <td class="coluna-tabela-centro">2</td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Apoquel Zoetis Dermatológico para Cães 5,4 mg
+                            </td>
+                            <td>Medicamentos</td>
+                            <td>R$ 179,19</td>
+                            <td class="coluna-tabela-centro">75</td>
+                            <td class="coluna-tabela-centro"><span class="status-inativo">Inativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Fantasia de Dinossauro Cansei de Ser Gato Roxa
+                            </td>
+                            <td>Roupas</td>
+                            <td>R$ 94,99</td>
+                            <td class="coluna-tabela-centro"><span class="estoque-esgotado">Esgotado</span></td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate">
+                                Brinquedo Caça Petisco Interativo Cansei de Ser Gato
+                            </td>
+                            <td>Brinquedos</td>
+                            <td>R$ 62,99</td>
+                            <td class="coluna-tabela-centro">26</td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="corpo-tabela-linha">
+                            <td scope="row" class="text-truncate unidade-tabela-border-radius-esquerda">
+                                Tapete Higiênico Fresh Pads Jumbo M para Cães
+                            </td>
+                            <td>Higiene</td>
+                            <td>R$ 76,34</td>
+                            <td class="coluna-tabela-centro">20</td>
+                            <td class="coluna-tabela-centro"><span class="status-ativo">Ativo</span></td>
+                            <td class="coluna-tabela-centro unidade-tabela-border-radius-direita">
+                                <div class="acoes-tabela">
+                                    <button class="btn-pencil" data-bs-target="#modalEditarProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-pencil" style="font-size: 24px;"></i>
+                                    </button>
+                                    <button class="btn-trash" data-bs-target="#modalExcluirProduto"
+                                        data-bs-toggle="modal">
+                                        <i class="ti ti-trash" style="font-size: 24px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <nav class="mt-4" aria-label="Paginação">
+                <ul class="pagination justify-content-end rounded-2" id="paginacao">
+
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+    <div class="modal fade" id="modalExcluirProduto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-excluir-produto">
+                <h2 class="modal-titulo">Excluir produto</h2>
+
+                <p class="texto-modal-excluir-produto">Tem certeza que deseja excluir este produto?</p>
+
+                <div class="container-btns-modal-acoes">
+                    <button type="button" class="botao-secundario" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="botao" id="btn-confirmar-exclusao-produto">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalCriarProduto" tabindex="-1" aria-labelledby="titulo-modal-criar-produto"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-criar-produto">
+                <form class="form-modal-produto" id="form-produto" novalidate>
+                    <h2 class="modal-titulo mb-3" id="titulo-modal-produto">Criar produto</h2>
+                    <div class="container-colunas">
+                        <div class="input-grupo">
+                            <label for="prod-nome">Nome</label>
+                            <div class="input-border">
+                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto">
+                            </div>
+                        </div>
+
+                        <div class="container-groups-colunas">
+                            <div class="input-grupo">
+                                <label for="prod-categoria">Categoria</label>
+                                <div class="input-border">
+                                    <select class="form-select" id="prod-categoria" name="categoria" required>
+                                        <option value="1">Ração e petiscos</option>
+                                        <option value="2">Higiene</option>
+                                        <option value="3">Brinquedos</option>
+                                        <option value="4">Acessórios</option>
+                                        <option value="5">Medicamentos</option>
+                                        <option value="6">Roupas</option>
+                                        <option value="7">Camas e Casinhas</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-preço">Preço</label>
+                                <div class="input-border">
+                                    <input type="number" class="form-control" id="prod-preço" placeholder="R$ 0,00">
+                                </div>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-estoque">Estoque</label>
+                                <div class="input-border">
+                                    <input type="text" class="form-control" id="prod-estoque" placeholder="0"
+                                        maxlength="3">
+                                </div>
+                            </div>
+
+                            <div class="checkbox-btn-status">
+                                <input type="checkbox" id="prod-status">
+                                <label for="prod-status">Produto ativo</label>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-descricao">Descrição</label>
+                                <div class="input-border">
+                                    <textarea class="form-control" name="descricao" id="prod-descricao" rows="5"
+                                        placeholder="Descrição do produto"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-imagem">imagem</label>
+
+                                <label class="area-upload" id="area-upload">
+                                    <input type="file" id="prod-imagem" name="imagem"
+                                        accept="image/png, image/jpeg, image/webp" class="visually-hidden">
+
+                                    <svg class="borda-upload" aria-hidden="true">
+                                        <rect width="100%" height="100%" rx="10" ry="10" />
+                                    </svg>
+
+                                    <div class="conteudo-upload">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-cloud-upload preview-icon">
+                                            <path d="M12 13v8" />
+                                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                            <path d="m8 17 4-4 4 4" />
+                                        </svg>
+                                        <p>Arraste a imagem ou clique aqui</p>
+                                    </div>
+
+                                    <p class="txt-capacidade-upload">PNG, JPG até 10mb</p>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-btns-modal-produto mt-4">
+                        <div class="container-btns-modal-produto-acoes">
+                            <button type="button" class="botao-secundario" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="botao" id="btn-salvar-produto">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditarProduto" tabindex="-1" aria-labelledby="titulo-modal-editar-produto"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-criar-produto">
+                <form class="form-modal-produto" id="form-produto" novalidate>
+                    <h2 class="modal-titulo mb-3" id="titulo-modal-produto">Editar produto</h2>
+                    <div class="container-colunas">
+                        <div class="input-grupo">
+                            <label for="prod-nome">Nome</label>
+                            <div class="input-border">
+                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto" value="Ração Úmida GranPlus Gourmet Sachê">
+                            </div>
+                        </div>
+
+                        <div class="container-groups-colunas">
+                            <div class="input-grupo">
+                                <label for="prod-categoria">Categoria</label>
+                                <div class="input-border">
+                                    <select class="form-select" id="prod-categoria" name="categoria" required>
+                                        <option value="1">Ração e petiscos</option>
+                                        <option value="2">Higiene</option>
+                                        <option value="3">Brinquedos</option>
+                                        <option value="4">Acessórios</option>
+                                        <option value="5">Medicamentos</option>
+                                        <option value="6">Roupas</option>
+                                        <option value="7">Camas e Casinhas</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-preço">Preço</label>
+                                <div class="input-border">
+                                    <input type="text" class="form-control" id="prod-preço" placeholder="R$ 0,00" value="3,39">
+                                </div>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-estoque">Estoque</label>
+                                <div class="input-border">
+                                    <input type="text" class="form-control" id="prod-estoque" placeholder="0"
+                                        maxlength="3" value="23">
+                                </div>
+                            </div>
+
+                            <div class="checkbox-btn-status">
+                                <input type="checkbox" id="prod-status">
+                                <label for="prod-status">Produto ativo</label>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-descricao">Descrição</label>
+                                <div class="input-border">
+                                    <textarea class="form-control" name="descricao" id="prod-descricao" rows="5"
+                                        placeholder="Descrição do produto">A ração Gran Plus para cachorro adulto é um alimento úmido completo desenvolvido para oferecer nutrição balanceada e sabor irresistível. A fórmula com ingredientes selecionados garante melhor digestão, pelagem</textarea>
+                                </div>
+                            </div>
+
+                            <div class="input-grupo">
+                                <label for="prod-imagem">imagem</label>
+
+                                <label class="area-upload" id="area-upload">
+                                    <input type="file" id="prod-imagem" name="imagem"
+                                        accept="image/png, image/jpeg, image/webp" class="visually-hidden">
+
+                                    <svg class="borda-upload" aria-hidden="true">
+                                        <rect width="100%" height="100%" rx="10" ry="10" />
+                                    </svg>
+
+                                    <div class="conteudo-upload">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-cloud-upload preview-icon">
+                                            <path d="M12 13v8" />
+                                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                            <path d="m8 17 4-4 4 4" />
+                                        </svg>
+                                        <p>Arraste a imagem ou clique aqui</p>
+                                    </div>
+
+                                    <p class="txt-capacidade-upload">PNG, JPG até 10mb</p>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-btns-modal-produto mt-4">
+                        <div class="container-btns-modal-produto-acoes">
+                            <button type="button" class="botao-secundario" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="botao" id="btn-salvar-produto">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

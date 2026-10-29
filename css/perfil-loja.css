@@ -1,0 +1,214 @@
+body {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+figcaption {
+    display: none;
+}
+
+p,
+h2,
+h3 {
+    margin-bottom: 0 !important;
+}
+
+main {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(60px, 8vw, 120px) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.btn-voltar {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+}
+
+#section-perfil-loja {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+#section-perfil-loja-conteudo {
+    width: 100%;
+    max-width: 880px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    margin: 20px auto;
+}
+
+#section-perfil-loja h2 {
+    font-family: var(--fonte-poppins);
+    font-weight: 550;
+    font-size: 32px;
+}
+
+#section-form-dados-perfil {
+    flex: 1;
+    min-width: 430px;
+    min-height: 500px;
+    background-color: #FAF8F2;
+    border-radius: 30px;
+    padding: 20px 0px 0px 0px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .25);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+#section-form-dados-perfil:not(.editando) .form-perfil-loja {
+    padding-bottom: 20px;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-verde-escuro);
+    padding: 0px 0 20px 0;
+    margin: 0 20px;
+}
+
+.circulo-perfil {
+    width: 80px;
+    height: 80px;
+    background-color: #198754;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.abrev-nome {
+    font-family: var(--fonte-poppins);
+    font-weight: 550;
+    font-size: clamp(16px, 1.38vw, 20px);
+    color: var(--cor-branco-amarelado);
+}
+
+.nome-e-email-perfil {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.nome-loja {
+    font-family: var(--fonte-poppins);
+    font-weight: 550;
+    font-size: clamp(14px, 1.38vw, 20px);
+    color: var(--cor-cinza);
+}
+
+.email-loja {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: clamp(12px, 1.11vw, 16px);
+    color: #9c9b9b;
+}
+
+.form-perfil-loja {
+    flex: 1;
+    justify-content: space-between;
+    padding-top: 10px;
+    gap: 15px;
+}
+
+.campo-dados-perfil {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: clamp(14px, 1.5vw, 16px);
+    color: var(--cor-cinza);
+    padding: 0px 20px 0 20px;
+}
+
+.input-dados-perfil {
+    width: 100%;
+    outline: none;
+    border: none;
+    background: none;
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--cor-cinza);
+}
+
+.input-dados-perfil::placeholder {
+    font-size: clamp(12px, 1.11vw, 16px);
+}
+
+.container-image-perfil-loja {
+    flex: 1;
+    min-width: 430px;
+    min-height: 500px;
+    margin-left: -40px;
+}
+
+.container-image-perfil-loja figure {
+    margin: 0;
+    height: 100%;
+}
+
+.img-background-perfil-loja {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media(max-width: 900px) {
+    .container-image-perfil-loja {
+        display: none;
+    }
+
+    #section-perfil-loja-conteudo {
+        flex-direction: column;
+        align-items: center;
+        padding: 0px 10px;
+    }
+
+    #section-form-dados-perfil {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+        max-width: 400px;
+        min-height: 450px;
+    }
+
+    #section-perfil-loja {
+        align-items: center;
+    }
+}
+
+@media(max-width: 600px) {
+    main {
+        padding: 100px 0;
+    }
+
+    .circulo-perfil {
+        width: 50px;
+        height: 50px;
+    }
+
+    .btn-voltar {
+        top: 30px;
+        left: 12px;
+    }
+}

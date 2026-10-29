@@ -1,4 +1,9 @@
+import { ligarBotoesCarrinho } from "./carrinho-api.js";
+
+ligarBotoesCarrinho();
+
 // CATÁLOGO DE PRODUTOS - lógica de listagem, filtro, ordenação, paginação e busca
+import { mostrarToast } from "./toast.js";
 
 const PRODUTOS_POR_PAGINA = 12;
 
@@ -9,6 +14,8 @@ let mapaCategorias = {};
 let paginaAtual = 1;
 let criterioOrdenacaoAtual = null; // guarda a última ordenação escolhida, pra reaplicar após novo filtro
 let termoPesquisaAtual = '';
+let usuarioLogado = null;        // registro completo do usuário logado (ou null se visitante)
+let favoritosUsuario = [];
 
 // Formata um número para o padrão brasileiro.
 function formatarMoeda(valor) {
@@ -26,22 +33,31 @@ async function carregarCatalogo() {
     try {
         // As 3 chamadas saem juntas, em vez de uma atrás da outra
         // reduz o tempo total de espera e o número de requisições sequenciais
-        const [respostaProdutos, respostaLojistas, respostaCategorias] = await Promise.all([
+        const [respostaProdutos, respostaUsuarios, respostaCategorias] = await Promise.all([
             fetch(`https://6a98614f7160beda2292eff8.mockapi.io/produtos`),
-            fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/lojistas`),
+            fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios`),
             fetch(`https://6a9872a37160beda2292ff4f.mockapi.io/categorias`)
         ]);
 
         const produtos = await respostaProdutos.json();
-        const lojistas = await respostaLojistas.json();
+        const usuarios = await respostaUsuarios.json();
         const categorias = await respostaCategorias.json();
 
         // Monta os mapas id -> nome pra consulta
-        for (const lojista of lojistas) {
-            mapaLojistas[lojista.id] = lojista.nomeEmpresa;
+        for (const usuario of usuarios) {
+            if (usuario.nomeEmpresa) {
+                mapaLojistas[usuario.id] = usuario.nomeEmpresa;
+            }
         }
         for (const categoria of categorias) {
             mapaCategorias[categoria.id] = categoria.nome;
+        }
+
+        const sessao = pegarUsuarioLogado();
+
+        if(sessao){
+            usuarioLogado = usuarios.find(usuario => usuario.id == sessao.id);
+            favoritosUsuario = (usuarioLogado?.favoritos ?? []).map(String); 
         }
 
         // Só produtos "Ativo" entram no catálogo
@@ -49,7 +65,8 @@ async function carregarCatalogo() {
 
         // Cópia inicial, sem filtro nenhum aplicado ainda
         produtosExibidos = [...todosOsProdutos];
-
+        
+        conectarEventosDeFavoritos();
         popularCategorias(categorias);
         conectarEventosDeFiltro();
         conectarEventosDeOrdenacao();
@@ -120,9 +137,7 @@ function aplicarFiltros() {
     ).map(input => parseInt(input.dataset.estrelas));
 
     // Se várias notas estiverem marcadas, usa a menor como corte mínimo
-    const avaliacaoMinima = avaliacoesSelecionadas.length > 0
-        ? Math.min(...avaliacoesSelecionadas)
-        : null;
+    const avaliacaoMinima = avaliacoesSelecionadas.length > 0 ? Math.min(...avaliacoesSelecionadas) : null;
 
     const termoNormalizado = normalizarTexto(termoPesquisaAtual);
 
@@ -162,7 +177,7 @@ function aplicarFiltros() {
     atualizarTituloCatalogo();
 
     // Todo novo filtro/ordenação sempre volta pra página 1
-    renderizarPagina(1); 
+    renderizarPagina(1);
 }
 
 /* Renderiza a página especificada: fatia produtosExibidos de acordo com
@@ -192,19 +207,20 @@ function renderizarCards(produtos) {
     }
 
     for (const produto of produtos) {
+        const favoritado = favoritosUsuario.includes(produto.id);
         const mediaAvaliacoes = calcularMediaAvaliacoes(produto.avaliacoesProduto);
 
         const coluna = document.createElement('div');
         coluna.className = "col-12 col-md-6 col-xl-4";
 
         coluna.innerHTML = `
-                <article class="card-produto">
+                <article class="card-produto" data-produto-id="${produto.id}">
                     <a href="detalhes-do-produto.html?id=${produto.id}">
                         <div class="produto-avaliacao">
                             <i class="ti ti-star-filled"></i>
                             <span>${mediaAvaliacoes ?? ''}</span>
                         </div>
-                        <i class="ti ti-heart ti-heart-icon"></i>
+                        <i class="ti ${favoritado ? 'ti-heart-filled' : 'ti-heart'} ti-heart-icon" data-produto-id="${produto.id}"></i>
 
                         <img src="../img-produtos/${produto.imagemURL[0]}" class="produto-img" alt="${produto.nome}">
 
@@ -227,6 +243,56 @@ function renderizarCards(produtos) {
     }
 }
 
+// Um único listener no container cobre todos os cards, inclusive os recriados a cada filtro/página
+function conectarEventosDeFavoritos() {
+    document.getElementById('lista-produtos').addEventListener('click', function (evento) {
+        const coracao = evento.target.closest('.ti-heart-icon');
+        if (!coracao) return;
+
+        evento.preventDefault(); // o coração está dentro do <a>: impede a navegação pros detalhes
+        alternarFavorito(coracao);
+    });
+}
+
+async function alternarFavorito(coracao) {
+    // Visitante: manda pro login
+    if (!usuarioLogado) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const produtoId = String(coracao.dataset.produtoId);
+    const jaFavoritado = favoritosUsuario.includes(produtoId);
+    
+    if(jaFavoritado){
+        mostrarToast('Produto já favoritado', 'Produto já adicionado aos favoritos.', 'erro');
+        return
+    }
+
+    // Monta a nova lista
+    const novaLista = [...favoritosUsuario, produtoId];
+
+    try {
+        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${usuarioLogado.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ favoritos: novaLista })
+        });
+
+        if (!resposta.ok) throw new Error('Falha ao atualizar favoritos');
+
+        // Só atualiza o estado local e o ícone depois que a API confirmou
+        favoritosUsuario = novaLista;
+        coracao.classList.toggle('ti-heart-filled');
+
+        mostrarToast('Favoritado', 'Produto adicionado aos favoritos.', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível atualizar seus favoritos. Tente novamente.', 'erro');
+    }
+}
+
 /* Desenha os botões de paginação (setas + números) com base na
 quantidade total de produtosExibidos. */
 function renderizarPaginacao() {
@@ -235,7 +301,7 @@ function renderizarPaginacao() {
     paginacao.innerHTML = '';
 
     // Não mostra paginação se tudo cabe numa página só
-    if (totalPaginas <= 1) return; 
+    if (totalPaginas <= 1) return;
 
     paginacao.appendChild(criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Previous'));
 

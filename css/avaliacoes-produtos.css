@@ -1,0 +1,71 @@
+/* PÁGINA DE AVALIAÇÕES DOS PRODUTOS */
+.container {
+    margin: 5em auto;
+}
+
+h1 {
+    font-family: var(--fonte-poppins);
+    font-size: clamp(32px, 5vw, 36px);
+}
+
+#form-pesquisa {
+    width: 100%;
+}
+
+.card-avaliacao {
+    background-color: var(--cor-cinza);
+    padding: 1em;
+    border-radius: 1em;
+    font-family: var(--fonte-nunito);
+    display: flex;
+    gap: 1em;
+    justify-content: space-between;
+}
+
+.card-conteudo {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-conteudo>div:first-child>div {
+    flex: 1;
+    min-width: 0;
+}
+
+.produto-img {
+    width: 30%;
+    max-width: 180px;
+    max-height: 180px;
+    flex-shrink: 0;
+}
+
+.card-nome-produto {
+    font-weight: bold;
+    font-size: clamp(16px, 5vw, 24px);
+}
+
+.card-avaliacao small {
+    margin-bottom: .5em;
+}
+
+.ti-star-filled, .ti-star, .ti-star-half-filled {
+    color: var(--cor-verde);
+}
+
+@media (min-width: 768px) {
+    #form-pesquisa {
+        margin: 0;
+        margin-left: auto;
+        max-width: 20em;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        margin: 8em auto;
+    }
+
+    .btn-voltar {
+        margin: 1em;
+    }
+}
