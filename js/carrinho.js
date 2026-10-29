@@ -383,9 +383,32 @@ function temEstoqueSuficiente(produtos) {
     return true;
 }
 
+function formValidarCartao(modal) {
+    const form = modal.querySelector("form");
+    if (!form) return true;
+
+    const campos = form.querySelectorAll("[required]");
+    let valido = true;
+
+    for (const campo of campos) {
+        const vazio = campo.value.trim() === "";
+        campo.classList.toggle("is-invalid", vazio);
+        if (vazio) valido = false;
+    }
+
+    if (!valido) {
+        mostrarToast("Dados do cartão", "Preencha todos os campos para continuar.", "aviso");
+        form.querySelector(".is-invalid").focus();
+    }
+
+    return valido;
+}
+
 async function confirmarPagamento(e) {
     const botao = e.currentTarget;
     const modal = botao.closest(".modal");
+
+    if (!formValidarCartao(modal)) return null;
 
     if (pedidosPendentes.length === 0) {
         mostrarToast("Nenhum pedido pendente", "Nenhum pedido aguardando pagamento.", "erro");
@@ -474,4 +497,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("btn-confirmar-remocao").addEventListener("click", confirmarRemocao);
     document.getElementById("btn-finalizar").addEventListener("click", finalizarCompra);
     document.getElementById("btn-continuar-pagamento").addEventListener("click", continuarPagamento);
+
+    const camposCartao = document.querySelectorAll(".modal form [required]");
+    for (const campo of camposCartao) {
+        campo.addEventListener("input", () => {
+            campo.classList.remove("is-invalid");
+        })
+    }
 });

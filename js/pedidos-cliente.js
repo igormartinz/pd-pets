@@ -15,6 +15,9 @@ let pedidosDoCliente = [];
 let nomesProdutos = {};
 let paginaAtual = 1;
 
+// IDs dos produtos que o cliente logado já avaliou
+let produtosAvaliados;
+
 function formatarMoeda(valor) {
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
@@ -41,7 +44,10 @@ function montarCardPedido(pedido, nomeProduto) {
 
     const botaoCancelar = STATUS_COM_CANCELAMENTO.includes(pedido.status) ? `<button id="btnCancelar" data-pedido-id="${pedido.id}" data-bs-target="#modalCancelarPedido" data-bs-toggle="modal">Cancelar pedido</button>` : '';
 
-    const botaoAvaliar = STATUS_COM_AVALIACAO.includes(pedido.status) ? `<button id="btnAvaliar" class="btnAvaliarProduto" data-pedido-id="${pedido.id}" data-produto-id="${pedido.produtoID}" data-bs-target="#modalAvaliarProduto" data-bs-toggle="modal">Avaliar pedido</button>` : '';
+    const jaAvaliado = produtosAvaliados.has(String(pedido.produtoID));
+    const botaoAvaliar = STATUS_COM_AVALIACAO.includes(pedido.status) ? (jaAvaliado ? '<button id="btnAvaliar" class="btnAvaliarProduto" disabled>Avaliado</button>' : `<button id="btnAvaliar" data-pedido-id="${pedido.id}" data-produto-id="${pedido.produtoID}" data-bs-toggle="modal" data-bs-target="#modalAvaliarProduto" class="btnAvaliarProduto">Avaliar pedido</button>`)
+        : '';
+
 
     return `
         <div class="container-pedidos-info">
@@ -89,8 +95,7 @@ async function carregarPedidos() {
     container.innerHTML = '<p class="w-100">Carregando...</p>';
 
     try {
-        const usuario = pegarUsuarioLogado(); // função do auth.js
-        if (!usuario) return; // sem sessão, o verificarAut já está redirecionando
+        const usuario = pegarUsuarioLogado();
 
         const [respostaPedidos, respostaProdutos] = await Promise.all([
             fetch(URL_PEDIDOS),
@@ -104,10 +109,7 @@ async function carregarPedidos() {
         const todosOsPedidos = await respostaPedidos.json();
         const produtos = await respostaProdutos.json();
 
-        // String() nos dois lados: o clienteID vem como número e o id da sessão como texto
-        pedidosDoCliente = todosOsPedidos.filter(
-            pedido => String(pedido.clienteID) === String(usuario.id)
-        );
+        pedidosDoCliente = todosOsPedidos.filter(pedido => pedido.clienteID == usuario.id);
 
         if (pedidosDoCliente.length === 0) {
             container.style.display = 'flex';
@@ -116,11 +118,15 @@ async function carregarPedidos() {
         }
 
         nomesProdutos = {};
+        produtosAvaliados = new Set();
         for (const produto of produtos) {
             nomesProdutos[produto.id] = produto.nome;
+
+            const jaAvaliou = avaliacoesReais(produto).some(avaliacao => avaliacao.clienteID == usuario.id);
+            if (jaAvaliou) produtosAvaliados.add(produto.id);
         }
 
-        // Mais recentes primeiro (data ISO ordena como texto); empate decidido pelo id
+        // Mais recentes primeiro.
         pedidosDoCliente.sort((a, b) => b.data.localeCompare(a.data) || Number(b.id) - Number(a.id));
 
         renderizarPagina(1);
@@ -202,49 +208,6 @@ function criarNumero(pagina, ativo) {
     item.appendChild(link);
     return item;
 }
-
-const containerEstrelas = document.getElementById('avaliacao-estrelas');
-const estrelas = containerEstrelas.querySelectorAll('i');
-
-// Guarda a nota do usuario
-let notaSelecionada = 0;
-
-// Pinta as estrelas visulmente até a quantidade informada
-function pintarEstrelas(quantidade) {
-    estrelas.forEach(function (estrela) {
-        // Lê o valor numérico guardado no atributo data-nota de cada estrela
-        const valor = parseInt(estrela.dataset.nota);
-
-        if (valor <= quantidade) {
-            // Estrela dentro da faixa selecionada fica preenchida
-            estrela.classList.remove('ti-star');
-            estrela.classList.add('ti-star-filled');
-        } else {
-            // Estrela fora da faixa: volta a ficar vazia
-            estrela.classList.remove('ti-star-filled');
-            estrela.classList.add('ti-star');
-        }
-    });
-}
-
-// Conecta os eventos de clique e hover em cada uma das 5 estrelas
-estrelas.forEach(function (estrela) {
-    // Clique: fixa a nota selecionada
-    estrela.addEventListener('click', function () {
-        notaSelecionada = parseInt(this.dataset.nota);
-        pintarEstrelas(notaSelecionada);
-    });
-
-    // Hover: mostra prévia
-    estrela.addEventListener('mouseenter', function () {
-        pintarEstrelas(parseInt(this.dataset.nota));
-    });
-});
-
-// Ao tirar o mouse de cima do grupo inteiro, volta a mostrar a nota realmente selecionada
-containerEstrelas.addEventListener('mouseleave', function () {
-    pintarEstrelas(notaSelecionada);
-});
 
 let idPedidoParaCancelar = null;
 
@@ -331,7 +294,144 @@ async function cancelarPedido(modalElemento, botaoConfirmar) {
     }
 }
 
+let notaSelecionada = 0;
+let produtoParaAvaliar = null; // Produto cujo modal de avaliação está aberto
+
+// Os produtos sem avaliação guardam um item de preenchimento com data vazia.
+function avaliacoesReais(produto) {
+    return (produto.avaliacoesProduto ?? []).filter(avaliacao => avaliacao.data);
+}
+
+// Data de hoje no formato do MockAPI (AAAA-MM-DD), no fuso local.
+function dataDeHoje() {
+    const hoje = new Date();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    return `${hoje.getFullYear()}-${mes}-${dia}`;
+}
+
+function conectarAvaliacao() {
+    const modalElemento = document.getElementById('modalAvaliarProduto');
+    const containerEstrelas = document.getElementById('avaliacao-estrelas');
+    const estrelas = containerEstrelas.querySelectorAll('i');
+    const campoComentario = document.getElementById('comentario');
+    const botaoEnviar = document.getElementById('btn-enviar-avaliacao');
+
+    // Pinta as estrelas até a nota informada: cheia, meia ou vazia
+    function pintarEstrelas(nota) {
+        estrelas.forEach(function (estrela) {
+            const valor = Number(estrela.dataset.nota);
+
+            estrela.classList.remove('ti-star', 'ti-star-filled', 'ti-star-half-filled');
+
+            if (nota >= valor) {
+                estrela.classList.add('ti-star-filled');
+            } else if (nota >= valor - 0.5) {
+                estrela.classList.add('ti-star-half-filled');
+            } else {
+                estrela.classList.add('ti-star');
+            }
+        });
+    }
+
+    // Metade esquerda da estrela = x,5; metade direita = x inteiro
+    function notaPelaPosicao(estrela, evento) {
+        const retangulo = estrela.getBoundingClientRect();
+        const valor = Number(estrela.dataset.nota);
+        const metadeEsquerda = evento.clientX - retangulo.left < retangulo.width / 2;
+        return metadeEsquerda ? valor - 0.5 : valor;
+    }
+
+    estrelas.forEach(function (estrela) {
+        // Clique: fixa a nota
+        estrela.addEventListener('click', function (evento) {
+            notaSelecionada = notaPelaPosicao(estrela, evento);
+            pintarEstrelas(notaSelecionada);
+        });
+
+        // Movimento do mouse: prévia que acompanha a metade da estrela
+        estrela.addEventListener('mousemove', function (evento) {
+            pintarEstrelas(notaPelaPosicao(estrela, evento));
+        });
+    });
+
+    // Ao sair do grupo, volta a mostrar a nota realmente selecionada
+    containerEstrelas.addEventListener('mouseleave', function () {
+        pintarEstrelas(notaSelecionada);
+    });
+
+    // Ao abrir, guarda o produto do botão clicado e limpa o que sobrou da avaliação anterior
+    modalElemento.addEventListener('show.bs.modal', function (evento) {
+        produtoParaAvaliar = evento.relatedTarget?.dataset.produtoId ?? null;
+        notaSelecionada = 0;
+        pintarEstrelas(0);
+        campoComentario.value = '';
+    });
+
+    botaoEnviar.addEventListener('click', function () {
+        enviarAvaliacao(modalElemento, botaoEnviar, campoComentario);
+    });
+}
+
+async function enviarAvaliacao(modalElemento, botaoEnviar, campoComentario) {
+    if (!produtoParaAvaliar) return;
+
+    if (notaSelecionada === 0) {
+        mostrarToast('Nota obrigatória', 'Selecione uma nota de 1 a 5 estrelas.', 'erro');
+        return;
+    }
+
+    const usuario = pegarUsuarioLogado();
+    if (!usuario) return;
+
+    try {
+        // Lê o produto atual: a lista da tela pode estar desatualizada
+        const resposta = await fetch(`${URL_PRODUTOS}/${produtoParaAvaliar}`);
+        if (!resposta.ok) throw new Error('Falha ao consultar o produto');
+
+        const produto = await resposta.json();
+        const avaliacoes = avaliacoesReais(produto); // já descarta o item de preenchimento
+
+        // Um cliente só avalia o mesmo produto uma vez
+        if (avaliacoes.some(avaliacao => String(avaliacao.clienteID) === String(usuario.id))) {
+            produtosAvaliados.add(String(produto.id));
+            renderizarPagina(paginaAtual);
+            bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+            mostrarToast('Produto já avaliado', 'Você já avaliou este produto.', 'aviso');
+            return;
+        }
+
+        const proximoId = avaliacoes.reduce((maior, avaliacao) => Math.max(maior, Number(avaliacao.id)), 0) + 1;
+
+        avaliacoes.push({
+            id: proximoId,
+            clienteID: Number(usuario.id),
+            produtoID: Number(produto.id),
+            nota: notaSelecionada,
+            comentario: campoComentario.value.trim(),
+            data: dataDeHoje()
+        });
+
+        const respostaAtualizacao = await atualizarRecurso(
+            `${URL_PRODUTOS}/${produto.id}`,
+            { avaliacoesProduto: avaliacoes }
+        );
+        if (!respostaAtualizacao.ok) throw new Error('Falha ao salvar a avaliação');
+
+        // Atualiza a tela: o botão do produto passa a "Avaliado"
+        produtosAvaliados.add(String(produto.id));
+        renderizarPagina(paginaAtual);
+        bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+        mostrarToast('Avaliação enviada', 'Avaliação enviada com sucesso!', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível enviar sua avaliação. Tente novamente.', 'erro');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     carregarPedidos();
     conectarCancelamento();
+    conectarAvaliacao();
 });

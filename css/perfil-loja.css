@@ -28,12 +28,6 @@ main {
     flex: 1;
 }
 
-h2,
-h3,
-p {
-    margin: 0;
-}
-
 .btn-voltar {
     position: absolute;
     top: 30px;
