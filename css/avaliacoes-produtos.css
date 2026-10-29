@@ -48,7 +48,7 @@ h1 {
     margin-bottom: .5em;
 }
 
-.ti-star-filled {
+.ti-star-filled, .ti-star, .ti-star-half-filled {
     color: var(--cor-verde);
 }
 
