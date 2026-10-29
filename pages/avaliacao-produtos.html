@@ -21,17 +21,31 @@
     <main class="container">
         <div class="d-flex flex-column align-items-center mb-4 flex-md-row justify-content-md-between">
             <h1>Avaliações</h1>
-            <form role="search" id="form-pesquisa">
-                <div class="input-border-secundario">
-                    <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
-                        placeholder="Busque por um produto">
+            <div class="d-flex gap-2 align-items-center">
+                <form role="search" id="form-pesquisa">
+                    <div class="input-border-secundario">
+                        <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
+                            placeholder="Busque por um produto">
+                    </div>
+                    <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
+                </form>
+                <div class="dropdown">
+                    <button class="botao border-0 px-4 d-flex gap-1" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">Filtrar <i class="ti ti-filter"></i></button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" data-filtrar="todas">Todas as estrelas</button></li>
+                        <li><button class="dropdown-item" data-filtrar="1-estrela">1 Estrela</button></li>
+                        <li><button class="dropdown-item" data-filtrar="2-estrela">2 Estrela</button></li>
+                        <li><button class="dropdown-item" data-filtrar="3-estrela">3 Estrela</button></li>
+                        <li><button class="dropdown-item" data-filtrar="4-estrela">4 Estrela</button></li>
+                        <li><button class="dropdown-item" data-filtrar="5-estrela">5 Estrela</button></li>
+                    </ul>
                 </div>
-                <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
-            </form>
+            </div>
         </div>
 
         <section id="lista-avaliacoes" class="d-flex flex-column gap-3">
-            
+
         </section>
 
     </main>
