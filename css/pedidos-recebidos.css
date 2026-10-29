@@ -14,14 +14,6 @@
 }
 
 /* PÁGINA DE PEDIDOS DO LOJISTA */
-
-body {
-    min-height: 100vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 main {
     width: 100%;
     max-width: 1080px;
@@ -58,7 +50,7 @@ main>h1 {
     left: 10px;
 }
 
-#pedidos-lojista {
+#lista-pedidos-recebidos {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -122,7 +114,7 @@ main>h1 {
 }
 
 .pago {
-    background-color: var(--cor-verde-escuro);
+    background-color: #198754;
 }
 
 .separando {
@@ -284,7 +276,7 @@ main>h1 {
 }
 
 @media (min-width: 768px) {
-    #pedidos-lojista {
+    #lista-pedidos-recebidos {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
@@ -296,7 +288,7 @@ main>h1 {
 }
 
 @media(min-width: 1200px) {
-    #pedidos-lojista {
+    #lista-pedidos-recebidos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
     }

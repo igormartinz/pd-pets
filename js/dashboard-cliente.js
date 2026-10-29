@@ -175,7 +175,7 @@ function exibeStatusLojista() {
     }
 }
 
-export function exibeDashboardsSidebar() {
+function exibeDashboardsSidebar() {
 
     const perfis = usuario.perfil;
     const linksDashboards = document.querySelectorAll('[data-perfil]');
