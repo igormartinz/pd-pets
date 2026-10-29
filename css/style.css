@@ -615,7 +615,7 @@ input[type="password"]::-ms-reveal {
     display: none;
 }
 
-.btn-exibir-senha{
+.btn-exibir-senha {
     color: var(--cor-cinza);
     font-size: 1.5em;
     top: 9px;
@@ -625,7 +625,7 @@ input[type="password"]::-ms-reveal {
     border: none;
 }
 
-.input-senha{
+.input-senha {
     padding-right: 3em;
 }
 
@@ -661,4 +661,19 @@ input[type="password"]::-ms-reveal {
     .produto-lojista {
         font-size: clamp(10px, .98vw, 14px);
     }
+}
+
+/* Esconder as setas da função padrão dos inputs númericos */
+
+/* Chrome, Safari, Edge, Opera, Brave... */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }

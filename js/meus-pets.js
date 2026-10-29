@@ -128,7 +128,7 @@ function abrirModalEdicao(idPet) {
     campos.especie.value = pet.especie;
     campos.raca.value = pet.raca;
     campos.idade.value = pet.idade;
-    campos.peso.value = pet.peso;
+    campos.peso.value = String(pet.peso).replace(".", ",");
 
     bootstrap.Modal.getOrCreateInstance("#modalPet").show();
 }
@@ -150,13 +150,13 @@ function validarFormPets(dados) {
     }
 
     const idade = Number(dados.idade);
-    if (!Number.isInteger(idade) || idade < 0) {
+    if (!/^\d+$/.test(dados.idade)) {
         return "Informe a idade em anos, com um número inteiro.";
     }
 
     const peso = Number(dados.peso);
-    if (isNaN(peso) || peso <= 0) {
-        return "Informe um peso maior que zero.";
+    if (!/^\d+(\.\d{1,2})?$/.test(dados.peso) || Number(dados.peso) <= 0) {
+        return "Informe um peso válido.";
     }
 
     return null;
@@ -234,6 +234,32 @@ async function confirmarExclusaoPet() {
     }
 }
 
+function somenteInteiro(valor) {
+    return valor.replace(/\D/g, "");
+}
+
+function somenteDecimal(valor) {
+    const limpo = valor.replace(/\./g, ",").replace(/[^\d,]/g, "");
+    const partes = limpo.split(",");
+
+    if (partes.length === 1) return limpo;
+
+    return partes[0] + "," + partes.slice(1).join("").slice(0, 2);
+}
+
+function aplicarMascarasPet() {
+    const idade = document.getElementById("pet-idade");
+    const peso = document.getElementById("pet-peso");
+
+    idade.addEventListener("input", () => {
+        idade.value = somenteInteiro(idade.value);
+    });
+
+    peso.addEventListener("input", () => {
+        peso.value = somenteDecimal(peso.value);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const usuarioLogado = verificarAut("cliente");
     if (!usuarioLogado) return null;
@@ -247,11 +273,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     usuarioAtual = usuario;
     renderizarPets();
+    aplicarMascarasPet();
 
     document.getElementById("btn-cadastrar-pet").addEventListener("click", abrirModalCadastro);
     document.getElementById("btn-salvar-pet").addEventListener("click", salvarPet);
     document.getElementById("btn-confirmar-exclusao").addEventListener("click", confirmarExclusaoPet);
-})
+});
 
 document.getElementById("form-pet").addEventListener("submit", (e) => {
     e.preventDefault();
