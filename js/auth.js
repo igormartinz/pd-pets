@@ -4,6 +4,11 @@ const CHAVE_SESSAO = "usuarioLogado";
 const LOGIN = "/pages/login.html";
 const DASHBOARD_CLIENTE = "/pages/dashboard-cliente.html";
 
+// Testa usuario logado para exibir ou não botão entrar
+if (pegarUsuarioLogado()) {
+    document.documentElement.classList.add("usuario-logado");
+}
+
 // Recupera os dados do usuário autenticado, transformando os dados em formato JSON ou se não houver, nulo.
 
 function pegarUsuarioLogado() {
