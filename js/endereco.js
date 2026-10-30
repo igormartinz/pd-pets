@@ -262,6 +262,19 @@ function maskCEP() {
     })
 }
 
+function somenteInteiro(valor) {
+    return valor.replace(/\D/g, "");
+}
+
+function aplicarMascarasEnd() {
+    const endNumero = document.getElementById("end-numero");
+
+    endNumero.addEventListener("input", () => {
+        endNumero.value = somenteInteiro(endNumero.value);
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", async () => {
     const usuarioLogado = verificarAut("Cliente");
     if (!usuarioLogado) return null;
@@ -283,6 +296,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     document.getElementById("btn-confirmar-exclusao-endereco").addEventListener("click", () => {
         confirmarExclusao();
-    })
+    });
     maskCEP();
+    aplicarMascarasEnd();
 });
