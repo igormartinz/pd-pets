@@ -73,7 +73,7 @@ function criarCardAvaliacao(produto, avaliacao, nomeCliente) {
     const nota = Math.min(5, Math.max(0, Number(avaliacao.nota) || 0));
 
     return `
-        <article class="card-avaliacao">
+        <article class="card-avaliacao" data-nota="${nota}">
             <div class="card-conteudo">
                 <div class="d-flex gap-2">
                     <img src="${imagem}" class="produto-img d-md-none" alt="${nomeProduto}">
@@ -166,13 +166,35 @@ function normalizarTexto(texto) {
 
 // Filtra as avaliações pelo nome do produto.
 function pesquisarAvaliacoes(termo) {
+    aplicarFiltrosAvaliacoes(termo);
+}
+
+// Filtra as avaliações pela nota selecionada.
+function filtrarAvaliacoes(nota) {
+    notaSelecionada = nota;
+    aplicarFiltrosAvaliacoes(inputPesquisa.value);
+}
+
+// Aplica os critérios ativos de pesquisa e nota.
+function aplicarFiltrosAvaliacoes(termo) {
     const pesquisa = normalizarTexto(termo);
     const cards = listaAvaliacoes.querySelectorAll(".card-avaliacao");
     let quantidadeEncontrada = 0;
 
     cards.forEach(card => {
-        const nomeProduto = card.querySelector(".card-nome-produto")?.textContent ?? "";
-        const corresponde = normalizarTexto(nomeProduto).includes(pesquisa);
+        const nomeProduto =
+            card.querySelector(".card-nome-produto")?.textContent ?? "";
+
+        const notaCard = Number(card.dataset.nota);
+
+        const correspondePesquisa =
+            normalizarTexto(nomeProduto).includes(pesquisa);
+
+        const correspondeNota =
+            notaSelecionada === null ||
+            notaCard === notaSelecionada;
+
+        const corresponde = correspondePesquisa && correspondeNota;
 
         card.classList.toggle("d-none", !corresponde);
 
@@ -181,28 +203,59 @@ function pesquisarAvaliacoes(termo) {
         }
     });
 
-    let mensagemVazia = document.getElementById("mensagem-pesquisa-vazia");
+    let mensagem = document.getElementById("mensagem-avaliacoes-vazias");
 
-    if (!mensagemVazia) {
-        mensagemVazia = document.createElement("p");
-        mensagemVazia.id = "mensagem-pesquisa-vazia";
-        mensagemVazia.className = "text-center mt-3";
-        listaAvaliacoes.appendChild(mensagemVazia);
+    if (!mensagem) {
+        mensagem = document.createElement("p");
+        mensagem.id = "mensagem-avaliacoes-vazias";
+        mensagem.className = "text-center mt-3";
+        listaAvaliacoes.appendChild(mensagem);
     }
 
-    mensagemVazia.textContent = "Nenhuma avaliação encontrada.";
-    mensagemVazia.classList.toggle(
-        "d-none",
-        quantidadeEncontrada > 0 || pesquisa === ""
-    );
+    if (quantidadeEncontrada === 0) {
+        if (pesquisa && notaSelecionada !== null) {
+            mensagem.textContent =
+                "Nenhuma avaliação encontrada para essa pesquisa e quantidade de estrelas.";
+        } else if (notaSelecionada !== null) {
+            mensagem.textContent =
+                `Nenhuma avaliação encontrada com ${notaSelecionada} estrela${notaSelecionada > 1 ? "s" : ""}.`;
+        } else {
+            mensagem.textContent =
+                "Nenhuma avaliação encontrada para esse produto.";
+        }
+
+        mensagem.classList.remove("d-none");
+    } else {
+        mensagem.classList.add("d-none");
+    }
 }
 
-document.addEventListener("DOMContentLoaded", carregarAvaliacoes);
-
+const botoesFiltro = document.querySelectorAll("[data-filtrar]");
 const formularioPesquisa = document.getElementById("form-pesquisa");
 const inputPesquisa = document.getElementById("input-pesquisa");
 
+let notaSelecionada = null
+
+// Pesquisa ao enviar o formulário.
 formularioPesquisa.addEventListener("submit", evento => {
     evento.preventDefault();
     pesquisarAvaliacoes(inputPesquisa.value);
 });
+
+// Atualiza os resultados enquanto o usuário digita.
+inputPesquisa.addEventListener("input", () => {
+    pesquisarAvaliacoes(inputPesquisa.value);
+});
+
+// Filtra pela quantidade de estrelas.
+botoesFiltro.forEach(botao => {
+    botao.addEventListener("click", () => {
+        const filtro = botao.dataset.filtrar;
+
+        const nota = filtro === "todas" ? null : Number(filtro.split("-")[0]);
+
+        filtrarAvaliacoes(nota);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", carregarAvaliacoes);
