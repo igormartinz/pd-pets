@@ -532,6 +532,10 @@ hr {
     color: var(--cor-cinza);
 }
 
+.usuario-logado .btn-entrar {
+    display: none;
+}
+
 /* RODAPE */
 .rodape {
     background-color: var(--cor-branco-amarelado);

@@ -4,6 +4,10 @@ const CHAVE_SESSAO = "usuarioLogado";
 const LOGIN = "/pages/login.html";
 const DASHBOARD_CLIENTE = "/pages/dashboard-cliente.html";
 
+if (pegarUsuarioLogado()) {
+    document.documentElement.classList.add("usuario-logado");
+}
+
 // Recupera os dados do usuário autenticado, transformando os dados em formato JSON ou se não houver, nulo.
 
 function pegarUsuarioLogado() {
@@ -56,6 +60,8 @@ function logOut() {
     localStorage.removeItem(CHAVE_SESSAO);
     window.location.href = "/index.html";
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const linkPerfil = document.getElementById("link-perfil");

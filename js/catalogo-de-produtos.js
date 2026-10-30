@@ -353,7 +353,7 @@ function criarNumero(pagina, ativo) {
 /* Calcula a média das notas de um produto a partir do array
 avaliacoesProduto embutido nele. */
 function calcularMediaAvaliacoes(avaliacoes) {
-    if (!avaliacoes || avaliacoes[0].data === '') {
+    if (!avaliacoes || avaliacoes.length === 0) {
         return null;
     }
 
