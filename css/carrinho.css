@@ -259,3 +259,11 @@ main {
 .nome-produto-esgotado {
     font-weight: bold;
 }
+
+.input-border:has(.is-invalid)::before {
+    background: var(--bs-form-invalid-border-color);
+}
+
+.input-border .form-control.is-invalid {
+    border-color: transparent;
+}
