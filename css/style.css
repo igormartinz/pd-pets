@@ -411,7 +411,7 @@ a {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 20px;
+    border-radius: 30px;
     padding: 2px;
     background: linear-gradient(45deg,
             var(--cor-verde) 0%,

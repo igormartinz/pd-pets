@@ -23,26 +23,37 @@
             <div class="container-header-estoque">
                 <h2>Estoque</h2>
 
-                <form class="d-flex" role="search" id="form-pesquisa">
-                    <input type="search" class="input-pesquisa" id="input-pesquisa"
-                        placeholder="O que você procura hoje?">
+                <form role="search" id="form-pesquisa">
+                    <div class="input-border-secundario">
+                        <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
+                            placeholder="Busque por um produto">
+                    </div>
                     <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
                 </form>
 
                 <div class="container-tabela-btns-header">
-                    <button class="botao" id="btn-categorias">
-                        Categorias
+                    <div class="filtro-categorias">
+                        <select class="select-filtro" id="filtro-categoria" aria-label="Filtrar por categoria">
+                            <option value="">Categorias</option>
+                            <option value="1">Ração e Petiscos</option>
+                            <option value="2">Higiene</option>
+                            <option value="3">Brinquedos</option>
+                            <option value="4">Acessórios</option>
+                            <option value="5">Medicamentos</option>
+                            <option value="6">Roupas</option>
+                            <option value="7">Camas e Casinhas</option>
+                        </select>
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-category">
+                            class="icone-filtro" aria-hidden="true">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M4 4h6v6h-6l0 -6" />
                             <path d="M14 4h6v6h-6l0 -6" />
                             <path d="M4 14h6v6h-6l0 -6" />
                             <path d="M14 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                         </svg>
-                    </button>
+                    </div>
 
                     <button class="botao" id="btn-cadastrar-produto" data-bs-target="#modalCriarProduto"
                         data-bs-toggle="modal">
@@ -396,7 +407,8 @@
                         <div class="input-grupo">
                             <label for="prod-nome">Nome</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto" value="Ração Úmida GranPlus Gourmet Sachê">
+                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto"
+                                    value="Ração Úmida GranPlus Gourmet Sachê">
                             </div>
                         </div>
 
@@ -419,7 +431,8 @@
                             <div class="input-grupo">
                                 <label for="prod-preço">Preço</label>
                                 <div class="input-border">
-                                    <input type="text" class="form-control" id="prod-preço" placeholder="R$ 0,00" value="3,39">
+                                    <input type="text" class="form-control" id="prod-preço" placeholder="R$ 0,00"
+                                        value="3,39">
                                 </div>
                             </div>
 
