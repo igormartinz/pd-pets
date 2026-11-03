@@ -5,7 +5,7 @@ const API_URL_PRODUTO = "https://6a98614f7160beda2292eff8.mockapi.io";
 
 export async function buscarUsuario(id) {
     const resp = await fetch(`${API_URL_USUARIO}/usuarios/${id}`);
-    if (!resp.ok) throw new Error("Uusário não encontrado.");
+    if (!resp.ok) throw new Error("Usuário não encontrado.");
     return await resp.json();
 }
 
@@ -16,19 +16,13 @@ export async function buscarProduto(id) {
 }
 
 export async function salvarCarrinho(usuario, novoCarrinho) {
-    const carrinhoAntigo = usuario.carrinho;
-    usuario.carrinho = novoCarrinho;
-
     const resp = await fetch(`${API_URL_USUARIO}/usuarios/${usuario.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify(usuario)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...usuario, carrinho: novoCarrinho })
     });
 
-    if (!resp.ok) {
-        usuario.carrinho = carrinhoAntigo;
-        throw new Error("Erro ao salvar o carrinho.");
-    }
+    if (!resp.ok) throw new Error("Erro ao salvar o carrinho.");
 
     return await resp.json();
 }
@@ -41,8 +35,6 @@ export function contarItens(carrinho) {
     return total;
 }
 
-let adicionandoAoCarrinho = false;
-
 export async function addProdutoCarrinho(produto, quantidade, botao) {
     const usuarioLogado = verificarAut("Cliente");
     if (!usuarioLogado) return null;
@@ -52,8 +44,6 @@ export async function addProdutoCarrinho(produto, quantidade, botao) {
         return null;
     }
 
-    adicionandoAoCarrinho = true;
-    if (botao) botao.classList.add("adicionando");
 
     try {
         const usuario = await buscarUsuario(usuarioLogado.id);
@@ -92,8 +82,6 @@ export async function addProdutoCarrinho(produto, quantidade, botao) {
     } catch (error) {
         console.error(error);
         mostrarToast("Erro", "Não foi possível adicionar ao carrinho.", "erro");
-    } finally {
-        botao.classList.remove("adicionando");
     }
 }
 
@@ -114,7 +102,7 @@ export function ligarBotoesCarrinho() {
 
         try {
             const produto = await buscarProduto(card.dataset.produtoId);
-            
+
             await addProdutoCarrinho(produto, 1, botao);
         } catch (erro) {
             console.error(erro);
