@@ -53,7 +53,7 @@ main {
     width: 25vw;
     height: 40px;
     max-width: 203px;
-    font-size: clamp(12px, 1.5vw, 16px);
+    font-size: clamp(14px, 1.5vw, 16px);
     padding: .5em 0;
     display: flex;
     justify-content: center;
@@ -90,7 +90,7 @@ main {
 }
 
 .input-border-secundario .form-control::placeholder {
-    font-size: clamp(12px, 1.5vw, 16px);
+    font-size: clamp(14px, 1.5vw, 16px);
 }
 
 .icone-lupa {
