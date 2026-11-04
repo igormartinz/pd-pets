@@ -12,6 +12,10 @@ h1 {
     width: 100%;
 }
 
+.input-primario{
+    border-radius: 1em;
+}
+
 .card-avaliacao {
     background-color: var(--cor-cinza);
     padding: 1em;
