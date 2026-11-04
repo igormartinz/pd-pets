@@ -38,7 +38,6 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 24px;
     flex: 1;
 }
@@ -80,7 +79,7 @@ main {
 .container-header-estoque h2 {
     font-family: var(--fonte-poppins);
     font-weight: 550;
-    font-size: clamp(20px, 2.5vw, 36px);
+    font-size: clamp(32px, 2.5vw, 36px);
 }
 
 #form-pesquisa {
@@ -504,50 +503,15 @@ main {
     stroke-dasharray: 45 30;
 }
 
-.filtro-categorias {
-    width: 25vw;
-    height: 40px;
-    max-width: 203px;
-    display: inline-flex;
-    position: relative;
-}
-
-.select-filtro {
+.filtro {
     width: 100%;
-    appearance: none;
-    border: none;
-    border-radius: 30px;
-    padding: .5em 2em;
     font-size: clamp(12px, 1.5vw, 16px);
-    background-color: var(--cor-verde-escuro);
-    color: var(--cor-branco);
-    font-family: var(--fonte-nunito);
     font-weight: bold;
     cursor: pointer;
-    transition: .3s ease;
-}
-
-.select-filtro:hover {
-    background-color: #22514B;
-}
-
-.select-filtro:focus-visible {
-    outline: none;
-}
-
-.select-filtro option {
-    background-color: var(--cor-branco);
-    color: var(--cor-cinza);
-    font-size: clamp(12px, 1.5vw, 16px);
-}
-
-.icone-filtro {
-    position: absolute;
-    right: 1em;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--cor-branco);
-    pointer-events: none;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media(max-width: 768px) {
@@ -584,10 +548,9 @@ main {
         gap: 12px;
     }
 
-    .filtro-categorias {
+    .filtro {
         width: 100%;
         max-width: 100%;
-
     }
 
     #btn-cadastrar-produto {
