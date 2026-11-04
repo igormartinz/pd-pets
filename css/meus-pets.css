@@ -15,6 +15,10 @@ h1 {
     font-family: var(--fonte-poppins);
 }
 
+.form-control {
+    border-radius: 15px;
+}
+
 /* CARD PET */
 .card-pet {
     max-width: 270px;

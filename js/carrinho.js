@@ -25,7 +25,7 @@ async function atualizarRecurso(url, dados) {
 let usuarioAtual = null;
 let produtosPorId = {};
 let idItemParaRemover = null;
-let pedidosPendentes = [];
+// let pedidosPendentes = [];
 let enderecoSelecionado = null;
 
 function mostrarCarregando() {
@@ -283,7 +283,7 @@ function montarPedido(item, endereco) {
         clienteID: Number(usuarioAtual.id),
         enderecoID: Number(endereco),
         data: new Date().toISOString().slice(0, 10),
-        status: "Aguardando pagamento",
+        status: "Pago",
         produtoID: Number(item.produtoID),
         quantidade: Number(item.quantidade),
         valor: Number(valor.toFixed(2))
@@ -325,24 +325,25 @@ async function finalizarCompra() {
         }
 
         preencherModalFinalizacao(totais, quantidadeItens, endereco);
-
         enderecoSelecionado = endereco;
-        pedidosPendentes = [];
 
-        for (const item of itens) {
-            const pedido = montarPedido(item, endereco.id);
+        // pedidosPendentes = [];
 
-            const pedidoSalvo = await criarPedido(pedido);
+        // for (const item of itens) {
+        //     const pedido = montarPedido(item, endereco.id);
 
-            pedidosPendentes.push(pedidoSalvo);
-        }
+        //     const pedidoSalvo = await criarPedido(pedido);
 
-        usuarioAtual = await salvarCarrinho(usuarioAtual, []);
-        renderizarCarrinho();
+        //     pedidosPendentes.push(pedidoSalvo);
+        // }
+
+        // usuarioAtual = await salvarCarrinho(usuarioAtual, []);
+        // renderizarCarrinho();
         bootstrap.Modal.getOrCreateInstance("#modalFinalizar").show();
     } catch (erro) {
         console.error(erro);
         mostrarToast("Erro", "Não foi possível criar o pedido. Tente mais tarde.", "erro");
+    } finally{
         botao.disabled = false;
     }
 }
@@ -364,18 +365,34 @@ function continuarPagamento() {
     bootstrap.Modal.getOrCreateInstance(modalFinalizar).hide();
 }
 
-async function buscarProdutosDosPedidos() {
-    return await Promise.all(pedidosPendentes.map(pedido => {
-        return buscarProduto(pedido.produtoID);
-    }));
+// async function buscarProdutosDosPedidos() {
+//     return await Promise.all(pedidosPendentes.map(pedido => {
+//         return buscarProduto(pedido.produtoID);
+//     }));
+// }
+
+// function temEstoqueSuficiente(produtos) {
+//     for (let i = 0; i < pedidosPendentes.length; i++) {
+//         const pedido = pedidosPendentes[i];
+//         const produto = produtos[i];
+
+//         if (Number(produto.estoque) < Number(pedido.quantidade)) {
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }
+
+
+// Produtos ATUAIS dos itens do carrinho (o estoque pode ter mudado desde que a página abriu)
+async function buscarProdutosDosItens(itens) {
+    return await Promise.all(itens.map(item => buscarProduto(item.produtoID)));
 }
 
-function temEstoqueSuficiente(produtos) {
-    for (let i = 0; i < pedidosPendentes.length; i++) {
-        const pedido = pedidosPendentes[i];
-        const produto = produtos[i];
-
-        if (Number(produto.estoque) < Number(pedido.quantidade)) {
+function temEstoqueSuficiente(itens, produtos) {
+    for (let i = 0; i < itens.length; i++) {
+        if (Number(produtos[i].estoque) < Number(itens[i].quantidade)) {
             return false;
         }
     }
@@ -410,8 +427,10 @@ async function confirmarPagamento(e) {
 
     if (!formValidarCartao(modal)) return null;
 
-    if (pedidosPendentes.length === 0) {
-        mostrarToast("Nenhum pedido pendente", "Nenhum pedido aguardando pagamento.", "erro");
+    const itens = itensValidos();
+
+    if (itens.length === 0) {
+        mostrarToast("Carrinho vazio", "Seu carrinho está vazio.", "erro");
         return null;
     }
 
@@ -420,38 +439,35 @@ async function confirmarPagamento(e) {
     const alteracoes = [];
 
     try {
-        const produtos = await buscarProdutosDosPedidos();
+        const produtos = await buscarProdutosDosItens(itens);
 
-        if (!temEstoqueSuficiente(produtos)) {
+        if (!temEstoqueSuficiente(itens, produtos)) {
             mostrarToast("Estoque insuficiente", "Estoque insuficiente para concluir o pagamento.", "erro");
             return null;
         }
 
-        for (let i = 0; i < pedidosPendentes.length; i++) {
-            const pedido = pedidosPendentes[i];
+        // Baixa o estoque de cada produto
+        for (let i = 0; i < itens.length; i++) {
             const produto = produtos[i];
             const url = `${API_URL_PRODUTO}/produtos/${produto.id}`;
 
             const atualizado = copiarObjeto(produto);
-
-            atualizado.estoque = Number(produto.estoque) - Number(pedido.quantidade);
+            atualizado.estoque = Number(produto.estoque) - Number(itens[i].quantidade);
 
             await atualizarRecurso(url, atualizado);
             alteracoes.push({ url: url, original: produto });
         }
 
-        for (const pedido of pedidosPendentes) {
-            const url = `${API_URL_PEDIDO}/pedidos/${pedido.id}`;
-
-            const atualizado = copiarObjeto(pedido);
-            atualizado.enderecoID = Number(enderecoSelecionado.id);
-            atualizado.status = "Pago";
-
-            await atualizarRecurso(url, atualizado);
-            alteracoes.push({ url: url, original: pedido });
+        // Cria os pedidos, já como "Pago"
+        for (const item of itens) {
+            const pedidoSalvo = await criarPedido(montarPedido(item, enderecoSelecionado.id));
+            alteracoes.push({ url: `${API_URL_PEDIDO}/pedidos/${pedidoSalvo.id}`, criado: true });
         }
 
-        pedidosPendentes = [];
+        // Esvazia o carrinho por último: se falhar, tudo acima é desfeito
+        usuarioAtual = await salvarCarrinho(usuarioAtual, []);
+        renderizarCarrinho();
+
         bootstrap.Modal.getOrCreateInstance(modal).hide();
         mostrarToast("Pagamento concluído", "Seu pedido foi pago com sucesso. Veja em Meus Pedidos.", "sucesso");
 
@@ -465,12 +481,18 @@ async function confirmarPagamento(e) {
 }
 
 async function desfazerAlteracoes(alteracoes) {
-    for (const alteracao of alteracoes) {
+    for (const alteracao of [...alteracoes].reverse()) {
         try {
-            await atualizarRecurso(alteracao.url, alteracao.original);
+            if (alteracao.criado) {
+                // Pedido criado nesta tentativa: é removido
+                const resp = await fetch(alteracao.url, { method: "DELETE" });
+                if (!resp.ok) throw new Error(`Erro ao excluir ${alteracao.url}`);
+            } else {
+                // Estoque: volta ao valor original
+                await atualizarRecurso(alteracao.url, alteracao.original);
+            }
         } catch (erro) {
             console.error("Não foi possível desfazer", alteracao.url, erro);
-
         }
     }
 }
