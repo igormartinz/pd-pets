@@ -1,4 +1,13 @@
+const URL_PRODUTOS = "https://6a98614f7160beda2292eff8.mockapi.io/produtos";
+const URL_USUARIOS = "https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios";
+
 const listaAvaliacoes = document.getElementById("lista-avaliacoes");
+const botoesFiltro = document.querySelectorAll("[data-filtrar]");
+const textoFiltro = document.getElementById("texto-filtro-estrelas");
+const formularioPesquisa = document.getElementById("form-pesquisa");
+const inputPesquisa = document.getElementById("input-pesquisa");
+
+let notaSelecionada = null;
 
 // Formata a data para o padrão brasileiro.
 function formatarData(data) {
@@ -33,15 +42,13 @@ async function buscarNomeCliente(clienteID, cacheClientes) {
     const id = String(clienteID);
 
     if (!cacheClientes.has(id)) {
-        const requisicao = fetch(`${"https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios"}/${encodeURIComponent(id)}`)
-            .then(async resposta => {
+        const requisicao = fetch(`${URL_USUARIOS}/${encodeURIComponent(id)}`).then(async resposta => {
                 if (!resposta.ok) {
                     throw new Error("Não foi possível buscar o cliente.");
                 }
 
                 return resposta.json();
-            })
-            .catch(erro => {
+            }).catch(erro => {
                 console.error(`Erro ao buscar cliente ${id}:`, erro);
                 return null;
             });
@@ -65,12 +72,18 @@ async function buscarNomeCliente(clienteID, cacheClientes) {
     return `${nomes[0]} ${nomes[nomes.length - 1][0]}.`;
 }
 
+// Faixa (1 a 5) em que a nota se encaixa no filtro.
+function faixaDaNota(nota) {
+    return Math.max(1, Math.floor(nota));
+}
+
 // Cria o HTML de cada avaliação.
 function criarCardAvaliacao(produto, avaliacao, nomeCliente) {
     const nomeProduto = produto.nome;
     const imagem = produto.imagemURL[0] ? `../img-produtos/${produto.imagemURL[0]}` : "../img-produtos/produto-sem-imagem.png"
     const comentario = String(avaliacao.comentario ?? "").trim();
     const nota = Math.min(5, Math.max(0, Number(avaliacao.nota) || 0));
+    const notaTexto = String(nota).replace(".", ",");
 
     return `
         <article class="card-avaliacao" data-nota="${nota}">
@@ -105,7 +118,7 @@ async function carregarAvaliacoes() {
 
         listaAvaliacoes.innerHTML = '<p>Carregando...</p>';
 
-        const resposta = await fetch('https://6a98614f7160beda2292eff8.mockapi.io/produtos');
+        const resposta = await fetch(URL_PRODUTOS);
 
         if (!resposta.ok) {
             throw new Error("Não foi possível buscar os produtos.");
@@ -164,17 +177,6 @@ function normalizarTexto(texto) {
         .trim();
 }
 
-// Filtra as avaliações pelo nome do produto.
-function pesquisarAvaliacoes(termo) {
-    aplicarFiltrosAvaliacoes(termo);
-}
-
-// Filtra as avaliações pela nota selecionada.
-function filtrarAvaliacoes(nota) {
-    notaSelecionada = nota;
-    aplicarFiltrosAvaliacoes(inputPesquisa.value);
-}
-
 // Aplica os critérios ativos de pesquisa e nota.
 function aplicarFiltrosAvaliacoes(termo) {
     const pesquisa = normalizarTexto(termo);
@@ -182,18 +184,10 @@ function aplicarFiltrosAvaliacoes(termo) {
     let quantidadeEncontrada = 0;
 
     cards.forEach(card => {
-        const nomeProduto =
-            card.querySelector(".card-nome-produto")?.textContent ?? "";
+        const nomeProduto = card.querySelector(".card-nome-produto")?.textContent ?? "";
 
-        const notaCard = Number(card.dataset.nota);
-
-        const correspondePesquisa =
-            normalizarTexto(nomeProduto).includes(pesquisa);
-
-        const correspondeNota =
-            notaSelecionada === null ||
-            notaCard === notaSelecionada;
-
+        const correspondePesquisa = normalizarTexto(nomeProduto).includes(pesquisa);
+        const correspondeNota = notaSelecionada === null || faixaDaNota(Number(card.dataset.nota)) === notaSelecionada;
         const corresponde = correspondePesquisa && correspondeNota;
 
         card.classList.toggle("d-none", !corresponde);
@@ -214,14 +208,11 @@ function aplicarFiltrosAvaliacoes(termo) {
 
     if (quantidadeEncontrada === 0) {
         if (pesquisa && notaSelecionada !== null) {
-            mensagem.textContent =
-                "Nenhuma avaliação encontrada para essa pesquisa e quantidade de estrelas.";
+            mensagem.textContent = "Nenhuma avaliação encontrada para essa pesquisa e quantidade de estrelas.";
         } else if (notaSelecionada !== null) {
-            mensagem.textContent =
-                `Nenhuma avaliação encontrada com ${notaSelecionada} estrela${notaSelecionada > 1 ? "s" : ""}.`;
+            mensagem.textContent = `Nenhuma avaliação encontrada com ${notaSelecionada} estrela${notaSelecionada > 1 ? "s" : ""}.`;
         } else {
-            mensagem.textContent =
-                "Nenhuma avaliação encontrada para esse produto.";
+            mensagem.textContent = "Nenhuma avaliação encontrada para esse produto.";
         }
 
         mensagem.classList.remove("d-none");
@@ -230,31 +221,27 @@ function aplicarFiltrosAvaliacoes(termo) {
     }
 }
 
-const botoesFiltro = document.querySelectorAll("[data-filtrar]");
-const formularioPesquisa = document.getElementById("form-pesquisa");
-const inputPesquisa = document.getElementById("input-pesquisa");
-
-let notaSelecionada = null
-
 // Pesquisa ao enviar o formulário.
 formularioPesquisa.addEventListener("submit", evento => {
     evento.preventDefault();
-    pesquisarAvaliacoes(inputPesquisa.value);
+    aplicarFiltrosAvaliacoes();
 });
 
 // Atualiza os resultados enquanto o usuário digita.
-inputPesquisa.addEventListener("input", () => {
-    pesquisarAvaliacoes(inputPesquisa.value);
-});
+inputPesquisa.addEventListener("input", aplicarFiltrosAvaliacoes);
 
 // Filtra pela quantidade de estrelas.
 botoesFiltro.forEach(botao => {
     botao.addEventListener("click", () => {
         const filtro = botao.dataset.filtrar;
 
-        const nota = filtro === "todas" ? null : Number(filtro.split("-")[0]);
+        notaSelecionada = filtro === "todas" ? null : Number(filtro.split("-")[0]);
 
-        filtrarAvaliacoes(nota);
+        // Marca o item ativo e mostra a seleção no botão do dropdown
+        botoesFiltro.forEach(outro => outro.classList.toggle("active", outro === botao));
+        if (textoFiltro) textoFiltro.textContent = botao.textContent;
+
+        aplicarFiltrosAvaliacoes();
     });
 });
 
