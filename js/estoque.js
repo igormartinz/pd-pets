@@ -16,6 +16,8 @@ const NOMES_CATEGORIAS = {
 
 let produtosDoLojista = [];
 let produtosFiltrados = [];
+let paginaAtual = 1;
+let categoriaSelecionada = ""; // "" = todas as categorias
 
 async function buscarProdutoDoLojista(idLojista) {
     const resp = await fetch(`${API_URL_PRODUTO}/produtos?lojistaID=${idLojista}`);
@@ -29,8 +31,10 @@ async function buscarProdutoDoLojista(idLojista) {
     // o filtro do MockAPI é parcial (lojistaID=1 traz 1, 10, 11...) então precisamos conferir o valor exato
     return produtos.filter(produto => {
         return String(produto.lojistaID) === String(idLojista);
-    })
+    });
 }
+
+buscarProdutoDoLojista(1).then(lista => console.log(lista));
 
 function formatarPreco(valor) {
     return Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -59,7 +63,7 @@ function criarLinhaProduto(produto) {
 
     // nome do produto
     const celulaNome = criarCelula();
-    celulaNome.className = "nome-produto-tabela text-truncate";
+    celulaNome.className = "nome-produto-tabela text-truncate unidade-tabela-border-radius-esquerda";
     celulaNome.textContent = produto.nome;
 
     // Categoria e preco
@@ -78,12 +82,12 @@ function criarLinhaProduto(produto) {
     }
 
     // Status. Se ativo = true fica com o selo verde, senão selo vermelho
-    const celulaStatus = criarCelula("coluna-tabela-centro unidade-tabela-border-radius-direita");
+    const celulaStatus = criarCelula("coluna-tabela-centro");
     const ativo = produto.status === "Ativo";
     celulaStatus.append(criarSelo(produto.status, ativo ? "status-ativo" : "status-inativo"));
 
     // Ações (editar e excluir)
-    const celulaAcoes = criarCelula("coluna-tabela-centro");
+    const celulaAcoes = criarCelula("coluna-tabela-centro unidade-tabela-border-radius-direita");
     celulaAcoes.innerHTML = `
     <div class="acoes-tabela">
                 <button class="btn-pencil" data-bs-target="#modalEditarProduto" data-bs-toggle="modal">
@@ -118,12 +122,14 @@ function renderizarPagina(pagina, rolar) {
     const corpo = document.getElementById("corpo-tabela-estoque");
 
     if (produtosFiltrados.length === 0) {
-        mostrarMensagemTabela("Nenhum produto encontrado");
+        mostrarMensagemTabela("Nenhum produto foi encontrado.");
         renderizarPaginacao();
         return null;
     }
 
-    const inicio = (pagina - 1) * PRODUTOS_POR_PAGINA;
+    paginaAtual = pagina;
+
+    const inicio = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
     const fim = inicio + PRODUTOS_POR_PAGINA;
     const produtosDaPagina = produtosFiltrados.slice(inicio, fim);
 
@@ -140,16 +146,126 @@ function renderizarPagina(pagina, rolar) {
 }
 
 function renderizarPaginacao() {
-    const totalPaginas = Math.ceil(produtosFiltrados.length) / PRODUTOS_POR_PAGINA;
+    const totalPaginas = Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA);
+    const paginacao = document.getElementById("paginacao");
+
+    paginacao.innerHTML = "";
+
+    if (totalPaginas <= 1) return null;
+
+    paginacao.appendChild(criarSeta("left", paginaAtual - 1, paginaAtual === 1, "Página anterior"));
+
+    for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+        paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
+    }
+
+    paginacao.appendChild(criarSeta("right", paginaAtual + 1, paginaAtual === totalPaginas, "Proxima página"));
 }
 
-buscarProdutoDoLojista(1).then(lista => {
-    document.getElementById("corpo-tabela-estoque").append(criarLinhaProduto(lista[0]));
-});
+function criarSeta(direcao, pagina, desabilitado, aria) {
+    const item = document.createElement("li");
+    item.className = desabilitado ? "page-item disabled" : "page-item";
 
+    const link = document.createElement("a");
+    link.className = "page-link paginacao-seta";
+    link.href = "#";
+    link.setAttribute("aria-label", aria);
+    link.innerHTML = `<span aria-hidden="true"><i class="ti ti-chevron-compact-${direcao}"></i></span>`;
 
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!desabilitado) renderizarPagina(pagina, true);
+    });
 
+    item.appendChild(link);
+    return item;
+}
 
+function criarNumero(pagina, ativo) {
+    const item = document.createElement("li");
+    item.className = `page-item ${ativo ? "ativo" : ''}`;
 
+    const link = document.createElement("a");
+    link.className = `page-link paginacao-numeracao ${ativo ? "link-ativo" : ''}`;
+    link.href = "#";
+    link.textContent = pagina;
 
+    if (ativo) link.setAttribute("aria-current", "page");
 
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        renderizarPagina(pagina, true);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+async function carregarEstoque(idLojista) {
+    mostrarMensagemTabela("Carregando produtos...");
+
+    try {
+        produtosDoLojista = await buscarProdutoDoLojista(idLojista);
+        produtosFiltrados = produtosDoLojista;
+        renderizarPagina(1);
+    } catch (erro) {
+        console.error(erro);
+        mostrarMensagemTabela("Não foi possível carregar os produtos.");
+        mostrarToast("Erro", "Não foi possível carregar o estoque. Tente novamente.", "erro");
+    }
+}
+
+function normalizarTexto(texto) {
+    return String(texto)
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
+
+function aplicarFiltros() {
+    const termo = normalizarTexto(document.getElementById("input-pesquisa").value);
+    const termoNormalizado = normalizarTexto(termo);
+
+    produtosFiltrados = produtosDoLojista.filter(produto => {
+        const combinaNome = normalizarTexto(produto.nome).includes(termoNormalizado);
+        const combinaCategoria = categoriaSelecionada === "" || String(produto.categoriaID) === categoriaSelecionada;
+
+        return combinaNome && combinaCategoria
+    });
+
+    renderizarPagina(1);
+}
+
+function selecionarCategoria(botao) {
+    categoriaSelecionada = botao.dataset.categoria;
+
+    aplicarFiltros();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const usuarioLogado = verificarAut("Lojista");
+    if (!usuarioLogado) return null;
+
+    carregarEstoque(usuarioLogado.id);
+
+    const formPesquisa = document.getElementById("form-pesquisa");
+    const inputPesquisa = document.getElementById("input-pesquisa");
+
+    inputPesquisa.addEventListener("input", () => {
+        aplicarFiltros(inputPesquisa.value);
+    });
+
+    formPesquisa.addEventListener("submit", (e) => {
+        e.preventDefault();
+        aplicarFiltros(inputPesquisa.value);
+    });
+
+    const opcoesCategoria = document.querySelectorAll(".dropdown-menu [data-categoria]");
+
+    for (const opcao of opcoesCategoria) {
+        opcao.addEventListener("click", () => {
+            selecionarCategoria(opcao);
+        })
+    }
+})

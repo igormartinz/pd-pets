@@ -386,7 +386,7 @@ a {
 
 .ativo {
     color: var(--cor-salmao);
-    border: 3px solid var(--cor-salmao);
+    border: 2px solid var(--cor-salmao);
 }
 
 .link-ativo {
