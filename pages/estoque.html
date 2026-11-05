@@ -23,26 +23,39 @@
             <div class="container-header-estoque">
                 <h2>Estoque</h2>
 
-                <form class="d-flex" role="search" id="form-pesquisa">
-                    <input type="search" class="input-pesquisa" id="input-pesquisa"
-                        placeholder="O que você procura hoje?">
+                <form role="search" id="form-pesquisa">
+                    <div class="input-border-secundario">
+                        <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
+                            placeholder="Busque por um produto">
+                    </div>
                     <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
                 </form>
 
                 <div class="container-tabela-btns-header">
-                    <button class="botao" id="btn-categorias">
-                        Categorias
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-category">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M4 4h6v6h-6l0 -6" />
-                            <path d="M14 4h6v6h-6l0 -6" />
-                            <path d="M4 14h6v6h-6l0 -6" />
-                            <path d="M14 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                        </svg>
-                    </button>
+                    <div class="dropdown">
+                        <button class="botao filtro d-flex gap-2 align-items-center" id="filtro-categoria" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorias
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 4h6v6h-6l0 -6" />
+                                <path d="M14 4h6v6h-6l0 -6" />
+                                <path d="M4 14h6v6h-6l0 -6" />
+                                <path d="M14 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                            </svg>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item">Ração e Petiscos</button></li>
+                            <li><button class="dropdown-item">Higiene</button></li>
+                            <li><button class="dropdown-item">Brinquedos</button></li>
+                            <li><button class="dropdown-item">Acessórios</button></li>
+                            <li><button class="dropdown-item">Medicamentos</button></li>
+                            <li><button class="dropdown-item">Roupas</button></li>
+                            <li><button class="dropdown-item">Camas e Casinhas</button></li>
+                        </ul>
+                    </div>
 
                     <button class="botao" id="btn-cadastrar-produto" data-bs-target="#modalCriarProduto"
                         data-bs-toggle="modal">
@@ -264,13 +277,26 @@
                     </tbody>
                 </table>
             </div>
-
-            <nav class="mt-4" aria-label="Paginação">
-                <ul class="pagination justify-content-end rounded-2" id="paginacao">
-
-                </ul>
-            </nav>
         </section>
+
+        <!-- PAGINAÇÃO -->
+        <nav class="mt-2" aria-label="Paginação">
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    <a class="page-link paginacao-seta" href="#" aria-label="Previous">
+                        <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
+                    </a>
+                </li>
+                <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
+                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
+                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link paginacao-seta" href="#" aria-label="Next">
+                        <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </main>
 
     <div class="modal fade" id="modalExcluirProduto" tabindex="-1" aria-hidden="true">
@@ -290,7 +316,7 @@
 
     <div class="modal fade" id="modalCriarProduto" tabindex="-1" aria-labelledby="titulo-modal-criar-produto"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog my-3 modal-dialog-centered">
             <div class="modal-content modal-content-criar-produto">
                 <form class="form-modal-produto" id="form-produto" novalidate>
                     <h2 class="modal-titulo mb-3" id="titulo-modal-produto">Criar produto</h2>
@@ -386,9 +412,9 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalEditarProduto" tabindex="-1" aria-labelledby="titulo-modal-editar-produto"
+    <div class="modal fade " id="modalEditarProduto" tabindex="-1" aria-labelledby="titulo-modal-editar-produto"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog my-3 modal-dialog-centered">
             <div class="modal-content modal-content-criar-produto">
                 <form class="form-modal-produto" id="form-produto" novalidate>
                     <h2 class="modal-titulo mb-3" id="titulo-modal-produto">Editar produto</h2>
@@ -396,7 +422,8 @@
                         <div class="input-grupo">
                             <label for="prod-nome">Nome</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto" value="Ração Úmida GranPlus Gourmet Sachê">
+                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto"
+                                    value="Ração Úmida GranPlus Gourmet Sachê">
                             </div>
                         </div>
 
@@ -419,7 +446,8 @@
                             <div class="input-grupo">
                                 <label for="prod-preço">Preço</label>
                                 <div class="input-border">
-                                    <input type="text" class="form-control" id="prod-preço" placeholder="R$ 0,00" value="3,39">
+                                    <input type="text" class="form-control" id="prod-preço" placeholder="R$ 0,00"
+                                        value="3,39">
                                 </div>
                             </div>
 
