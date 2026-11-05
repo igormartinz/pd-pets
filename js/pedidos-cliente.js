@@ -9,7 +9,7 @@ const STATUS_COM_CANCELAMENTO = ['Aguardando pagamento', 'Pago'];
 const STATUS_COM_AVALIACAO = ['Entregue'];
 
 // Páginação
-const PEDIDOS_POR_PAGINA = 6;
+const PEDIDOS_POR_PAGINA = 9;
 
 let pedidosDoCliente = [];
 let nomesProdutos = {};
@@ -63,16 +63,14 @@ function montarCardPedido(pedido, nomeProduto) {
             </div>
 
             <div class="container-central-pedidos-info">
-                <h2 id="tituloProduto">${nomeProduto ?? 'Produto não encontrado'}</h2>
-
                 <div class="container-valor-quantidade">
                     <div class="valor-produto">
-                        <p>Valor:</p>
+                        <p>Valor Total:</p>
                         <span id="valorProduto">${formatarMoeda(pedido.valor)}</span>
                     </div>
 
                     <div class="quantidade-produto">
-                        <p>Quantidade:</p>
+                        <p>Itens:</p>
                         <span id="quantidadeProduto">${pedido.quantidade}</span>
                     </div>
                 </div>
