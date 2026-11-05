@@ -178,8 +178,8 @@ function normalizarTexto(texto) {
 }
 
 // Aplica os critérios ativos de pesquisa e nota.
-function aplicarFiltrosAvaliacoes(termo) {
-    const pesquisa = normalizarTexto(termo);
+function aplicarFiltrosAvaliacoes() {
+    const pesquisa = normalizarTexto(inputPesquisa.value);
     const cards = listaAvaliacoes.querySelectorAll(".card-avaliacao");
     let quantidadeEncontrada = 0;
 

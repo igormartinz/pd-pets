@@ -52,7 +52,7 @@ main {
     width: 25vw;
     height: 40px;
     max-width: 203px;
-    font-size: clamp(12px, 1.5vw, 16px);
+    font-size: clamp(14px, 1.5vw, 16px);
     padding: .5em 0;
     display: flex;
     justify-content: center;
@@ -89,7 +89,7 @@ main {
 }
 
 .input-border-secundario .form-control::placeholder {
-    font-size: clamp(12px, 1.5vw, 16px);
+    font-size: clamp(14px, 1.5vw, 16px);
 }
 
 .icone-lupa {
@@ -105,6 +105,7 @@ main {
 
 .tabela-estoque {
     width: 100%;
+    min-height: 460px;
     border-radius: 10px;
     background-color: var(--cor-verde-escuro);
     padding: 0 1px 1px;
@@ -118,12 +119,30 @@ main {
     border-collapse: collapse;
     caption-side: bottom;
     color: var(--cor-branco);
-    font-family: var(--fonte-nunito);
+    font-family: var(--fonte-nunito);   
 }
 
 .titulos-tabela-estoque {
     text-align: center;
     padding: 1rem 0;
+}
+
+.coluna-preco,
+.coluna-estoque,
+.coluna-status {
+    width: 110px;
+}
+
+.coluna-nome-produto {
+    width: 500px;
+}
+
+.coluna-categoria {
+    width: 190px;
+}
+
+.coluna-acoes {
+    width: 140px;
 }
 
 .tabela-estoque tbody td {
@@ -503,15 +522,24 @@ main {
     stroke-dasharray: 45 30;
 }
 
+.dropdown {
+    width: 200px;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+
 .filtro {
     width: 100%;
     font-size: clamp(12px, 1.5vw, 16px);
     font-weight: bold;
-    cursor: pointer;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
 }
 
 @media(max-width: 768px) {
@@ -548,7 +576,7 @@ main {
         gap: 12px;
     }
 
-    .filtro {
+    .dropdown {
         width: 100%;
         max-width: 100%;
     }
