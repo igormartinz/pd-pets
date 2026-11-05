@@ -35,7 +35,7 @@ async function BuscarUsuarioPorCredenciais(email, senha) {
 
 
 // Salva a sessão do usuário no localStorage (Não salva a senha)
-function salvarSessao(usuario, perfil) {
+function salvarSessao(usuario) {
     const dadosSessao = {
         id: usuario.id,
         nome: usuario.nomeCompleto,
