@@ -164,11 +164,6 @@ function normalizarTexto(texto) {
         .trim();
 }
 
-// Filtra as avaliações pelo nome do produto.
-function pesquisarAvaliacoes(termo) {
-    aplicarFiltrosAvaliacoes(termo);
-}
-
 // Filtra as avaliações pela nota selecionada.
 function filtrarAvaliacoes(nota) {
     notaSelecionada = nota;
@@ -176,8 +171,8 @@ function filtrarAvaliacoes(nota) {
 }
 
 // Aplica os critérios ativos de pesquisa e nota.
-function aplicarFiltrosAvaliacoes(termo) {
-    const pesquisa = normalizarTexto(termo);
+function aplicarFiltrosAvaliacoes() {
+    const pesquisa = normalizarTexto(inputPesquisa.value);
     const cards = listaAvaliacoes.querySelectorAll(".card-avaliacao");
     let quantidadeEncontrada = 0;
 
