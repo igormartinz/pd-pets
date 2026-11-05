@@ -1,12 +1,10 @@
 import { mostrarToast } from "./toast.js";
-
 import { buscarUsuario, buscarProduto, salvarCarrinho, contarItens } from "./carrinho-api.js";
 
 const API_URL_ENDERECO = "https://6aaac6cdff4dd5698b4f060c.mockapi.io";
-
 const API_URL_PEDIDO = "https://6a98614f7160beda2292eff8.mockapi.io";
-
 const API_URL_PRODUTO = "https://6a98614f7160beda2292eff8.mockapi.io";
+const TAXA_SERVICO = 2.00;
 
 function copiarObjeto(objeto) {
     return JSON.parse(JSON.stringify(objeto));
@@ -25,7 +23,6 @@ async function atualizarRecurso(url, dados) {
 let usuarioAtual = null;
 let produtosPorId = {};
 let idItemParaRemover = null;
-// let pedidosPendentes = [];
 let enderecoSelecionado = null;
 
 function mostrarCarregando() {
@@ -170,17 +167,21 @@ function calcularTotais() {
         valorProdutos = valorProdutos + calcularSubTotal(item);
     }
 
+    const taxa = itens.length > 0 ? TAXA_SERVICO : 0;
+
     return {
         quantidade: contarItens(itens),
         valorProdutos: valorProdutos,
-        total: valorProdutos
-    };
+        taxa: taxa,
+        total: valorProdutos + taxa
+    }
 }
 
 function atualizarResumo() {
     const totais = calcularTotais();
     document.getElementById("resumo-produtos-titulo").textContent = `Produtos (${totais.quantidade})`;
     document.getElementById("resumo-produtos-valor").textContent = formatarPreco(totais.valorProdutos);
+    document.getElementById("resumo-taxa-servico").textContent = formatarPreco(totais.taxa);
     document.getElementById("resumo-total").textContent = formatarPreco(totais.total);
 
     document.getElementById("btn-finalizar").disabled = totais.quantidade === 0;
@@ -274,20 +275,42 @@ async function buscarEnderecoPrincipal(idUsuario) {
     return principal || doUsuario[0] || null;
 }
 
-function montarPedido(item, endereco) {
-    const produto = produtosPorId[String(item.produtoID)];
+function montarPedido(itens, endereco) {
+    const itensPedido = itens.map(item => {
+        const produto = produtosPorId[String(item.produtoID)];
 
-    const valor = produto.preco * item.quantidade;
+        return {
+            produtoID: Number(item.produtoID),
+            quantidade: Number(item.quantidade),
+            valorUnitario: Number(produto.preco)
+        };
+    });
+
+    const somaItens = itensPedido.reduce((soma, item) => soma + item.quantidade * item.valorUnitario, 0);
+
+    // Data no fuso local
+    const hoje = new Date();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
 
     return {
         clienteID: Number(usuarioAtual.id),
-        enderecoID: Number(endereco),
-        data: new Date().toISOString().slice(0, 10),
+        enderecoEntrega: [
+            {
+                cep: endereco.cep,
+                rua: endereco.rua,
+                numero: endereco.numero,
+                complemento: endereco.complemento,
+                bairro: endereco.bairro,
+                cidade: endereco.cidade,
+                estado: endereco.estado
+            }
+        ],
+        data: `${hoje.getFullYear()}-${mes}-${dia}`,
         status: "Pago",
-        produtoID: Number(item.produtoID),
-        quantidade: Number(item.quantidade),
-        valor: Number(valor.toFixed(2))
-    }
+        itens: itensPedido,
+        valorTotal: Number((somaItens + TAXA_SERVICO).toFixed(2))
+    };
 }
 
 async function criarPedido(pedido) {
@@ -303,7 +326,7 @@ async function criarPedido(pedido) {
 function preencherModalFinalizacao(totais, quantidadeItens, endereco) {
     document.getElementById("finalizar-produtos-titulo").textContent = `Produtos (${quantidadeItens})`;
     document.getElementById("finalizar-produtos-valor").textContent = formatarPreco(totais.valorProdutos);
-    document.getElementById("finalizar-total").textContent = formatarPreco(totais.valorProdutos);
+    document.getElementById("finalizar-total").textContent = formatarPreco(totais.total);
     document.getElementById("finalizar-endereco-linha-1").textContent = `${endereco.rua}, ${endereco.numero} - ${endereco.bairro}`;
     document.getElementById("finalizar-endereco-linha-2").textContent = `${endereco.cidade} - ${endereco.estado}, ${endereco.cep}`;
 }
@@ -327,23 +350,13 @@ async function finalizarCompra() {
         preencherModalFinalizacao(totais, quantidadeItens, endereco);
         enderecoSelecionado = endereco;
 
-        // pedidosPendentes = [];
+        console.log(enderecoSelecionado)
 
-        // for (const item of itens) {
-        //     const pedido = montarPedido(item, endereco.id);
-
-        //     const pedidoSalvo = await criarPedido(pedido);
-
-        //     pedidosPendentes.push(pedidoSalvo);
-        // }
-
-        // usuarioAtual = await salvarCarrinho(usuarioAtual, []);
-        // renderizarCarrinho();
         bootstrap.Modal.getOrCreateInstance("#modalFinalizar").show();
     } catch (erro) {
         console.error(erro);
         mostrarToast("Erro", "Não foi possível criar o pedido. Tente mais tarde.", "erro");
-    } finally{
+    } finally {
         botao.disabled = false;
     }
 }
@@ -364,26 +377,6 @@ function continuarPagamento() {
 
     bootstrap.Modal.getOrCreateInstance(modalFinalizar).hide();
 }
-
-// async function buscarProdutosDosPedidos() {
-//     return await Promise.all(pedidosPendentes.map(pedido => {
-//         return buscarProduto(pedido.produtoID);
-//     }));
-// }
-
-// function temEstoqueSuficiente(produtos) {
-//     for (let i = 0; i < pedidosPendentes.length; i++) {
-//         const pedido = pedidosPendentes[i];
-//         const produto = produtos[i];
-
-//         if (Number(produto.estoque) < Number(pedido.quantidade)) {
-//             return false;
-//         }
-//     }
-
-//     return true;
-// }
-
 
 // Produtos ATUAIS dos itens do carrinho (o estoque pode ter mudado desde que a página abriu)
 async function buscarProdutosDosItens(itens) {
@@ -458,18 +451,16 @@ async function confirmarPagamento(e) {
             alteracoes.push({ url: url, original: produto });
         }
 
-        // Cria os pedidos, já como "Pago"
-        for (const item of itens) {
-            const pedidoSalvo = await criarPedido(montarPedido(item, enderecoSelecionado.id));
-            alteracoes.push({ url: `${API_URL_PEDIDO}/pedidos/${pedidoSalvo.id}`, criado: true });
-        }
+        // Cria UM pedido com todos os itens, já como "Pago"
+        const pedidoSalvo = await criarPedido(montarPedido(itens, enderecoSelecionado));
+        alteracoes.push({ url: `${API_URL_PEDIDO}/pedidos/${pedidoSalvo.id}`, criado: true });
 
         // Esvazia o carrinho por último: se falhar, tudo acima é desfeito
         usuarioAtual = await salvarCarrinho(usuarioAtual, []);
         renderizarCarrinho();
 
         bootstrap.Modal.getOrCreateInstance(modal).hide();
-        mostrarToast("Pagamento concluído", "Seu pedido foi pago com sucesso. Veja em Meus Pedidos.", "sucesso");
+        mostrarToast("Pagamento concluído", "Pagamento realizado com sucesso!", "sucesso");
 
     } catch (erro) {
         console.error(erro);
