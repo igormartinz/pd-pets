@@ -59,12 +59,14 @@ async function carregarPedidosRecebidos() {
         const produtos = await respostaProdutos.json();
         const usuarios = await respostaUsuarios.json();
 
-        // Nomes dos produtos e conjunto com os ids dos produtos do lojista logado
+        // Mapeia os nomes dos produtos e identifica os produtos do lojista
         const meusProdutos = new Set();
+
         for (const produto of produtos) {
             nomesProdutos[produto.id] = produto.nome;
+
             if (String(produto.lojistaID) === String(lojista.id)) {
-                meusProdutos.add(String(produto.id)); // String(): evita falha de comparação número x texto
+                meusProdutos.add(String(produto.id));
             }
         }
 
@@ -73,7 +75,26 @@ async function carregarPedidosRecebidos() {
             nomesClientes[usuario.id] = usuario.nomeCompleto;
         }
 
-        pedidosRecebidos = pedidos.filter(pedido => meusProdutos.has(String(pedido.produtoID)));
+        pedidosRecebidos = [];
+
+        for (const pedido of pedidos) {
+            const possuiProdutoDoLojista = (pedido.itens ?? []).some(
+                item => meusProdutos.has(String(item.produtoID))
+            );
+
+            // Ignora pedidos que não possuem produtos deste lojista
+            if (!possuiProdutoDoLojista) continue;
+
+            // Mantém todos os produtos do pedido
+            pedidosRecebidos.push({
+                id: pedido.id,
+                clienteID: pedido.clienteID,
+                data: pedido.data,
+                status: pedido.status,
+                itens: pedido.itens ?? [],
+                valor: pedido.valorTotal
+            });
+        }
 
         renderizarPedidosRecebidos();
 
@@ -125,14 +146,13 @@ function renderizarPedidosRecebidos(rolar = false) {
     for (const pedido of pedidosDaPagina) {
         container.insertAdjacentHTML('beforeend', montarCardPedidoRecebido(
             pedido,
-            nomesClientes[pedido.clienteID] ?? 'Cliente não encontrado',
-            nomesProdutos[pedido.produtoID] ?? 'Produto não encontrado'
+            nomesClientes[pedido.clienteID] ?? 'Cliente não encontrado'
         ));
     }
 
     renderizarPaginacao(totalPaginas);
 
-    // volta ao topo da lista ao trocar de página
+    // Volta ao topo da lista ao trocar de página
     if (rolar) container.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -142,13 +162,27 @@ function posicaoStatus(status) {
     return posicao === -1 ? ORDEM_STATUS.length : posicao;
 }
 
-function montarCardPedidoRecebido(pedido, nomeCliente, nomeProduto) {
+// Valor e quantidade de unidades dos itens DESTE lojista no pedido
+function resumoDoPedido(pedido) {
+    let quantidade = 0;
+
+    for (const item of pedido.itens) {
+        quantidade += Number(item.quantidade);
+    }
+
+    return quantidade;
+}
+
+function montarCardPedidoRecebido(pedido, nomeCliente) {
+    const quantidade = resumoDoPedido(pedido);
+
+    console.log(pedido)
+
     // O botão mostra o próximo status e só existe quando há um próximo passo
     const proximoStatus = PROXIMO_STATUS[pedido.status];
-    const botaoStatus = proximoStatus ? `
-                    <div class="container-btns-pedidos-lojista">
-                        <a class="btn-alterar-status" id="btnAlterarStatus" data-pedido-id="${pedido.id}" data-proximo-status="${proximoStatus}">Alterar status para ${proximoStatus}</a>
-                    </div>` : '';
+    const botaoStatus = proximoStatus
+        ? `<a class="btn-alterar-status" id="btnAlterarStatus" data-pedido-id="${pedido.id}" data-proximo-status="${proximoStatus}">Alterar status para ${proximoStatus}</a>`
+        : '';
 
     return `
             <div class="container-pedidos-info">
@@ -165,20 +199,24 @@ function montarCardPedidoRecebido(pedido, nomeCliente, nomeProduto) {
                 <div class="container-central-pedidos-info">
                     <div class="box-pedidos-info">
                         <h2 id="tituloCliente">${nomeCliente}</h2>
-                        <p id="nomeProduto">${nomeProduto}</p>
+
                         <div class="container-valor-quantidade">
                             <div class="valor-produto">
-                                <p>Valor</p>
-                                <span id="valorProduto">${formatarMoeda(pedido.valor)}</span>
+                                <p>Valor Total</p>
+                                <span id="valorProduto">${formatarMoeda(pedido.valor - 2)}</span>
                             </div>
 
                             <div class="quantidade-produto">
-                                <p>Quantidade</p>
-                                <span id="quantidadeProduto">${pedido.quantidade}</span>
+                                <p>Itens</p>
+                                <span id="quantidadeProduto">${quantidade}</span>
                             </div>
                         </div>
                     </div>
-                    ${botaoStatus}
+
+                    <div class="container-btns-pedidos-lojista d-flex flex-column gap-2">
+                        <a href="#" role="button" class="botao-secundario w-100" id="btnVerDetalhes" data-pedido-id="${pedido.id}" data-bs-toggle="modal" data-bs-target="#modalVerDetalhes">Ver Produtos</a>
+                        ${botaoStatus}
+                    </div>
                 </div>
             </div>
     `;
@@ -308,8 +346,46 @@ function conectarFiltroDeStatus() {
     }
 }
 
+// Um produto do pedido, no mesmo formato do modal da página do cliente (sem o botão de avaliar)
+function montarProdutoDetalhes(item) {
+    const nome = nomesProdutos[item.produtoID] ?? 'Produto não encontrado';
+    const subtotal = Number(item.quantidade) * Number(item.valorUnitario);
+
+    return `
+        <article class="produto">
+            <h4 class="text-truncate mb-1">${nome}</h4>
+            <div class="d-flex justify-content-between align-items-end">
+                <div>
+                    <p class="produto-quantidade">Quantidade: <span>${item.quantidade}</span></p>
+                    <p class="produto-preco-total">${formatarMoeda(subtotal)}</p>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function conectarDetalhes() {
+    const modalElemento = document.getElementById('modalVerDetalhes');
+
+    // Ao abrir, relatedTarget é o botão "Ver detalhes" do card clicado: dele sai o id do pedido
+    modalElemento.addEventListener('show.bs.modal', function (evento) {
+        const idPedido = evento.relatedTarget?.dataset.pedidoId;
+        const pedido = pedidosRecebidos.find(item => String(item.id) === String(idPedido));
+
+        if (!pedido) {
+            evento.preventDefault(); // não abre um modal vazio
+            return;
+        }
+
+        document.getElementById('detalhes-produtos').innerHTML = pedido.itens
+            .map(montarProdutoDetalhes)
+            .join('');
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     carregarPedidosRecebidos();
     conectarAlteracaoDeStatus();
     conectarFiltroDeStatus();
+    conectarDetalhes();
 });

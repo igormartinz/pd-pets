@@ -60,7 +60,7 @@ main>h1 {
 
 .container-pedidos-info {
     width: 100%;
-    height: 320px;
+    height: 310px;
     background-color: var(--cor-branco);
     border-radius: 15px;
     color: var(--cor-cinza);
@@ -147,20 +147,13 @@ main>h1 {
     font-weight: bold;
     font-size: 20px;
     color: var(--cor-verde-escuro);
-}
-
-#nomeProduto {
-    font-family: var(--fonte-poppins);
-    font-weight: 400;
-    font-size: 14px;
-    color: #000;
+    margin-bottom: .4em;
 }
 
 .container-valor-quantidade {
     display: flex;
     align-items: center;
     gap: 50px;
-    padding-top: 10px;
 }
 
 .valor-produto>p,
@@ -247,6 +240,63 @@ main>h1 {
 
 #btnAvaliarProduto:hover {
     background-color: #CF6536;
+}
+
+/* MODAL VER DETALHES */
+.modal-detalhes-pedido{
+    font-family: var(--fonte-nunito);
+}
+
+.titulo-detalhes{
+    font-size: clamp(20px, 5vw, 24px);
+    font-weight: bold;
+    font-family: var(--fonte-poppins);
+    margin-bottom: 1em;
+}
+
+.endereco-destino{
+    background-color: var(--cor-verde-escuro);
+    color: var(--cor-branco);
+    padding: 1em;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    margin-bottom: 1em;
+}
+
+.modal-detalhes-pedido hr{
+    margin: .5em 0;
+    border: 1px solid var(--cor-verde-escuro);
+}
+
+.produtos-pedido h3{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: .3em;
+}
+
+.produto{
+    border: 2px solid var(--cor-verde-escuro);
+    padding: .8em;
+    border-radius: 1em;
+}
+
+.produto h4{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.produto-quantidade{
+    font-size: 14px;
+}
+
+.produto-preco-total{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--cor-verde-escuro);
+    font-family: var(--fonte-poppins);
+    margin-top: .2em;
 }
 
 /* MODAL AVALIAR PEDIDO */

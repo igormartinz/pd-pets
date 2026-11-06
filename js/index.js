@@ -11,7 +11,7 @@ let favoritos = [];
 ligarBotoesCarrinho();
 
 // Produtos exibidos em "Produtos em Destaque", aparece de acordo com a ordem de IDs dentro do Array.
-const IDS_DESTAQUE = [1, 61, 10, 5]
+const IDS_DESTAQUE = [1, 60, 10, 5]
 
 function formatarMoeda(valor) {
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });

@@ -26,12 +26,12 @@
                 <section id="section-form-dados-perfil">
                     <div class="perfil-header">
                         <div class="circulo-perfil">
-                            <p class="abrev-nome">CG</p>
+                            <p class="abrev-nome"></p>
                         </div>
 
                         <div class="nome-e-email-perfil">
-                            <h3 class="nome-loja">Cansei de Ser Gato</h3>
-                            <p class="email-loja">empresa@gmail.com</p>
+                            <h3 class="nome-loja"></h3>
+                            <p class="email-loja"></p>
                         </div>
 
                         <div class="container-btns-perfil">
@@ -41,27 +41,27 @@
                     </div>
 
 
-                    <form class="d-flex flex-column form-perfil-loja">
+                    <form class="d-flex flex-column form-perfil-lojista">
                         <div class="campo-dados-perfil">
                             <label for="nome-empresa">Nome da empresa</label>
                             <div>
-                                <input class="input-dados-perfil" type="text" id="nome-empresa"
-                                    placeholder="Cansei de Ser Gato" readonly="true">
+                                <input class="input-dados-perfil" type="text" id="nome-empresa" readonly="true">
                             </div>
                         </div>
 
                         <div class="campo-dados-perfil">
                             <label for="nome-responsavel">Nome do responsável</label>
+                            <i class="ti ti-lock cadeado-nome-responsavel d-none" id="cadeado-nome-responsavel" aria-label="Campo não editável"></i>
                             <div>
-                                <input class="input-dados-perfil" type="text" id="nome-responsavel"
-                                    placeholder="Mateus Cristiano" readonly="true">
+                                <input class="input-dados-perfil" type="text" id="nome-responsavel" readonly="true">
                             </div>
                         </div>
 
                         <div class="campo-dados-perfil">
                             <label for="CNPJ">CNPJ</label>
+                            <i class="ti ti-lock cadeado-cnpj d-none" id="cadeado-cnpj" aria-label="Campo não editável"></i>
                             <div>
-                                <input class="input-dados-perfil" type="text" id="CNPJ" placeholder="38.519.484/0001-52"
+                                <input class="input-dados-perfil" type="text" id="CNPJ"
                                     readonly="true">
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                         <div class="campo-dados-perfil">
                             <label for="telefone">Telefone</label>
                             <div>
-                                <input class="input-dados-perfil" type="tel" id="telefone" placeholder="(31) 99999-0000"
+                                <input class="input-dados-perfil" type="tel" id="telefone" placeholder="(00) 00000-0000"
                                     readonly="true">
                             </div>
                         </div>
@@ -77,13 +77,13 @@
                         <div class="campo-dados-perfil">
                             <label for="email">E-mail</label>
                             <div>
-                                <input class="input-dados-perfil" type="password" id="email"
+                                <input class="input-dados-perfil" type="text" id="email"
                                     placeholder="empresa@gmail.com" readonly="true">
                             </div>
                         </div>
 
-                        <button type="button" class="d-none" id="btn-cancelar-perfil">Cancelar</button>
                     </form>
+                    <button type="button" class="d-none" id="btn-cancelar-perfil">Cancelar</button>
                 </section>
 
                 <div class="container-image-perfil-loja">
@@ -96,6 +96,18 @@
             </section>
         </section>
     </main>
+
+    <!-- TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div id="toast-indicador" class="rounded-1" style="width: 1em; height: 1em;"></div>
+                <strong id="toast-titulo" class="me-auto ms-2"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+            </div>
+            <div id="toast-mensagem" class="toast-body"></div>
+        </div>
+    </div>
 
     <script type="module" src="/js/perfil-loja.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
