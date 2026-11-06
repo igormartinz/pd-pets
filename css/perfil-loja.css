@@ -124,11 +124,11 @@ main {
     color: #9c9b9b;
 }
 
-.form-perfil-loja {
+.form-perfil-lojista {
     flex: 1;
     justify-content: space-between;
-    padding-top: 10px;
     gap: 15px;
+    padding: 1.5em 0;
 }
 
 .campo-dados-perfil {
@@ -171,6 +171,37 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+#btn-cancelar-perfil {
+    outline: none;
+    border: none;
+    width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--cor-verde-escuro);
+    padding: 5px 0;
+    font-family: var(--fonte-nunito);
+    color: var(--cor-branco);
+    font-weight: bold;
+    font-size: clamp(12px, 1.5vw, 16px);
+}
+
+.cadeado-cnpj, .cadeado-nome-responsavel {
+    font-size: 14px;
+    color: #9c9b9b;
+    vertical-align: middle;
+}
+
+#section-form-dados-perfil.editando .input-dados-perfil:not([readonly]) {
+    border-bottom: 1px solid #c8c9c9;
+    padding-bottom: 2px;
+}
+
+#section-form-dados-perfil.editando #CNPJ,
+#section-form-dados-perfil.editando #nome-responsavel {
+    color: #9c9b9b;
+    cursor: not-allowed;
 }
 
 @media(max-width: 900px) {
