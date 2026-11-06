@@ -86,18 +86,18 @@ async function carregarPedidosRecentes(clienteId) {
         for (const produto of produtos) {
             mapaProdutos[produto.id] = produto.nome;
         }
-
+        
         // Ordena do mais recente pro mais antigo e pega só os 6 primeiros
         const pedidosRecentes = pedidosDoCliente.sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 6);
-
+        
         renderizarPedidosRecentes(pedidosRecentes, mapaProdutos);
-
+        
     } catch (erro) {
         container.innerHTML = `
       <tr>
-        <td class="text-center py-4">Não foi possível carregar seus pedidos. Tente novamente mais tarde.</td>
+      <td class="text-center py-4">Não foi possível carregar seus pedidos. Tente novamente mais tarde.</td>
       </tr>
-    `;
+      `;
     }
 }
 
@@ -106,19 +106,41 @@ function renderizarPedidosRecentes(pedidos, mapaProdutos) {
     container.innerHTML = '';
 
     for (const pedido of pedidos) {
-        const nomeProduto = mapaProdutos[pedido.produtoID] ?? 'Produto não encontrado';
-        const classeBadge = CLASSE_STATUS[pedido.status];
+        const itens = pedido.itens ?? [];
+        const primeiroItem = itens[0];
+
+        const nomeProduto = primeiroItem
+            ? mapaProdutos[primeiroItem.produtoID] ?? 'Produto não encontrado'
+            : 'Pedido sem produtos';
+
+        const quantidadeRestante = itens.length - 1;
+
+        const nomeExibicao = quantidadeRestante > 0
+            ? `${nomeProduto} e mais ${quantidadeRestante} ${quantidadeRestante === 1 ? 'item' : 'itens'}`
+            : nomeProduto;
+
+        const classeBadge = CLASSE_STATUS[pedido.status] ?? '';
 
         const linha = document.createElement('tr');
+
         linha.innerHTML = `
-      <td>
-        <div class="pedido-linha">
-          <span class="produto-nome"><i class="ti ti-shopping-bag icone-tabela"></i> ${nomeProduto}</span>
-          <span class="produto-preco">${formatarMoeda(pedido.valor)}</span>
-          <span class="produto-status badge rounded-pill ${classeBadge}">${pedido.status}</span>
-        </div>
-      </td>
-    `;
+            <td>
+                <div class="pedido-linha">
+                    <span class="produto-nome">
+                        <i class="ti ti-shopping-bag icone-tabela"></i>
+                        ${nomeExibicao}
+                    </span>
+
+                    <span class="produto-preco">
+                        ${formatarMoeda(pedido.valorTotal)}
+                    </span>
+
+                    <span class="produto-status badge rounded-pill ${classeBadge}">
+                        ${pedido.status}
+                    </span>
+                </div>
+            </td>
+        `;
 
         container.appendChild(linha);
     }

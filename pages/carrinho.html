@@ -82,6 +82,8 @@
                             <dd class="valor-total-produtos" id="resumo-produtos-valor"></dd>
                         </div>
                         <div class="d-flex alignx-items-center justify-content-between">
+                            <dt class="taxa-servicos">Taxa de serviço</dt>
+                            <dd class="taxa-servicos" id="resumo-taxa-servico">R$ 0,00</dd>
                         </div>
                     </dl>
                     <hr>
@@ -90,8 +92,7 @@
                         <dd class="valor-total-final" id="resumo-total"></dd>
                     </div>
 
-                    <button class="botao w-100 mt-3 px-1" data-bs-target="#modalFinalizar" id="btn-finalizar">Continuar
-                        para finalização</button>
+                    <button class="botao w-100 mt-3 px-1" data-bs-target="#modalFinalizar" id="btn-finalizar">Criar Pedido</button>
                 </section>
             </div>
         </div>
@@ -163,6 +164,10 @@
                             <dt class="finalizacao-texto-destaque">Frete</dt>
                             <dd class="m-0">Grátis</dd>
                         </div>
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <dt class="finalizacao-texto-destaque">Taxa de serviço</dt>
+                            <dd class="m-0">R$ 2,00</dd>
+                        </div>
                         <div class="d-flex align-items-center justify-content-between  mt-3">
                             <dt class="finalizacao-texto-destaque">Total da compra</dt>
                             <dd class="finalizacao-texto-destaque" id="finalizar-total"></dd>
@@ -206,7 +211,7 @@
                         </div>
 
                         <div class="d-flex flex-column gap-2 mt-4">
-                            <button type="button" class="botao px-0 w-100" id="btn-continuar-pagamento">Continuar
+                            <button type="button" class="botao px-0 w-100" id="btn-continuar-pagamento">Fazer
                                 pagamento</button>
                             <button type="button" class="botao-secundario px-0 w-100"
                                 data-bs-dismiss="modal">Cancelar</button>
