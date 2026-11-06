@@ -47,6 +47,22 @@
         </nav>
     </main>
 
+    <!-- MODAL VER DETALHES -->
+    <div class="modal fade" id="modalVerDetalhes" tabindex="-1" aria-labelledby="modalVerDetalhesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 modal-detalhes-pedido">
+                <h2 class="titulo-detalhes" id="modalVerDetalhesLabel">Produto(s)</h2>
+                <section class="produtos-pedido">
+                    <div class="d-flex flex-column gap-2 lista-produtos-detalhes" id="detalhes-produtos"></div>
+                </section>
+                <button type="button" class="botao-secundario align-self-end mt-2"
+                    data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
         <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
