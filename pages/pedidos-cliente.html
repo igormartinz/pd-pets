@@ -22,60 +22,6 @@
 
         <h1>Meus Pedidos</h1>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVerDetalhes">
-            Teste
-        </button>
-
-        <!-- MODAL VER DETALHES -->
-        <div class="modal fade" id="modalVerDetalhes" tabindex="-1" aria-labelledby="modalVerDetalhes"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content p-4 rounded-4 modal-detalhes-pedido">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="titulo-detalhes">Detalhes do Pedido</h2>
-                        <span class="entregue">Entregue</span>
-                    </div>
-                    <article class="endereco-destino">
-                        <div class="d-flex align-items-center gap-1">
-                            <i class="ti ti-map-pin"></i>
-                            <h3 class="mt-1">ENDEREÇO DE DESTINO</h3>
-                        </div>
-                        <p>Goitacazes, 890 - Barro Preto, Belo Horizonte/MG</p>
-                    </article>
-                    <article class="info-pedido">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Taxa de serviço</dt>
-                            <dd class="m-0">R$ 2,00</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <dt>Total dos produtos</dt>
-                            <dd class="m-0">R$ 96,47</dd>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-2">
-                            <dt class="total-pedido">Total do Pedido</dt>
-                            <dd class="m-0 total-pedido">R$ 98,47</dd>
-                        </div>
-                    </article>
-                    <hr>
-                    <section class="produtos-pedido">
-                        <h3>Produtos</h3>
-                        <article class="produto">
-                            <h4 class="text-truncate mb-1">Brinquedo Spike Camarão de Pelúcia</h4>
-                            <div class="d-flex justify-content-between align-items-end">
-                                <div>
-                                    <p class="produto-quantidade">Quantidade: <span>1</span></p>
-                                    <p class="produto-preco-total">R$ 42,50</p>
-                                </div>
-                                <button class="botao-secundario d-flex gap-2 px-3 py-1"><i
-                                        class="ti ti-star-filled"></i> Avaliar</button>
-                            </div>
-                        </article>
-                    </section>
-                    <button class="botao-secundario align-self-end mt-2" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-
         <!-- LISTAGEM DE PEDIDOS -->
         <section id="lista-pedidos">
 
@@ -137,7 +83,46 @@
         </div>
     </div>
 
-
+    <!-- MODAL VER DETALHES -->
+    <div class="modal fade" id="modalVerDetalhes" tabindex="-1" aria-labelledby="modalVerDetalhesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 modal-detalhes-pedido">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="titulo-detalhes" id="modalVerDetalhesLabel">Detalhes do Pedido</h2>
+                    <span id="detalhes-status"></span>
+                </div>
+                <article class="endereco-destino">
+                    <div class="d-flex align-items-center gap-1">
+                        <i class="ti ti-map-pin"></i>
+                        <h3 class="mt-1">ENDEREÇO DE DESTINO</h3>
+                    </div>
+                    <p id="detalhes-endereco"></p>
+                </article>
+                <article class="info-pedido">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <dt>Taxa de serviço</dt>
+                        <dd class="m-0" id="detalhes-taxa"></dd>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <dt>Total dos produtos</dt>
+                        <dd class="m-0" id="detalhes-total-produtos"></dd>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-2">
+                        <dt class="total-pedido">Total do Pedido</dt>
+                        <dd class="m-0 total-pedido" id="detalhes-total-pedido"></dd>
+                    </div>
+                </article>
+                <hr>
+                <section class="produtos-pedido">
+                    <h3>Produtos</h3>
+                    <div class="d-flex flex-column gap-2 lista-produtos-detalhes" id="detalhes-produtos"></div>
+                </section>
+                <button type="button" class="botao-secundario align-self-end mt-2"
+                    data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- TOAST -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
