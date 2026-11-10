@@ -259,6 +259,7 @@ h3 {
     background-color: #FAF8F2;
     border-radius: 10px;
     padding: 20px;
+    width: 100%;
 }
 
 #nome-produto-descricao {
