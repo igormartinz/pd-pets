@@ -90,6 +90,7 @@ h3 {
 .container-informacoes-superior {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 12px;
 }
 
