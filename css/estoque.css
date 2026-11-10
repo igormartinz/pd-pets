@@ -543,20 +543,16 @@ main {
 }
 
 .area-upload.arquivo-carregado {
-    border-color: #198754;
-    background-color: #f0fff4;
+    border-color: var(--cor-verde-escuro);
+    background-color: var(--cor-branco);
 }
 
 .area-upload.arquivo-carregado .conteudo-upload {
-    color: #198754;
-}
-
-.area-upload.arquivo-carregado .conteudo-upload p {
-    font-weight: 600;
+    color: var(--cor-verde-escuro);
 }
 
 .area-upload.arquivo-carregado .txt-capacidade-upload {
-    color: #198754;
+    color: var(--cor-verde-escuro);
 }
 
 @media(max-width: 768px) {
