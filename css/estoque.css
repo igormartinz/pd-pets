@@ -542,6 +542,23 @@ main {
     padding: 10px 10px;
 }
 
+.area-upload.arquivo-carregado {
+    border-color: #198754;
+    background-color: #f0fff4;
+}
+
+.area-upload.arquivo-carregado .conteudo-upload {
+    color: #198754;
+}
+
+.area-upload.arquivo-carregado .conteudo-upload p {
+    font-weight: 600;
+}
+
+.area-upload.arquivo-carregado .txt-capacidade-upload {
+    color: #198754;
+}
+
 @media(max-width: 768px) {
 
     #modalCriarProduto .modal-dialog,

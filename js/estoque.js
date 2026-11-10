@@ -550,6 +550,60 @@ function conectarExclusaoDeProduto() {
     });
 }
 
+function configurarUpload(idCampo, idArea) {
+    const campoImagem = document.getElementById(idCampo);
+    const areaUpload = document.getElementById(idArea);
+
+    if (!campoImagem || !areaUpload) return;
+
+    function mostrarArquivoCarregado(arquivo) {
+        if (!arquivo) return;
+
+        areaUpload.classList.add('arquivo-carregado');
+
+        areaUpload.querySelector('.conteudo-upload p').textContent = arquivo.name;
+        areaUpload.querySelector('.txt-capacidade-upload').textContent =
+            'Arquivo carregado com sucesso!';
+    }
+
+    // Seleção pelo explorador de arquivos
+    campoImagem.addEventListener('change', () => {
+        mostrarArquivoCarregado(campoImagem.files?.[0]);
+    });
+
+    // Arrastar arquivo sobre a área
+    areaUpload.addEventListener('dragover', (evento) => {
+        evento.preventDefault();
+    });
+
+    // Soltar arquivo na área
+    areaUpload.addEventListener('drop', (evento) => {
+        evento.preventDefault();
+
+        const arquivo = evento.dataTransfer?.files?.[0];
+
+        if (!arquivo) return;
+
+        // Associa o arquivo arrastado ao input
+        const transferencia = new DataTransfer();
+        transferencia.items.add(arquivo);
+        campoImagem.files = transferencia.files;
+
+        mostrarArquivoCarregado(arquivo);
+    });
+
+    // Sair da área de upload
+    areaUpload.addEventListener('dragleave', () => {
+        areaUpload.classList.remove('arquivo-carregado');
+    });
+}
+
+// Modal de cadastro
+configurarUpload('prod-imagem', 'area-upload');
+
+// Modal de edição
+configurarUpload('prod-imagem-editar', 'area-upload-editar');
+
 document.addEventListener("DOMContentLoaded", () => {
     const usuarioLogado = verificarAut("Lojista");
     if (!usuarioLogado) return null;
