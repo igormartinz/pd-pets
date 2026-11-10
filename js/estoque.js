@@ -5,16 +5,6 @@ const URL_CATEGORIAS = 'https://6a9872a37160beda2292ff4f.mockapi.io/categorias';
 
 const PRODUTOS_POR_PAGINA = 6;
 
-const NOMES_CATEGORIAS = {
-    1: "Ração e Petiscos",
-    2: "Higiene",
-    3: "Brinquedos",
-    4: "Acessórios",
-    5: "Medicamentos",
-    6: "Roupas",
-    7: "Camas e Casinhas"
-}
-
 const CAMPOS_CADASTRO = {
     nome: 'prod-nome', categoria: 'prod-categoria', preco: 'prod-preco',
     estoque: 'prod-estoque', descricao: 'prod-descricao', status: 'prod-status'
@@ -26,6 +16,8 @@ const CAMPOS_EDICAO = {
 
 let idProdutoEmEdicao = null;
 let categoriasProntas = Promise.resolve();
+let nomesCategorias = {};
+let idProdutoEmExclusao = null;
 let produtosDoLojista = [];
 let produtosFiltrados = [];
 let paginaAtual = 1;
@@ -52,7 +44,7 @@ function formatarPreco(valor) {
 }
 
 function nomeCategoria(categoriaID) {
-    return NOMES_CATEGORIAS[categoriaID] || "Sem categoria";
+    return nomesCategorias[categoriaID] || "Sem categoria";
 }
 
 function criarCelula(classe) {
@@ -104,7 +96,7 @@ function criarLinhaProduto(produto) {
                 <button class="btn-pencil" data-bs-target="#modalEditarProduto" data-produto-id="${produto.id}" data-bs-toggle="modal">
                     <i class="ti ti-pencil" style="font-size: 24px;"></i>
                 </button>
-                <button class="btn-trash" data-bs-target="#modalExcluirProduto" data-bs-toggle="modal">
+                <button class="btn-trash" data-produto-id="${produto.id}" data-bs-target="#modalExcluirProduto" data-bs-toggle="modal">
                     <i class="ti ti-trash" style="font-size: 24px;"></i>
                 </button>
             </div>
@@ -250,16 +242,48 @@ function pegarCampos(ids) {
 // Preenche o select dos DOIS modais com as categorias reais da API
 async function popularCategoriasDosModais() {
     const selects = [document.getElementById('prod-categoria'), document.getElementById('edit-categoria')];
+    const dropdown = document.getElementById('dropdown-categorias');
 
     try {
         const resposta = await fetch(URL_CATEGORIAS);
         if (!resposta.ok) throw new Error('Falha ao buscar as categorias');
 
         const categorias = await resposta.json();
+
+        nomesCategorias = {};
+
+        for (const categoria of categorias) {
+            nomesCategorias[categoria.id] = categoria.nome;
+        }
+
         const opcoes = '<option value="" selected disabled>Selecione a categoria</option>'
             + categorias.map(categoria => `<option value="${categoria.id}">${categoria.nome}</option>`).join('');
 
         for (const select of selects) select.innerHTML = opcoes;
+
+        // Preenche o dropdown de filtros
+        if (dropdown) {
+            dropdown.innerHTML = '';
+
+            const todasCategorias = document.createElement('button');
+            todasCategorias.type = 'button';
+            todasCategorias.className = 'dropdown-item';
+            todasCategorias.textContent = 'Todas as categorias';
+            todasCategorias.dataset.categoria = '';
+
+            dropdown.appendChild(todasCategorias);
+
+            for (const categoria of categorias) {
+                const opcao = document.createElement('button');
+
+                opcao.type = 'button';
+                opcao.className = 'dropdown-item';
+                opcao.textContent = categoria.nome;
+                opcao.dataset.categoria = categoria.id;
+
+                dropdown.appendChild(opcao);
+            }
+        }
     } catch (erro) {
         console.error(erro);
         for (const select of selects) {
@@ -331,7 +355,7 @@ function conectarCadastroDeProduto() {
 
 // Cadastro de produto
 async function salvarProduto(modalElemento) {
-    const lojista = pegarUsuarioLogado(); 
+    const lojista = pegarUsuarioLogado();
     if (!lojista) return;
 
     const dados = validarProduto(pegarCampos(CAMPOS_CADASTRO));
@@ -437,11 +461,11 @@ async function salvarEdicao(botaoSalvar, modalElemento, campos) {
 
         await recarregarEstoque();
         bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
-        mostrarToast('Produto atualizado', 'Produto atualizado com sucesso!', 'sucesso');
+        mostrarToast('Produto atualizado', 'Produto editado com sucesso!', 'sucesso');
 
     } catch (erro) {
         console.error(erro);
-        mostrarToast('Erro', 'Não foi possível atualizar o produto. Tente novamente.', 'erro');
+        mostrarToast('Erro', 'Não foi possível editar o produto. Tente novamente.', 'erro');
     } finally {
         botaoSalvar.disabled = false;
     }
@@ -479,11 +503,58 @@ async function recarregarEstoque() {
     }
 }
 
+function conectarExclusaoDeProduto() {
+    const modalElemento = document.getElementById('modalExcluirProduto');
+    const botaoConfirmar = document.getElementById('btn-confirmar-exclusao-produto');
+
+    // Identifica o produto selecionado ao abrir o modal
+    modalElemento.addEventListener('show.bs.modal', evento => {
+        idProdutoEmExclusao = evento.relatedTarget?.dataset.produtoId ?? null;
+
+        if (!idProdutoEmExclusao) {
+            evento.preventDefault();
+            mostrarToast('Erro', 'Não foi possível identificar o produto.', 'erro');
+        }
+    });
+
+    // Executa a exclusão ao confirmar
+    botaoConfirmar.addEventListener('click', async () => {
+        if (!idProdutoEmExclusao) return;
+
+        try {
+            const resposta = await fetch(`${URL_PRODUTOS}/${idProdutoEmExclusao}`, {
+                method: 'DELETE'
+            });
+
+            if (!resposta.ok) {
+                throw new Error('Falha ao remover o produto');
+            }
+
+            // Fecha o modal
+            bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+
+            // Atualiza o estoque
+            const lojista = pegarUsuarioLogado();
+            await carregarEstoque(lojista.id);
+            mostrarToast('Produto excluído', 'Produto removido com sucesso!', 'sucesso');
+
+        } catch (erro) {
+            console.error(erro);
+            mostrarToast('Erro', 'Não foi possível remover o produto. Tente novamente.', 'erro');
+        }
+    });
+
+    // Limpa o ID ao fechar o modal
+    modalElemento.addEventListener('hidden.bs.modal', () => {
+        idProdutoEmExclusao = null;
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const usuarioLogado = verificarAut("Lojista");
     if (!usuarioLogado) return null;
 
-    carregarEstoque(usuarioLogado.id);
+    categoriasProntas.then(() => carregarEstoque(usuarioLogado.id));
 
     const formPesquisa = document.getElementById("form-pesquisa");
     const inputPesquisa = document.getElementById("input-pesquisa");
@@ -497,13 +568,15 @@ document.addEventListener("DOMContentLoaded", () => {
         aplicarFiltros(inputPesquisa.value);
     });
 
-    const opcoesCategoria = document.querySelectorAll(".dropdown-menu [data-categoria]");
+    const dropdownCategorias = document.getElementById('dropdown-categorias');
 
-    for (const opcao of opcoesCategoria) {
-        opcao.addEventListener("click", () => {
-            selecionarCategoria(opcao);
-        })
-    }
+    dropdownCategorias.addEventListener('click', evento => {
+        const opcao = evento.target.closest('[data-categoria]');
+
+        if (!opcao) return;
+
+        selecionarCategoria(opcao);
+    });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -511,4 +584,5 @@ document.addEventListener('DOMContentLoaded', () => {
     conectarCampoEstoque();
     conectarCadastroDeProduto();
     conectarEdicaoDeProduto();
+    conectarExclusaoDeProduto();
 });
