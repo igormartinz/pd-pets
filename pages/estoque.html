@@ -121,7 +121,7 @@
                     <h2 class="modal-titulo mb-3" id="titulo-modal-produto">Criar produto</h2>
                     <div class="container-colunas">
                         <div class="input-grupo">
-                            <label for="prod-nome">Nome</label>
+                            <label for="edit-nome">Nome</label>
                             <div class="input-border">
                                 <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto">
                             </div>
@@ -132,13 +132,7 @@
                                 <label for="prod-categoria">Categoria</label>
                                 <div class="input-border">
                                     <select class="form-select" id="prod-categoria" name="categoria" required>
-                                        <option value="1">Ração e petiscos</option>
-                                        <option value="2">Higiene</option>
-                                        <option value="3">Brinquedos</option>
-                                        <option value="4">Acessórios</option>
-                                        <option value="5">Medicamentos</option>
-                                        <option value="6">Roupas</option>
-                                        <option value="7">Camas e Casinhas</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -146,7 +140,7 @@
                             <div class="input-grupo">
                                 <label for="prod-preço">Preço</label>
                                 <div class="input-border">
-                                    <input type="number" class="form-control" id="prod-preço" placeholder="R$ 0,00">
+                                    <input type="number" class="form-control" id="prod-preço" placeholder="R$ 0,00" step="0.01" min="0">
                                 </div>
                             </div>
 
@@ -154,12 +148,12 @@
                                 <label for="prod-estoque">Estoque</label>
                                 <div class="input-border">
                                     <input type="text" class="form-control" id="prod-estoque" placeholder="0"
-                                        maxlength="3">
+                                        maxlength="5" inputmode="numeric">
                                 </div>
                             </div>
 
                             <div class="checkbox-btn-status">
-                                <input type="checkbox" id="prod-status">
+                                <input type="checkbox" id="prod-status" checked>
                                 <label for="prod-status">Produto ativo</label>
                             </div>
 
@@ -215,67 +209,58 @@
         aria-hidden="true">
         <div class="modal-dialog my-3 modal-dialog-centered">
             <div class="modal-content modal-content-criar-produto">
-                <form class="form-modal-produto" id="form-produto" novalidate>
-                    <h2 class="modal-titulo mb-3" id="titulo-modal-produto">Editar produto</h2>
+                <form class="form-modal-produto" id="form-editar-produto" novalidate>
+                    <h2 class="modal-titulo mb-3" id="titulo-modal-editar-produto">Editar produto</h2>
                     <div class="container-colunas">
                         <div class="input-grupo">
-                            <label for="prod-nome">Nome</label>
+                            <label for="edit-nome">Nome</label>
                             <div class="input-border">
-                                <input type="text" class="form-control" id="prod-nome" placeholder="Nome do produto"
-                                    value="Ração Úmida GranPlus Gourmet Sachê">
+                                <input type="text" class="form-control" id="edit-nome" placeholder="Nome do produto">
                             </div>
                         </div>
 
                         <div class="container-groups-colunas">
                             <div class="input-grupo">
-                                <label for="prod-categoria">Categoria</label>
+                                <label for="edit-categoria">Categoria</label>
                                 <div class="input-border">
-                                    <select class="form-select" id="prod-categoria" name="categoria" required>
-                                        <option value="1">Ração e petiscos</option>
-                                        <option value="2">Higiene</option>
-                                        <option value="3">Brinquedos</option>
-                                        <option value="4">Acessórios</option>
-                                        <option value="5">Medicamentos</option>
-                                        <option value="6">Roupas</option>
-                                        <option value="7">Camas e Casinhas</option>
+                                    <select class="form-select" id="edit-categoria" name="categoria" required>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="input-grupo">
-                                <label for="prod-preço">Preço</label>
+                                <label for="edit-preço">Preço</label>
                                 <div class="input-border">
-                                    <input type="text" class="form-control" id="prod-preço" placeholder="R$ 0,00"
-                                        value="3,39">
+                                    <input type="number" step="0.01" min="0" class="form-control" id="edit-preco" placeholder="R$ 0,00">
                                 </div>
                             </div>
 
                             <div class="input-grupo">
-                                <label for="prod-estoque">Estoque</label>
+                                <label for="edit-estoque">Estoque</label>
                                 <div class="input-border">
-                                    <input type="text" class="form-control" id="prod-estoque" placeholder="0"
-                                        maxlength="3" value="23">
+                                    <input type="text" class="form-control" id="edit-estoque" placeholder="0"
+                                        maxlength="5" inputmode="numeric">
                                 </div>
                             </div>
 
                             <div class="checkbox-btn-status">
-                                <input type="checkbox" id="prod-status">
-                                <label for="prod-status">Produto ativo</label>
+                                <input type="checkbox" id="edit-status">
+                                <label for="edit-status">Produto ativo</label>
                             </div>
 
                             <div class="input-grupo">
-                                <label for="prod-descricao">Descrição</label>
+                                <label for="edit-descricao">Descrição</label>
                                 <div class="input-border">
-                                    <textarea class="form-control" name="descricao" id="prod-descricao" rows="5"
-                                        placeholder="Descrição do produto">A ração Gran Plus para cachorro adulto é um alimento úmido completo desenvolvido para oferecer nutrição balanceada e sabor irresistível. A fórmula com ingredientes selecionados garante melhor digestão, pelagem</textarea>
+                                    <textarea class="form-control" name="descricao" id="edit-descricao" rows="5"
+                                        placeholder="Descrição do produto"></textarea>
                                 </div>
                             </div>
 
                             <div class="input-grupo">
-                                <label for="prod-imagem">imagem</label>
+                                <label for="area-upload-editar">imagem</label>
 
                                 <label class="area-upload" id="area-upload">
-                                    <input type="file" id="prod-imagem" name="imagem"
+                                    <input type="file" id="area-upload-editar" name="imagem"
                                         accept="image/png, image/jpeg, image/webp" class="visually-hidden">
 
                                     <svg class="borda-upload" aria-hidden="true">
@@ -303,7 +288,7 @@
                     <div class="container-btns-modal-produto mt-4">
                         <div class="container-btns-modal-produto-acoes">
                             <button type="button" class="botao-secundario" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="botao" id="btn-salvar-produto">Salvar</button>
+                            <button type="button" class="botao" id="btn-salvar-edicao">Salvar</button>
                         </div>
                     </div>
                 </form>

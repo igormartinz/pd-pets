@@ -1,6 +1,7 @@
 import { mostrarToast } from "./toast.js";
 
-const API_URL_PRODUTO = "https://6a98614f7160beda2292eff8.mockapi.io";
+const URL_PRODUTOS = 'https://6a98614f7160beda2292eff8.mockapi.io/produtos';
+const URL_CATEGORIAS = 'https://6a9872a37160beda2292ff4f.mockapi.io/categorias';
 
 const PRODUTOS_POR_PAGINA = 6;
 
@@ -14,13 +15,24 @@ const NOMES_CATEGORIAS = {
     7: "Camas e Casinhas"
 }
 
+const CAMPOS_CADASTRO = {
+    nome: 'prod-nome', categoria: 'prod-categoria', preco: 'prod-preco',
+    estoque: 'prod-estoque', descricao: 'prod-descricao', status: 'prod-status'
+};
+const CAMPOS_EDICAO = {
+    nome: 'edit-nome', categoria: 'edit-categoria', preco: 'edit-preco',
+    estoque: 'edit-estoque', descricao: 'edit-descricao', status: 'edit-status'
+};
+
+let idProdutoEmEdicao = null;
+let categoriasProntas = Promise.resolve();
 let produtosDoLojista = [];
 let produtosFiltrados = [];
 let paginaAtual = 1;
 let categoriaSelecionada = ""; // "" = todas as categorias
 
 async function buscarProdutoDoLojista(idLojista) {
-    const resp = await fetch(`${API_URL_PRODUTO}/produtos?lojistaID=${idLojista}`);
+    const resp = await fetch(`${URL_PRODUTOS}?lojistaID=${idLojista}`);
 
     // No MockAPI, 404 com filtro vai ser igual a nenhum produto encontrado
     if (resp.status === 404) return [];
@@ -34,7 +46,6 @@ async function buscarProdutoDoLojista(idLojista) {
     });
 }
 
-buscarProdutoDoLojista(1).then(lista => console.log(lista));
 
 function formatarPreco(valor) {
     return Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -89,8 +100,8 @@ function criarLinhaProduto(produto) {
     // Ações (editar e excluir)
     const celulaAcoes = criarCelula("coluna-tabela-centro unidade-tabela-border-radius-direita");
     celulaAcoes.innerHTML = `
-    <div class="acoes-tabela">
-                <button class="btn-pencil" data-bs-target="#modalEditarProduto" data-bs-toggle="modal">
+            <div class="acoes-tabela">
+                <button class="btn-pencil" data-bs-target="#modalEditarProduto" data-produto-id="${produto.id}" data-bs-toggle="modal">
                     <i class="ti ti-pencil" style="font-size: 24px;"></i>
                 </button>
                 <button class="btn-trash" data-bs-target="#modalExcluirProduto" data-bs-toggle="modal">
@@ -164,7 +175,7 @@ function renderizarPaginacao() {
 
 function criarSeta(direcao, pagina, desabilitado, aria) {
     const item = document.createElement("li");
-    item.className = desabilitado ? "page-item disabled" : "page-item";
+    item.className = "page-item"
 
     const link = document.createElement("a");
     link.className = "page-link paginacao-seta";
@@ -223,24 +234,249 @@ function normalizarTexto(texto) {
         .trim();
 }
 
-function aplicarFiltros() {
-    const termo = normalizarTexto(document.getElementById("input-pesquisa").value);
-    const termoNormalizado = normalizarTexto(termo);
+function selecionarCategoria(botao) {
+    categoriaSelecionada = botao.dataset.categoria;
+
+    aplicarFiltros();
+}
+
+// { nome: 'prod-nome', ... } -> { nome: <elemento>, ... }
+function pegarCampos(ids) {
+    return Object.fromEntries(
+        Object.entries(ids).map(([chave, id]) => [chave, document.getElementById(id)])
+    );
+}
+
+// Preenche o select dos DOIS modais com as categorias reais da API
+async function popularCategoriasDosModais() {
+    const selects = [document.getElementById('prod-categoria'), document.getElementById('edit-categoria')];
+
+    try {
+        const resposta = await fetch(URL_CATEGORIAS);
+        if (!resposta.ok) throw new Error('Falha ao buscar as categorias');
+
+        const categorias = await resposta.json();
+        const opcoes = '<option value="" selected disabled>Selecione a categoria</option>'
+            + categorias.map(categoria => `<option value="${categoria.id}">${categoria.nome}</option>`).join('');
+
+        for (const select of selects) select.innerHTML = opcoes;
+    } catch (erro) {
+        console.error(erro);
+        for (const select of selects) {
+            select.innerHTML = '<option value="" selected disabled>Não foi possível carregar as categorias</option>';
+        }
+    }
+}
+
+// Estoque: só dígitos. Bloqueia "-", letras, vírgula e ponto.
+function conectarCampoEstoque() {
+    for (const id of ['prod-estoque', 'edit-estoque']) {
+        const campo = document.getElementById(id);
+        campo.addEventListener('input', () => {
+            campo.value = campo.value.replace(/\D/g, '');
+        });
+    }
+}
+
+function validarProduto(campos) {
+    const nome = campos.nome.value.trim();
+    const preco = Number(String(campos.preco.value).replace(',', '.'));
+    const estoque = Number(campos.estoque.value.trim());
+    const descricao = campos.descricao.value.trim();
+
+    if (!nome) {
+        return mostrarToast('Campo Nome', 'Informe o nome do produto.', 'erro');
+    }
+    if (!campos.categoria.value) {
+        return mostrarToast('Campo Categoria', 'Selecione uma categoria.', 'erro');
+    }
+    if (!campos.preco.value || !(preco > 0)) {
+        return mostrarToast('Campo Preço', 'Informe um preço maior que zero.', 'erro');
+    }
+    if (campos.estoque.value.trim() === '') {
+        return mostrarToast('Campo Estoque', 'Informe o estoque.', 'erro');
+    }
+    if (!descricao) {
+        return mostrarToast('Campo Descrição', 'Informe a descrição do produto.', 'erro');
+    }
+
+    return {
+        nome: nome,
+        categoriaID: Number(campos.categoria.value),
+        descricao: descricao,
+        preco: Math.round(preco * 100) / 100,
+        estoque: estoque,
+        imagemURL: [
+            'imagem-produto.png',
+            'imagem-produto.png',
+            'imagem-produto.png'
+        ],
+        status: campos.status.checked ? 'Ativo' : 'Inativo'
+    };
+}
+
+function conectarCadastroDeProduto() {
+    const modalElemento = document.getElementById('modalCriarProduto');
+    const formulario = document.getElementById('form-produto');
+    const botaoSalvar = document.getElementById('btn-salvar-produto');
+
+    botaoSalvar.addEventListener('click', () => salvarProduto(modalElemento));
+
+    formulario.addEventListener('submit', evento => evento.preventDefault());
+
+    modalElemento.addEventListener('hidden.bs.modal', () => {
+        formulario.reset();
+    });
+}
+
+// Cadastro de produto
+async function salvarProduto(modalElemento) {
+    const lojista = pegarUsuarioLogado(); 
+    if (!lojista) return;
+
+    const dados = validarProduto(pegarCampos(CAMPOS_CADASTRO));
+    if (!dados) return;
+
+    try {
+        const resposta = await fetch(URL_PRODUTOS, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...dados,
+                lojistaID: Number(lojista.id),
+            })
+        });
+
+        if (!resposta.ok) throw new Error('Falha ao cadastrar o produto');
+
+        await recarregarEstoque();
+        bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+        mostrarToast('Produto cadastrado', 'Produto cadastrado com sucesso!', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível cadastrar o produto. Tente novamente.', 'erro');
+    }
+}
+
+function conectarEdicaoDeProduto() {
+    const modalElemento = document.getElementById('modalEditarProduto');
+    const formulario = document.getElementById('form-editar-produto');
+    const botaoSalvar = document.getElementById('btn-salvar-edicao');
+    const campos = pegarCampos(CAMPOS_EDICAO);
+
+    modalElemento.addEventListener('show.bs.modal', function (evento) {
+        idProdutoEmEdicao = evento.relatedTarget?.dataset.produtoId ?? null;
+
+        if (!idProdutoEmEdicao) {
+            evento.preventDefault();
+            return;
+        }
+
+    });
+
+    // Os dados são carregados depois da animação de abertura.
+    modalElemento.addEventListener('shown.bs.modal', async function () {
+        const idRequisitado = idProdutoEmEdicao;
+
+        try {
+            await categoriasProntas;
+
+            const resposta = await fetch(`${URL_PRODUTOS}/${idRequisitado}`);
+            if (!resposta.ok) throw new Error('Falha ao buscar o produto');
+
+            const produto = await resposta.json();
+
+            if (idRequisitado !== idProdutoEmEdicao) return;
+
+            const lojista = pegarUsuarioLogado();
+            if (String(produto.lojistaID) !== String(lojista?.id)) {
+                bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+                mostrarToast('Acesso negado', 'Você não pode editar este produto.', 'erro');
+                return;
+            }
+
+            campos.nome.value = produto.nome ?? '';
+            campos.categoria.value = String(produto.categoriaID);
+            campos.preco.value = produto.preco;
+            campos.estoque.value = produto.estoque;
+            campos.descricao.value = produto.descricao ?? '';
+            campos.status.checked = produto.status === 'Ativo';
+
+        } catch (erro) {
+            console.error(erro);
+            bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+            mostrarToast('Erro', 'Não foi possível carregar o produto. Tente novamente.', 'erro');
+        }
+    });
+
+    botaoSalvar.addEventListener('click', () => salvarEdicao(botaoSalvar, modalElemento, campos));
+
+    formulario.addEventListener('submit', evento => evento.preventDefault());
+
+    modalElemento.addEventListener('hidden.bs.modal', () => {
+        formulario.reset();
+        idProdutoEmEdicao = null;
+    });
+}
+
+async function salvarEdicao(botaoSalvar, modalElemento, campos) {
+    if (!idProdutoEmEdicao) return;
+
+    const dados = validarProduto(campos);
+    if (!dados) return;
+
+    try {
+        const resposta = await fetch(`${URL_PRODUTOS}/${idProdutoEmEdicao}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
+
+        if (!resposta.ok) throw new Error('Falha ao atualizar o produto');
+
+        await recarregarEstoque();
+        bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+        mostrarToast('Produto atualizado', 'Produto atualizado com sucesso!', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível atualizar o produto. Tente novamente.', 'erro');
+    } finally {
+        botaoSalvar.disabled = false;
+    }
+}
+
+// Recalcula produtosFiltrados a partir da busca e da categoria atuais
+function filtrarProdutos() {
+    const termoNormalizado = normalizarTexto(document.getElementById("input-pesquisa").value);
 
     produtosFiltrados = produtosDoLojista.filter(produto => {
         const combinaNome = normalizarTexto(produto.nome).includes(termoNormalizado);
         const combinaCategoria = categoriaSelecionada === "" || String(produto.categoriaID) === categoriaSelecionada;
 
-        return combinaNome && combinaCategoria
+        return combinaNome && combinaCategoria;
     });
+}
 
+function aplicarFiltros() {
+    filtrarProdutos();
     renderizarPagina(1);
 }
 
-function selecionarCategoria(botao) {
-    categoriaSelecionada = botao.dataset.categoria;
+// Refaz a busca dos produtos do lojista, mantendo busca, categoria e página
+async function recarregarEstoque() {
+    const lojista = pegarUsuarioLogado();
+    if (!lojista) return;
 
-    aplicarFiltros();
+    try {
+        produtosDoLojista = await buscarProdutoDoLojista(lojista.id);
+        filtrarProdutos();
+        renderizarPagina(paginaAtual);
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível atualizar a lista de produtos.', 'erro');
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -268,4 +504,11 @@ document.addEventListener("DOMContentLoaded", () => {
             selecionarCategoria(opcao);
         })
     }
-})
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    categoriasProntas = popularCategoriasDosModais();
+    conectarCampoEstoque();
+    conectarCadastroDeProduto();
+    conectarEdicaoDeProduto();
+});
