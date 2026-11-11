@@ -7,6 +7,12 @@ body {
     font-size: 24px;
 }
 
+p,
+h2,
+h3 {
+    margin-bottom: 0 !important;
+}
+
 /* CARDS ATENDIMENTO */
 .card-atendimento {
     color: var(--cor-cinza);
@@ -37,11 +43,12 @@ body {
 }
 
 /* MODAIS */
-.modal-titulo{
+.modal-titulo {
     font-family: var(--fonte-poppins);
 }
 
-.form-control, .form-control:focus {
+.form-control,
+.form-control:focus {
     outline: none;
     box-shadow: none;
     border: none;
@@ -54,11 +61,40 @@ body {
     transition: color 0.15s ease;
 }
 
+.container-titulo-modal-detalhes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#detalhes-titulo {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--cor-cinza);
+}
+
+.container-datas-detalhes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#detalhes-abertura,
+#detalhes-atualizacao {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    font-size: clamp(12px, 1.5vw, 14px);
+    padding: 0px 5px 0px 5px;
+    text-align: center;
+}
+
 .avaliacao-estrelas i.ti-star-filled {
     color: var(--cor-verde);
 }
 
-.resposta-cliente, .resposta-adm{
+.resposta-cliente,
+.resposta-adm {
     background-color: var(--cor-verde);
     color: var(--cor-branco);
     width: 60%;
@@ -68,10 +104,22 @@ body {
     font-family: var(--fonte-nunito);
 }
 
-.resposta-adm{
+.resposta-adm {
     background-color: var(--cor-cinza);
     align-self: flex-start;
     border-radius: 0 1em 1em 1em;
+}
+
+.aviso-adm {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    color: var(--cor-cinza);
+}
+
+#aviso-resolvido {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    color: #dc3545;
 }
 
 @media (min-width: 992px) {
@@ -86,7 +134,7 @@ body {
         margin-left: auto;
     }
 
-    .btn-voltar{
+    .btn-voltar {
         top: 30px;
         left: 40px;
     }
