@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/js/auth.js"></script>
+    <script src="/js/auth.js"></script>
     <script>verificarAut("Cliente");</script>
     <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
@@ -25,138 +25,13 @@
                 data-bs-target="#modalAbrirChamado"><i class="ti ti-message-circle-plus"></i> Abrir chamado</button>
         </div>
 
-        <section class="row g-3">
-            <div class="col-12 col-md-6">
-                <article class="card-atendimento">
-                    <div class="d-flex flex-column-reverse flex-lg-row justify-content-between">
-                        <div>
-                            <small class="atendimento-data">Realizado em 04/08/2026</small>
-                            <h2 class="atendimento-assunto mt-lg-1">Produto não recebido</h2>
-                        </div>
-                        <p
-                            class="badge rounded-pill mb-2 p-2 px-4 status-atendimento status-em-atendimento align-self-start">
-                            Em
-                            atendimento</p>
-                    </div>
-                    <p class="atendimento-descricao">Olá! Meu pedido consta como "Entregue", mas não recebi o produto.
-                        Poderiam verificar o que aconteceu?</p>
-                    <div class="d-flex flex-column-reverse flex-lg-row gap-2 mt-auto">
-                        <button
-                            class="botao px-3 w-100 w-lg-auto ms-auto  btn-ver-detalhes">Ver detalhes</button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6">
-                <article class="card-atendimento">
-                    <div class="d-flex flex-column-reverse flex-lg-row justify-content-between">
-                        <div>
-                            <small class="atendimento-data">Realizado em 04/08/2026</small>
-                            <h2 class="atendimento-assunto mt-lg-1">Produto chegou danificado</h2>
-                        </div>
-                        <p class="badge rounded-pill mb-2 p-2 px-4 bg-success status-atendimento align-self-start">
-                            Resolvido</p>
-                    </div>
-                    <p class="atendimento-descricao">Recebi o produto hoje, porém a embalagem estava danificada e o
-                        produto apresenta avarias. Gostaria de solicitar uma solução.</p>
-                    <div class="d-flex flex-column-reverse flex-lg-row gap-2 mt-auto">
-                        <button data-bs-toggle="modal" data-bs-target="#modalAvaliarChamado"
-                            class="botao-secundario px-3 w-100 w-lg-auto ms-auto btn-avaliar-chamado">Avaliar o atendimento</button>
-                        <button class="botao px-3 w-100 w-lg-auto btn-ver-detalhes">Ver detalhes</button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6">
-                <article class="card-atendimento">
-                    <div class="d-flex flex-column-reverse flex-lg-row justify-content-between">
-                        <div>
-                            <small class="atendimento-data">Realizado em 04/08/2026</small>
-                            <h2 class="atendimento-assunto mt-lg-1">Problema com pagamento</h2>
-                        </div>
-                        <p
-                            class="badge rounded-pill mb-2 p-2 px-4 bg-success status-atendimento status-em-atendimento align-self-start bg-warning text-dark">
-                            Aberto</p>
-                    </div>
-                    <p class="atendimento-descricao">Realizei o pagamento do pedido, mas o sistema ainda informa que o
-                        pagamento está pendente.</p>
-                    <div class="d-flex flex-column-reverse flex-lg-row gap-2 mt-auto">
-                        <button class="botao-secundario px-3 w-100 w-lg-auto d-none btn-avaliar-chamado">Avaliar o atendimento</button>
-                        <button class="botao px-3 w-100 w-lg-auto ms-auto btn-ver-detalhes">Ver detalhes</button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6">
-                <article class="card-atendimento">
-                    <div class="d-flex flex-column-reverse flex-lg-row justify-content-between">
-                        <div>
-                            <small class="atendimento-data">Realizado em 04/08/2026</small>
-                            <h2 class="atendimento-assunto mt-lg-1">Erro ao adicionar produto ao carrinho</h2>
-                        </div>
-                        <p class="badge rounded-pill mb-2 p-2 px-4 bg-success status-atendimento align-self-start">
-                            Resolvido</p>
-                    </div>
-                    <p class="atendimento-descricao">Olá! Meu pedido consta como "Entregue", mas não recebi o produto.
-                        Poderiam verificar o que aconteceu?</p>
-                    <div class="d-flex flex-column-reverse flex-lg-row gap-2 mt-auto">
-                        <button class="botao-secundario px-3 w-100 w-lg-auto ms-auto btn-avaliar-chamado">Avaliar o atendimento</button>
-                        <button class="botao px-3 w-100 w-lg-auto btn-ver-detalhes">Ver detalhes</button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6">
-                <article class="card-atendimento">
-                    <div class="d-flex flex-column-reverse flex-lg-row justify-content-between">
-                        <div>
-                            <small class="atendimento-data">Realizado em 04/08/2026</small>
-                            <h2 class="atendimento-assunto mt-lg-1">Produto diferente do anunciado</h2>
-                        </div>
-                        <p
-                            class="badge rounded-pill mb-2 p-2 px-4 bg-warning text-dark status-atendimento align-self-start">
-                            Aberto</p>
-                    </div>
-                    <p class="atendimento-descricao">O produto recebido possui características diferentes das
-                        apresentadas na página de detalhes. Gostaria de verificar a possibilidade de troca.</p>
-                    <div class="d-flex flex-column-reverse flex-lg-row gap-2 mt-auto">
-                        <button class="botao-secundario px-3 w-100 w-lg-auto d-none btn-avaliar-chamado">Avaliar o atendimento</button>
-                        <button class="botao px-3 w-100 w-lg-auto ms-auto btn-ver-detalhes">Ver detalhes</button>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6">
-                <article class="card-atendimento">
-                    <div class="d-flex flex-column-reverse flex-lg-row justify-content-between">
-                        <div>
-                            <small class="atendimento-data">Realizado em 04/08/2026</small>
-                            <h2 class="atendimento-assunto mt-lg-1">Solicitação de cancelamento</h2>
-                        </div>
-                        <p class="badge rounded-pill mb-2 p-2 px-4 bg-success status-atendimento align-self-start">
-                            Resolvido</p>
-                    </div>
-                    <p class="atendimento-descricao">Gostaria de cancelar meu pedido, pois não tenho mais interesse em
-                        receber os produtos.</p>
-                    <div class="d-flex flex-column-reverse flex-lg-row gap-2 mt-auto">
-                        <button class="botao-secundario px-3 w-100 w-lg-auto ms-auto btn-avaliar-chamado">Avaliar o atendimento</button>
-                        <button class="botao px-3 w-100 w-lg-auto btn-ver-detalhes">Ver detalhes</button>
-                    </div>
-                </article>
-            </div>
+        <section class="row g-3" id="lista-chamados">
         </section>
 
         <!-- PAGINAÇÃO -->
         <nav class="mt-4" aria-label="Paginação">
-            <ul class="pagination justify-content-end">
-                <li class="page-item">
-                    <a class="page-link paginacao-seta" href="#" aria-label="Previous">
-                        <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
-                    </a>
-                </li>
-                <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
-                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
-                <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link paginacao-seta" href="#" aria-label="Next">
-                        <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
-                    </a>
-                </li>
+            <ul class="pagination justify-content-end rounded-2" id="paginacao">
+
             </ul>
         </nav>
     </main>
@@ -168,23 +43,24 @@
             <div class="modal-content p-4 rounded-3">
                 <h2 class="modal-titulo">Formulário de chamado</h2>
                 <p class="mb-3">Descreva como podemos ajudar</p>
-                <form class="row gy-2">
+                <form class="row gy-2" id="form-chamado">
                     <div class="d-flex flex-column campo-input w-100">
                         <div class="input-border">
                             <input type="text" name="assunto" class="form-control p-2 input-contato" id="assunto"
-                                placeholder="Assunto">
+                                placeholder="Assunto" required>
                         </div>
                     </div>
                     <div class="d-flex flex-column campo-input">
                         <div class="input-border">
                             <textarea name="descricao" id="descricao" class="form-control input-contato"
-                                placeholder="Descrição" rows="5"></textarea>
+                                placeholder="Descrição" rows="5" required></textarea>
                         </div>
                     </div>
 
                     <div class="d-flex align-items-center justify-content-center gap-2 mt-4">
-                        <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Voltar</button>
-                        <button type="button" class="botao px-0 w-50">Enviar</button>
+                        <button type="button" class="botao-secundario px-0 w-50"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="botao px-0 w-50" id="btn-enviar-chamado">Enviar</button>
                     </div>
                 </form>
             </div>
@@ -213,7 +89,8 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2 mt-4">
-                        <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Voltar</button>
+                        <button type="button" class="botao-secundario px-0 w-50"
+                            data-bs-dismiss="modal">Cancelar</button>
                         <button type="button" class="botao px-0 w-50">Enviar</button>
                     </div>
                 </form>
@@ -226,40 +103,54 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-4 rounded-3">
-                <h2 class="modal-titulo mb-1">Chamado</h2>
-                <div class="d-flex flex-column gap-3 my-4">
-                    <p class="resposta-cliente">Olá! Meu pedido consta como "Entregue", mas não recebi o produto.
-                        Poderiam verificar o que aconteceu?</p>
-                    <p class="resposta-adm">Olá! Claro. Vou verificar as informações do seu pedido e o status da
-                        entrega.</p>
-                    <p class="resposta-cliente">Certo, obrigado. Gostaria de saber se existe alguma informação sobre
-                        onde o pedido foi entregue.</p>
-                    <p class="resposta-adm">Verifiquei o pedido e consta que ele foi entregue ontem. Vou encaminhar a
-                        ocorrência para verificarmos com a transportadora o local e o responsável pela entrega.</p>
-                    <p class="resposta-cliente">Tudo bem. Existe algum prazo para eu receber um retorno?</p>
-                    <p class="resposta-adm">Sim. A solicitação será analisada e você receberá uma atualização assim que
-                        tivermos um posicionamento.</p>
+                <div class="gap-2 mb-3 container-titulo-modal-detalhes">
+                    <h2 class="modal-titulo" id="detalhes-titulo"></h2>
+                    <p class="badge rounded-pill p-2 px-4 status-atendimento" id="detalhes-status"></p>
                 </div>
-                <form class="row gy-2">
+
+                <div class="container-datas-detalhes">
+                    <small class="d-block" id="detalhes-abertura"></small>
+                    <small class="d-block" id="detalhes-atualizacao"></small>
+                </div>
+
+                <div class="d-flex flex-column gap-3 my-4" id="detalhes-mensagens"></div>
+
+                <p class="text-center d-none" id="aviso-resolvido">Este chamado foi resolvido e não recebe novas
+                    respostas.</p>
+
+                <form class="row gy-2" id="form-resposta">
                     <div class="d-flex flex-column campo-input">
                         <div class="input-border">
                             <input type="text" name="resposta" id="resposta" class="form-control p-2 input-contato"
-                                placeholder="Resposta" rows="5"></input>
+                                placeholder="Resposta">
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2 mt-4">
-                        <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Voltar</button>
-                        <button type="button" class="botao px-0 w-50">Responder</button>
+                        <button type="button" class="botao-secundario px-0 w-50"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="botao px-0 w-50" id="btn-enviar-resposta">Responder</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded-1" id="toast-indicador" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2" id="toast-titulo"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-mensagem"></div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
-    <script src="../js/suporte.js"></script>
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script type="module" src="../js/suporte.js"></script>
 </body>
 
 </html>
