@@ -82,7 +82,7 @@
                             <i class="ti ti-checklist icone-indicador"></i>
                             <p class="texto-indicador mb-1">Produtos cadastrados</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">13</h3>
+                                <h3 class="valor-indicador m-0" id="dash-produtos">-</h3>
                                 <a href="estoque.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-compact-right"></i></a>
                             </div>
@@ -93,7 +93,7 @@
                             <i class="ti ti-basket-exclamation icone-indicador"></i>
                             <p class="texto-indicador mb-1">Produtos sem estoque</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">2</h3>
+                                <h3 class="valor-indicador m-0" id="dash-sem-estoque">-</h3>
                                 <a href="estoque.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-compact-right"></i></a>
                             </div>
@@ -104,7 +104,7 @@
                             <i class="ti ti-clipboard-list icone-indicador"></i>
                             <p class="texto-indicador mb-1">Pedidos recebidos</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">4</h3>
+                                <h3 class="valor-indicador m-0" id="dash-pedidos-recebidos">-</h3>
                                 <a href="pedidos-recebidos.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-compact-right"></i></a>
                             </div>
@@ -115,7 +115,7 @@
                             <i class="ti ti-cube-send icone-indicador"></i>
                             <p class="texto-indicador mb-1">Pedidos entregues</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">63</h3>
+                                <h3 class="valor-indicador m-0" id="dash-pedidos-entregues">-</h3>
                                 <a href="pedidos-recebidos.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-compact-right"></i></a>
                             </div>
@@ -124,9 +124,9 @@
                     <div class="col-12 col-xl-6">
                         <article class="card-indicador">
                             <i class="ti ti-chart-bar icone-indicador"></i>
-                            <p class="texto-indicador mb-1">Faturamento simulado</p>
+                            <p class="texto-indicador mb-1">Faturamento</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">R$ 3.991,00</h3>
+                                <h3 class="valor-indicador m-0" id="dash-faturamento">-</h3>
                             </div>
                         </article>
                     </div>
@@ -149,42 +149,8 @@
                                 <th scope="col" class="text-nowrap text-center">TICKET MÉDIO</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">1</span>
-                                    Bebedouro Fonte de Porcelana Cansei de Ser Gato</th>
-                                <td class="text-center">71</td>
-                                <td class="text-center">R$ 21.086,29</td>
-                                <td class="text-center">R$ 296,99</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">2</span> Ração
-                                    Fórmula Natural Life para Cães</th>
-                                <td class="text-center">62</td>
-                                <td class="text-center">R$ 14.193,04</td>
-                                <td class="text-center">R$ 228,92</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">3</span>
-                                    Antipulgas Simparic Trio 6 mg para Cães</th>
-                                <td class="text-center">58</td>
-                                <td class="text-center">R$ 5.422,42</td>
-                                <td class="text-center">R$ 93,49</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">4</span>
-                                    Brinquedo PD Pets Varinha para Gatos</th>
-                                <td class="text-center">46</td>
-                                <td class="text-center">R$ 1.149,54</td>
-                                <td class="text-center">R$ 24,99</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="text-truncate"><span class="numero-produto-vendas">5</span>
-                                    Fantasia de Coelho Branco Cansei de Ser Gato</th>
-                                <td class="text-center">37</td>
-                                <td class="text-center">R$ 1.665,00</td>
-                                <td class="text-center">R$ 45,00</td>
-                            </tr>
+                        <tbody id="tabela-relatorio-vendas">
+                            
                         </tbody>
                     </table>
                 </div>
