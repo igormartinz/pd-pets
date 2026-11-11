@@ -330,11 +330,6 @@ function validarProduto(campos) {
         descricao: descricao,
         preco: Math.round(preco * 100) / 100,
         estoque: estoque,
-        imagemURL: [
-            'imagem-produto.png',
-            'imagem-produto.png',
-            'imagem-produto.png'
-        ],
         status: campos.status.checked ? 'Ativo' : 'Inativo'
     };
 }
@@ -367,7 +362,12 @@ async function salvarProduto(modalElemento) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 ...dados,
-                lojistaID: Number(lojista.id),
+                imagemURL: [
+                    'imagem-produto.png',
+                    'imagem-produto.png',
+                    'imagem-produto.png'
+                ],
+                lojistaID: Number(lojista.id)
             })
         });
 
@@ -434,7 +434,7 @@ function conectarEdicaoDeProduto() {
         }
     });
 
-    botaoSalvar.addEventListener('click', () => salvarEdicao(botaoSalvar, modalElemento, campos));
+    botaoSalvar.addEventListener('click', () => salvarEdicao(modalElemento, campos));
 
     formulario.addEventListener('submit', evento => evento.preventDefault());
 
@@ -444,7 +444,7 @@ function conectarEdicaoDeProduto() {
     });
 }
 
-async function salvarEdicao(botaoSalvar, modalElemento, campos) {
+async function salvarEdicao(modalElemento, campos) {
     if (!idProdutoEmEdicao) return;
 
     const dados = validarProduto(campos);
@@ -466,8 +466,6 @@ async function salvarEdicao(botaoSalvar, modalElemento, campos) {
     } catch (erro) {
         console.error(erro);
         mostrarToast('Erro', 'Não foi possível editar o produto. Tente novamente.', 'erro');
-    } finally {
-        botaoSalvar.disabled = false;
     }
 }
 
