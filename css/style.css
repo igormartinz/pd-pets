@@ -439,7 +439,7 @@ a {
 /* BOTÃO VOLTAR */
 .btn-voltar {
     position: absolute;
-    top: 20px;
+    top: 30px;
     left: 10px;
 }
 
@@ -614,6 +614,13 @@ input[type="password"]::-ms-reveal {
     padding-right: 3em;
 }
 
+@media (min-width: 768px) {
+    .btn-voltar {
+        top: 30px;
+        left: 25px;
+    }
+}
+
 @media (min-width: 992px) {
 
     /* CABECALHO */
@@ -645,6 +652,13 @@ input[type="password"]::-ms-reveal {
 
     .produto-lojista {
         font-size: clamp(10px, .98vw, 14px);
+    }
+}
+
+@media(min-width: 1200px) {
+    .btn-voltar {
+        top: 30px;
+        left: 40px;
     }
 }
 

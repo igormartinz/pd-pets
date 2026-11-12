@@ -1,0 +1,67 @@
+/* PÁGINAS DE LISTAGEM */
+.container {
+    margin: 6em auto;
+}
+
+h1 {
+    font-family: var(--fonte-poppins);
+    font-size: clamp(32px, 5vw, 36px);
+    font-weight: bold;
+}
+
+#form-pesquisa {
+    min-width: 17em;
+    max-width: 19em;
+    margin: 0;
+}
+
+.table-responsive{
+    border-radius: 1em;
+    width: 100%;
+}
+
+.tabela-clientes{
+    width: 100%;
+    background-color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+}
+
+.tabela-cabecalho tr{
+    padding: 1em 0;
+    background-color: var(--cor-verde-escuro);
+}
+
+.linha-cabecalho{
+    text-align: center;
+    font-size: 20px;
+    padding: 1em 0;
+}
+
+.linha-celula{
+    white-space: nowrap;
+    padding: 1em;
+    border: 1px solid var(--cor-verde-escuro);
+}
+
+/* MODAL DETALHES DO USUARIO */
+.modal-content{
+    background-color: var(--cor-branco-amarelado);
+    padding: 2em;
+    border-radius: 1em;
+    font-family: var(--fonte-nunito);
+}
+
+.modal-titulo{
+    font-family: var(--fonte-poppins);
+    font-weight: bold;
+    font-size: clamp(24px, 5vw, 36px);
+}
+
+.modal-content p{
+    font-weight: bold;
+    font-size: clamp(16px, 3vw, 20px);
+}
+
+.modal-content p span{
+    font-weight: 500;
+}
