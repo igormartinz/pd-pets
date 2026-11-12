@@ -78,21 +78,22 @@ async function carregarPedidosRecebidos() {
         pedidosRecebidos = [];
 
         for (const pedido of pedidos) {
-            const possuiProdutoDoLojista = (pedido.itens ?? []).some(
+
+            // Mantém somente os itens pertencentes ao lojista logado
+            const itensDoLojista = (pedido.itens ?? []).filter(
                 item => meusProdutos.has(String(item.produtoID))
             );
 
-            // Ignora pedidos que não possuem produtos deste lojista
-            if (!possuiProdutoDoLojista) continue;
+            // Ignora pedidos sem produtos deste lojista
+            if (itensDoLojista.length === 0) continue;
 
-            // Mantém todos os produtos do pedido
             pedidosRecebidos.push({
                 id: pedido.id,
                 clienteID: pedido.clienteID,
                 data: pedido.data,
                 status: pedido.status,
-                itens: pedido.itens ?? [],
-                valor: pedido.valorTotal
+                itens: itensDoLojista,
+                valor: itensDoLojista.reduce((soma, item) => soma + Number(item.quantidade) * Number(item.valorUnitario), 0)
             });
         }
 
@@ -164,19 +165,13 @@ function posicaoStatus(status) {
 
 // Valor e quantidade de unidades dos itens DESTE lojista no pedido
 function resumoDoPedido(pedido) {
-    let quantidade = 0;
-
-    for (const item of pedido.itens) {
-        quantidade += Number(item.quantidade);
-    }
+    let quantidade = pedido.itens.length;
 
     return quantidade;
 }
 
 function montarCardPedidoRecebido(pedido, nomeCliente) {
     const quantidade = resumoDoPedido(pedido);
-
-    console.log(pedido)
 
     // O botão mostra o próximo status e só existe quando há um próximo passo
     const proximoStatus = PROXIMO_STATUS[pedido.status];
@@ -203,7 +198,7 @@ function montarCardPedidoRecebido(pedido, nomeCliente) {
                         <div class="container-valor-quantidade">
                             <div class="valor-produto">
                                 <p>Valor Total</p>
-                                <span id="valorProduto">${formatarMoeda(pedido.valor - 2)}</span>
+                                <span id="valorProduto">${formatarMoeda(pedido.valor)}</span>
                             </div>
 
                             <div class="quantidade-produto">

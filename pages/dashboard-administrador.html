@@ -1,17 +1,327 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/js/auth.js"></script>
     <script>verificarAut("Administrador");</script>
-    <title>Document</title>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <title>PD Pets | Dashboard</title>
 </head>
 
 <body>
-    <button onclick="logOut()">Sair</button>
+    <div class="row m-0">
+        <!-- SIDEBAR -->
+        <div class="col-12 col-lg-3 p-0">
+            <aside id="sidebar" class="sidebar w-100 offcanvas offcanvas-lg offcanvas-start" tabindex="-1">
+                <div class="offcanvas-header d-flex flex-column gap-2">
+                    <button type="button" class="ms-auto btn-fechar d-lg-none" data-bs-dismiss="offcanvas"><i
+                            class="ti ti-x"></i></button>
+                    <img src="../img/logo-desktop.png" class="logo-sidebar mt-lg-3" alt="Logo PD Pets">
+                </div>
+                <hr class="line-sidebar">
+                <div class="offcanvas-body">
+                    <nav>
+                        <ul class="list-unstyled gap-4 list-itens-sidebar">
+                            <li class="d-lg-none"><a href="/"><i class="ti ti-home"></i> Início</a></li>
+                            </li>
+                            <li><a href="listagem-produtos.html"><i class="ti ti-checklist"></i>
+                                    Produtos</a></li>
+                            <li><a href="listagem-pedidos.html"><i class="ti ti-package"></i> Pedidos</a>
+                            <li><a href="chamados.html"><i class="ti ti-headset"></i> Chamados</a>
+                            </li>
+                            <li><a href="listagem-clientes.html"><i class="ti ti-users"></i> Listagem clientes</a>
+                            </li>
+                            <li><a href="listagem-lojistas.html"><i class="ti ti-users-group"></i> Listagem
+                                    lojistas</a>
+                            </li>
+                            <li class="titulo-sidebar-categoria">Dashboards</li>
+                            <li data-perfil="Cliente"><a href="dashboard-cliente.html"><i
+                                        class="ti ti-layout-dashboard"></i> Área do Cliente</a></li>
+                            <li data-perfil="Lojista"><a href="dashboard-lojista.html"><i
+                                        class="ti ti-building-store"></i> Área do Lojista</a></li>
+                            <li data-perfil="Administrador"><a href="dashboard-administrador.html"><i
+                                        class="ti ti-user-cog"></i> Administrativo</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+        </div>
 
+        <div class="col-12 col-lg-9 p-0">
+            <!-- CABEÇALHO -->
+            <header class="cabecalho-sidebar d-flex justify-content-between align-items-center p-3 px-lg-5">
+                <!-- MENU HAMBURGUER -->
+                <button class="d-lg-none menu-mobile-sidebar" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#sidebar">
+                    <i class="ti ti-menu-2 menu-mobile"></i>
+                </button>
+
+                <div class="d-none d-lg-block link-inicio d-flex">
+                    <a href="/"><i class="ti ti-home"></i> Inicio</a> <span>/ Área do Administrador</span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center gap-2 gap-md-3">
+                    <a href="perfil-cliente.html" class="d-flex justify-content-between align-items-center gap-1"><i
+                            class="ti ti-user-circle"></i><span class="d-none d-lg-block"
+                            id="nome-usuario-perfil">Mateus Cristiano</span></a>
+                    <button onclick="logOut()"
+                        class="botao-secundario px-4 btn-sair d-flex justify-content-between align-items-center gap-2">Sair
+                        <i class="ti ti-logout"></i></button>
+                </div>
+            </header>
+
+            <!-- CONTEUDO -->
+            <main class="px-3 px-lg-5 mb-5">
+                <h1 id="nome-usuario-titulo" class="m-0">Olá, <span id="nome-usuario">Mateus</span></h1>
+                <p class="descricao-pagina mb-2">Que bom ter você por aqui!</p>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <article class="card-indicador">
+                            <i class="ti ti-users icone-indicador"></i>
+                            <p class="texto-indicador">Clientes cadastrados</p>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="valor-indicador m-0">142</h3>
+                                <a href="listagem-clientes.html" class="align-self-end d-flex align-items-center">Ver
+                                    todos <i class="ti ti-chevron-right"></i></a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <article class="card-indicador">
+                            <i class="ti ti-building-store icone-indicador"></i>
+                            <p class="texto-indicador">Lojistas cadastrados</p>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="valor-indicador m-0">17</h3>
+                                <a href="listagem-lojistas.html" class="align-self-end d-flex align-items-center">Ver
+                                    todos <i class="ti ti-chevron-right"></i></a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <article class="card-indicador">
+                            <i class="ti ti-basket-exclamation icone-indicador"></i>
+                            <p class="texto-indicador">Produtos esgotados</p>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="valor-indicador m-0">38</h3>
+                                <a href="pedidos-recebidos.html" class="align-self-end d-flex align-items-center">Ver
+                                    todos <i class="ti ti-chevron-right"></i></a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <article class="card-indicador">
+                            <i class="ti ti-package icone-indicador"></i>
+                            <p class="texto-indicador">Pedidos</p>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="valor-indicador m-0">32</h3>
+                                <a href="pedidos-recebidos.html" class="align-self-end d-flex align-items-center">Ver
+                                    todos <i class="ti ti-chevron-right"></i></a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- METADE ESQUERDA -->
+                    <div class="col-12 col-xl-6">
+                        <div class="row g-3">
+
+                            <div class="col-12 col-md-6">
+                                <article class="card-indicador">
+                                    <i class="ti ti-headset icone-indicador"></i>
+                                    <p class="texto-indicador">Chamados em aberto</p>
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="valor-indicador m-0">4</h3>
+                                        <a href="pedidos-recebidos.html"
+                                            class="align-self-end d-flex align-items-center">Ver
+                                            todos <i class="ti ti-chevron-right"></i></a>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <article class="card-indicador">
+                                    <i class="ti ti-checklist icone-indicador"></i>
+                                    <p class="texto-indicador">Produtos cadastrados</p>
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="valor-indicador m-0">223</h3>
+                                        <a href="pedidos-recebidos.html"
+                                            class="align-self-end d-flex align-items-center">Ver
+                                            todos <i class="ti ti-chevron-right"></i></a>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <!-- RELATÓRIO DA PLATAFORMA -->
+
+                            <div class="col-12">
+                                <section class="section-card-relatorio">
+                                    <div class="d-flex flex-column header-relatorio-plataforma">
+                                        <h2>Relatório Plataforma</h2>
+                                        <p>Visualize os pedidos realizados, chamados resolvidos e lojistas ativos.</p>
+                                    </div>
+
+                                    <div class="row g-2 mt-2">
+                                        <div class="col-12 col-sm-4">
+                                            <div class="mini-card-relatorio">
+                                                <p class="mini-titulo-mini-card">Pedidos</p>
+                                                <p class="valor-mini-card">320</p>
+                                                <a href="pedidos-recebidos.html"
+                                                    class="d-flex justify-content-center align-items-center">
+                                                    <p>Ver todos</p> <i class="ti ti-arrow-up-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <div class="mini-card-relatorio">
+                                                <p class="mini-titulo-mini-card">Chamados</p>
+                                                <p class="valor-mini-card">41</p>
+                                                <a href="chamados.html"
+                                                    class="d-flex justify-content-center align-items-center">
+                                                    <p>Ver todos</p> <i class="ti ti-arrow-up-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <div class="mini-card-relatorio">
+                                                <p class="mini-titulo-mini-card">Lojistas ativos</p>
+                                                <p class="valor-mini-card">13</p>
+                                                <a href="listagem-lojistas.html"
+                                                    class="d-flex justify-content-center align-items-center">
+                                                    <p>Ver todos</p> <i class="ti ti-arrow-up-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- METADE DIREITA -->
+
+                    <div class="col-12 col-xl-6">
+                        <section class="section-card-categorias">
+                            <h2>Categorias</h2>
+
+                            <form class="d-flex gap-3 pb-3" id="form-categoria">
+                                <div class="input-border-secundario">
+                                    <input type="search" class="form-control input-primario" id="input-pesquisa"
+                                        placeholder="Busque por um produto">
+                                </div>
+
+                                <button type="submit" class="botao">Adicionar</button>
+                            </form>
+
+                            <ul class="list-unstyled lista-categorias" id="lista-categorias">
+                                <li class="item-categoria">
+                                    <span>Ração e Petiscos</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <li class="item-categoria">
+                                    <span>Higiene</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <li class="item-categoria">
+                                    <span>Brinquedos</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <li class="item-categoria">
+                                    <span>Acessórios</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <li class="item-categoria">
+                                    <span>Medicamentos</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <li class="item-categoria">
+                                    <span>Roupas</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <li class="item-categoria">
+                                    <span>Camas e casinhas</span>
+                                    <div class="position-btns">
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+
+                                        <button type="button" class="btn-icon">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
