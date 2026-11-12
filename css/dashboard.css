@@ -448,6 +448,10 @@ ul {
     justify-content: space-between;
 }
 
+.input-categoria {
+    width: 100%;
+}
+
 .input-primario::placeholder {
     font-family: var(--fonte-nunito);
     font-weight: 550;
