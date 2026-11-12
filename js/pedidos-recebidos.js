@@ -165,11 +165,7 @@ function posicaoStatus(status) {
 
 // Valor e quantidade de unidades dos itens DESTE lojista no pedido
 function resumoDoPedido(pedido) {
-    let quantidade = 0;
-
-    for (const item of pedido.itens) {
-        quantidade += Number(item.quantidade);
-    }
+    let quantidade = pedido.itens.length;
 
     return quantidade;
 }
