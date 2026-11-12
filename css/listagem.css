@@ -5,7 +5,7 @@
 
 h1 {
     font-family: var(--fonte-poppins);
-    font-size: clamp(32px, 5vw, 36px);
+    font-size: clamp(32px, 5vw, 32px);
     font-weight: bold;
 }
 
@@ -15,53 +15,95 @@ h1 {
     margin: 0;
 }
 
-.table-responsive{
+.table-responsive {
     border-radius: 1em;
     width: 100%;
 }
 
-.tabela-clientes{
+.tabela-clientes {
     width: 100%;
     background-color: var(--cor-cinza);
     font-family: var(--fonte-nunito);
 }
 
-.tabela-cabecalho tr{
+.tabela-cabecalho tr {
     padding: 1em 0;
     background-color: var(--cor-verde-escuro);
 }
 
-.linha-cabecalho{
+.linha-cabecalho {
     text-align: center;
     font-size: 20px;
     padding: 1em 0;
 }
 
-.linha-celula{
+.linha-celula {
     white-space: nowrap;
     padding: 1em;
     border: 1px solid var(--cor-verde-escuro);
 }
 
 /* MODAL DETALHES DO USUARIO */
-.modal-content{
+.modal-content {
     background-color: var(--cor-branco-amarelado);
     padding: 2em;
     border-radius: 1em;
     font-family: var(--fonte-nunito);
 }
 
-.modal-titulo{
+.modal-titulo {
     font-family: var(--fonte-poppins);
     font-weight: bold;
     font-size: clamp(24px, 5vw, 36px);
 }
 
-.modal-content p{
+.modal-content p {
     font-weight: bold;
     font-size: clamp(16px, 3vw, 20px);
 }
 
-.modal-content p span{
+.modal-content p span {
     font-weight: 500;
+}
+
+/* LISTAGEM DE LOJISTAS */
+.status-titulo {
+    white-space: nowrap;
+    padding: 0 1em;
+}
+
+.nome-empresa {
+    width: 100%;
+}
+
+.form-check {
+    margin: 0;
+}
+
+.form-check-input{
+    height: 1.5em;
+}
+
+.form-switch{
+    text-align: center;
+    height: 1em;
+}
+
+.form-check .form-check-input {
+    width: 3em;
+    float: none;
+}
+
+.form-check-input:checked{
+    background-color: var(--cor-verde);
+    border: var(--cor-verde);
+}
+
+.form-switch .form-check-input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.form-check-input:focus{
+    border: none !important;
 }

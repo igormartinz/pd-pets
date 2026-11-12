@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/auth.js"></script>
+    <script>verificarAut("Administrador");</script>
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/listagem.css">
+    <title>PD Pets | Listagem de Lojistas</title>
+</head>
+
+<body>
+    <!-- CONTEUDO -->
+    <a href="dashboard-administrador.html" class="botao-secundario btn-voltar px-5">Voltar</a>
+    <main class="container">
+        <div class="d-flex flex-column align-items-center mb-4 flex-md-row justify-content-md-between gap-3">
+            <h1>Listagem de Lojistas</h1>
+
+            <form role="search" id="form-pesquisa">
+                <div class="input-border-secundario">
+                    <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
+                        placeholder="Busque por nome">
+                </div>
+                <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
+            </form>
+        </div>
+
+        <section>
+            <div class="table-responsive">
+                <table class="tabela-clientes">
+                    <thead class="tabela-cabecalho">
+                        <tr class="pedido-linha">
+                            <th scope="col" class="linha-cabecalho">Nome da Empresa</th>
+                            <th scope="col" class="linha-cabecalho status-titulo">Status (Ativo/Inativo)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-clientes-lista">
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">PetMais Distribuidora</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-field">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="switchCheckChecked" checked>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">Mundo Animal Atacado</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">PetLar Suprimentos</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">Bicho Feliz Distribuidora</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">PetVitta Produtos</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">Casa do Pet Atacadista</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">Amigo Pet Supply</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">PetBom Distribuidora</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="pedido-linha">
+                            <td class="linha-celula nome-empresa">Universo Pet Atacado</td>
+                            <td class="linha-celula status-switch">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckChecked" checked>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINAÇÃO -->
+            <nav class="mt-4" aria-label="Paginação">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                        <a class="page-link paginacao-seta" href="#" aria-label="Previous">
+                            <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
+                        </a>
+                    </li>
+                    <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link paginacao-seta" href="#" aria-label="Next">
+                            <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+    <!-- MODAL DETALHES DO USUARIO -->
+    <div class="modal fade" id="modalDetalhesUsuario" tabindex="-1" aria-labelledby="tituloDetalhesUsuario"
+        aria-hidden="true">
+        <div class="modal-dialog my-3 modal-dialog-centered">
+            <div class="modal-content">
+                <h2 class="modal-titulo mb-3">PetBom Distribuidora</h2>
+                <p class="mb-2">Responsável: <span>Rafael Martins Oliveira</span></p>
+                <p class="mb-2">E-mail: <span>rafael@petbom-exemplo.com</span></p>
+                <p class="mb-2">CNPJ: <span>00.000.000/0001-00</span></p>
+                <p class="mb-4">Telefone: <span>(31) 90000-0000</span></p>
+                <button type="button" class="botao-secundario align-self-end px-5"
+                    data-bs-dismiss="modal">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/listagem-lojistas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
