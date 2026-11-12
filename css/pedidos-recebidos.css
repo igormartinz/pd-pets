@@ -70,7 +70,7 @@ main>h1 {
 .header-pedidos-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 10px 0;
     border-bottom: 2px solid var(--cor-verde-escuro);
 }
@@ -276,26 +276,28 @@ main>h1 {
     margin-bottom: .3em;
 }
 
-.produto{
+.produto {
     border: 2px solid var(--cor-verde-escuro);
     padding: .8em;
     border-radius: 1em;
 }
 
-.produto h4{
+.produto h4 {
+    font-family: var(--fonte-nunito);
     font-size: 16px;
     font-weight: bold;
 }
 
-.produto-quantidade{
-    font-size: 14px;
+.produto-quantidade {
+    font-family: var(--fonte-nunito);
+    font-size: 16px;
 }
 
-.produto-preco-total{
+.produto-preco-total {
+    font-family: var(--fonte-poppins);
     font-size: 20px;
     font-weight: bold;
     color: var(--cor-verde-escuro);
-    font-family: var(--fonte-poppins);
     margin-top: .2em;
 }
 

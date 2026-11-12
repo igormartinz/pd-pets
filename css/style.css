@@ -207,6 +207,13 @@ figcaption {
     pointer-events: none;
 }
 
+.input-primario::placeholder {
+    font-family: var(--fonte-nunito);
+    font-weight: 550;
+    font-size: 14px;
+    color: var(--cor-cinza);
+}
+
 .input-primario {
     width: 100%;
     display: block;
