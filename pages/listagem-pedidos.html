@@ -19,21 +19,21 @@
     <main class="container">
         <a href="dashboard-lojista.html" class="botao-secundario btn-voltar px-5">Voltar</a>
 
-        <div class="d-flex justify-content-between align-items-center header-listagem-pedidos">
-            <h2 class="titulo-listagem-pedidos">Listagem de Pedidos</h2>
-
-            <form role="search" id="form-pesquisa">
-                <div class="input-border-secundario">
-                    <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
-                        placeholder="Busque por nome, ID, status do pedido">
-                </div>
-                <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
-            </form>
-        </div>
-
+        
         <section class="row g-3" id="lista-pedidos-adm">
-            <div class="col-12 col-md-6 col-lg-3">
-                <article class="card-pedido h-100">
+            <div class="header-listagem-pedidos">
+                <h2 class="titulo-listagem-pedidos">Listagem de Pedidos</h2>
+    
+                <form role="search" id="form-pesquisa">
+                    <div class="input-border-secundario">
+                        <input type="search" class="pe-5 form-control input-primario" id="input-pesquisa"
+                            placeholder="Busque por nome, ID, status do pedido">
+                    </div>
+                    <button type="submit" id="btn-pesquisa"><i class="ti ti-search icone-lupa"></i></button>
+                </form>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card-pedido">
                     <div class="header-card-pedido">
                         <div class="Id-nome-pedidos-info">
                             <p id="idPedido" class="id-pedido">#28</p>
@@ -46,7 +46,7 @@
                     <div class="container-info-pedido-adm">
                         <div class="box-lojista">
                             <p>Lojista</p>
-                            <p id="nomePedido">Rafael</p>
+                            <p id="nomePedido">Rafael Martins</p>
                         </div>
                         <div class="box-data">
                             <p>Data</p>
@@ -62,11 +62,211 @@
                         </div>
                     </div>
 
-                    <button class="botao-secundario" data-bs-toggle="modal" data-bs-target="#modalVerDetalhes">Ver
+                    <button class="botao-secundario btn-ver-produtos" data-bs-toggle="modal"
+                        data-bs-target="#modalVerDetalhes">Ver
                         produtos</button>
                 </article>
             </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card-pedido">
+                    <div class="header-card-pedido">
+                        <div class="Id-nome-pedidos-info">
+                            <p id="idPedido" class="id-pedido">#28</p>
+                            <p id="nomePedido" class="nome-pedido">Ana Luiza Silva</p>
+                        </div>
+
+                        <span id="statusProduto" class="pago">Pago</span>
+                    </div>
+
+                    <div class="container-info-pedido-adm">
+                        <div class="box-lojista">
+                            <p>Lojista</p>
+                            <p id="nomePedido">Rafael Martins</p>
+                        </div>
+                        <div class="box-data">
+                            <p>Data</p>
+                            <p id="dataPedido">26/08/2026</p>
+                        </div>
+                        <div class="box-valor-total">
+                            <p>Valor total</p>
+                            <p id="valorTotalPedido">R$ 41,99</p>
+                        </div>
+                        <div class="box-itens">
+                            <p>Itens</p>
+                            <p id="itensPedido">1</p>
+                        </div>
+                    </div>
+
+                    <button class="botao-secundario btn-ver-produtos" data-bs-toggle="modal"
+                        data-bs-target="#modalVerDetalhes">Ver
+                        produtos</button>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card-pedido">
+                    <div class="header-card-pedido">
+                        <div class="Id-nome-pedidos-info">
+                            <p id="idPedido" class="id-pedido">#28</p>
+                            <p id="nomePedido" class="nome-pedido">Ana Luiza Silva</p>
+                        </div>
+
+                        <span id="statusProduto" class="separando">Separando</span>
+                    </div>
+
+                    <div class="container-info-pedido-adm">
+                        <div class="box-lojista">
+                            <p>Lojista</p>
+                            <p id="nomePedido">Rafael Martins</p>
+                        </div>
+                        <div class="box-data">
+                            <p>Data</p>
+                            <p id="dataPedido">26/08/2026</p>
+                        </div>
+                        <div class="box-valor-total">
+                            <p>Valor total</p>
+                            <p id="valorTotalPedido">R$ 41,99</p>
+                        </div>
+                        <div class="box-itens">
+                            <p>Itens</p>
+                            <p id="itensPedido">1</p>
+                        </div>
+                    </div>
+
+                    <button class="botao-secundario btn-ver-produtos" data-bs-toggle="modal"
+                        data-bs-target="#modalVerDetalhes">Ver
+                        produtos</button>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card-pedido">
+                    <div class="header-card-pedido">
+                        <div class="Id-nome-pedidos-info">
+                            <p id="idPedido" class="id-pedido">#28</p>
+                            <p id="nomePedido" class="nome-pedido">Ana Luiza Silva</p>
+                        </div>
+
+                        <span id="statusProduto" class="enviado">Enviado</span>
+                    </div>
+
+                    <div class="container-info-pedido-adm">
+                        <div class="box-lojista">
+                            <p>Lojista</p>
+                            <p id="nomePedido">Rafael Martins</p>
+                        </div>
+                        <div class="box-data">
+                            <p>Data</p>
+                            <p id="dataPedido">26/08/2026</p>
+                        </div>
+                        <div class="box-valor-total">
+                            <p>Valor total</p>
+                            <p id="valorTotalPedido">R$ 41,99</p>
+                        </div>
+                        <div class="box-itens">
+                            <p>Itens</p>
+                            <p id="itensPedido">1</p>
+                        </div>
+                    </div>
+
+                    <button class="botao-secundario btn-ver-produtos" data-bs-toggle="modal"
+                        data-bs-target="#modalVerDetalhes">Ver
+                        produtos</button>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card-pedido">
+                    <div class="header-card-pedido">
+                        <div class="Id-nome-pedidos-info">
+                            <p id="idPedido" class="id-pedido">#28</p>
+                            <p id="nomePedido" class="nome-pedido">Ana Luiza Silva</p>
+                        </div>
+
+                        <span id="statusProduto" class="entregue">Entregue</span>
+                    </div>
+
+                    <div class="container-info-pedido-adm">
+                        <div class="box-lojista">
+                            <p>Lojista</p>
+                            <p id="nomePedido">Rafael Martins</p>
+                        </div>
+                        <div class="box-data">
+                            <p>Data</p>
+                            <p id="dataPedido">26/08/2026</p>
+                        </div>
+                        <div class="box-valor-total">
+                            <p>Valor total</p>
+                            <p id="valorTotalPedido">R$ 41,99</p>
+                        </div>
+                        <div class="box-itens">
+                            <p>Itens</p>
+                            <p id="itensPedido">1</p>
+                        </div>
+                    </div>
+
+                    <button class="botao-secundario btn-ver-produtos" data-bs-toggle="modal"
+                        data-bs-target="#modalVerDetalhes">Ver
+                        produtos</button>
+                </article>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card-pedido">
+                    <div class="header-card-pedido">
+                        <div class="Id-nome-pedidos-info">
+                            <p id="idPedido" class="id-pedido">#28</p>
+                            <p id="nomePedido" class="nome-pedido">Ana Luiza Silva</p>
+                        </div>
+
+                        <span id="statusProduto" class="entregue">Entregue</span>
+                    </div>
+
+                    <div class="container-info-pedido-adm">
+                        <div class="box-lojista">
+                            <p>Lojista</p>
+                            <p id="nomePedido">Rafael Martins</p>
+                        </div>
+                        <div class="box-data">
+                            <p>Data</p>
+                            <p id="dataPedido">26/08/2026</p>
+                        </div>
+                        <div class="box-valor-total">
+                            <p>Valor total</p>
+                            <p id="valorTotalPedido">R$ 41,99</p>
+                        </div>
+                        <div class="box-itens">
+                            <p>Itens</p>
+                            <p id="itensPedido">1</p>
+                        </div>
+                    </div>
+
+                    <button class="botao-secundario btn-ver-produtos" data-bs-toggle="modal"
+                        data-bs-target="#modalVerDetalhes">Ver
+                        produtos</button>
+                </article>
+            </div>
+
+            <nav class="mt-4" aria-label="Paginação">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                        <a class="page-link paginacao-seta" href="#" aria-label="Previous">
+                            <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
+                        </a>
+                    </li>
+                    <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link paginacao-seta" href="#" aria-label="Next">
+                            <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </section>
+
     </main>
 
     <!-- MODAL VER DETALHES -->
