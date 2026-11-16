@@ -212,6 +212,8 @@ main {
         top: 20px;
         left: 20px;
     }
+}
+
 /* PÁGINAS DE LISTAGEM */
 .container {
     margin: 6em auto;
@@ -294,11 +296,11 @@ h1 {
     margin: 0;
 }
 
-.form-check-input{
+.form-check-input {
     height: 1.5em;
 }
 
-.form-switch{
+.form-switch {
     text-align: center;
     height: 1em;
 }
@@ -308,7 +310,7 @@ h1 {
     float: none;
 }
 
-.form-check-input:checked{
+.form-check-input:checked {
     background-color: var(--cor-verde);
     border: var(--cor-verde);
 }
@@ -318,6 +320,6 @@ h1 {
     outline: none;
 }
 
-.form-check-input:focus{
+.form-check-input:focus {
     border: none !important;
 }
