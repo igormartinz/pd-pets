@@ -86,12 +86,20 @@ async function carregarPedidosRecentes(clienteId) {
         for (const produto of produtos) {
             mapaProdutos[produto.id] = produto.nome;
         }
-        
+
         // Ordena do mais recente pro mais antigo e pega só os 6 primeiros
-        const pedidosRecentes = pedidosDoCliente.sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 6);
-        
+        const pedidosRecentes = pedidosDoCliente.sort((a, b) => {
+            const diferencaData = new Date(b.data) - new Date(a.data);
+
+            if (diferencaData !== 0) {
+                return diferencaData;
+            }
+
+            return Number(b.id) - Number(a.id);
+        }).slice(0, 6);
+
         renderizarPedidosRecentes(pedidosRecentes, mapaProdutos);
-        
+
     } catch (erro) {
         container.innerHTML = `
       <tr>
