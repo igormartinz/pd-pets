@@ -97,7 +97,7 @@ function criarItemCategoria(categoria) {
         botaoEditar.addEventListener("click", () => iniciarEdicao(categoria.id));
 
         const botaoExcluir = criarBotaoIcone("ti-trash", `Excluir ${categoria.nome}`);
-        botaoExcluir.addEventListener("click", () => abrirModalExclusao(categoria));
+        botaoExcluir.addEventListener("click", () => abrirModalRemocao(categoria));
 
         botoes.append(botaoEditar, botaoExcluir);
         item.append(nome, botoes);
@@ -211,13 +211,73 @@ async function salvarEdicao(categoria, novoNome, botao) {
         botao.disabled = false;
         mostrarToast("Erro", "Não foi possível atualizar a categoria", "erro");
     }
-
 }
 
-document.addEventListener("DOMContentLoaded", (e) => {
+function abrirModalRemocao(categoria) {
+    
+    categoriaParaExcluir = categoria;
+    document.getElementById("nome-categoria-excluir").textContent = categoria.nome;
+    bootstrap.Modal.getOrCreateInstance("#modalExcluirCategoria").show();
+}
+
+
+// Verifica se existe um produto vinculado a categoria
+async function categoriaTemProdutos(categoriaID) {
+    const resp = await fetch(`${API_URL_PRODUTOS}/produtos?categoriaID=${categoriaID}`);
+
+    if (resp.status === 404) return false;
+    if (!resp.ok) throw new Error("Erro ao verificar os produtos da categoria.");
+
+    const produtos = await resp.json();
+
+    return produtos.some(produto => String(produto.categoriaID) === String(categoriaID));
+}
+
+async function confirmarExclusao() {
+    if (!categoriaParaExcluir) return null;
+
+    const modal = bootstrap.Modal.getOrCreateInstance("#modalExcluirCategoria");
+    const botao = document.getElementById("btn-confirmar-exclusao-categoria");
+    botao.disabled = true;
+
+    try {
+        // Bloqueia se houver produto vinculado na categoria.
+        const produtoVinculado = await categoriaTemProdutos(categoriaParaExcluir.id);
+        if (produtoVinculado) {
+            modal.hide();
+            mostrarToast("Exclusão bloqueada", "Não é possível excluir uma categoria com produtos vinculados.", "erro");
+            return null;
+        }
+
+        const resp = await fetch(`${API_URL_CATEGORIA}/categorias/${categoriaParaExcluir.id}`, {
+            method: "DELETE"
+        });
+
+        if (resp.status === 404) return [];
+        if (!resp.ok) throw new Error("Erro ao excluir a categoria.");
+
+        categorias = categorias.filter(item => String(item.id) !== String(categoriaParaExcluir.id));
+
+        if (String(idEmEdicao) === String(categoriaParaExcluir.id)) idEmEdicao = null;
+        renderizarCategorias();
+
+        modal.hide();
+        mostrarToast("Categoria excluída", "Categoria excluída com sucesso!", "sucesso");
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast("Erro", "Não foi possível excluir a categoria. Tente novamente mais tarde.", "erro");
+    } finally {
+        botao.disabled = false;
+        categoriaParaExcluir = null;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const usuarioLogado = verificarAut("Administrador");
+    if (!usuarioLogado) return null;
+
     carregarCategorias();
 
-    const addCategoria = document.getElementById("botao-adicionar-categoria");
-
-    addCategoria.addEventListener("click", adicionarCategoria);
+    document.getElementById("form-categoria").addEventListener("submit", adicionarCategoria);
+    document.getElementById("btn-confirmar-exclusao-categoria").addEventListener("click", confirmarExclusao);
 });
