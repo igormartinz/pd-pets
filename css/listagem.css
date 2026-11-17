@@ -95,6 +95,15 @@ main {
     color: var(--cor-verde-escuro);
 }
 
+.tabela-listagem {
+    width: 100%;
+    background-color: var(--cor-cinza);
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--cor-verde-escuro);
+}
+
 .nome-pedido {
     font-family: var(--fonte-nunito);
     font-weight: bold;
@@ -212,4 +221,37 @@ main {
         top: 20px;
         left: 20px;
     }
+}
+
+.form-check-input:focus{
+    border: none !important;
+}
+
+/* LISTAGEM DE PRODUTOS */
+.estoque{
+    width: 20px;
+}
+
+.produto-estoque{
+    background-color: var(--cor-verde);
+    border-radius: 50px;
+    font-weight: bold;
+    padding: .2em 1.5em;
+    width: 100%;
+    display: block;
+}
+
+.esgotado{
+    background-color: #717171;
+}
+
+.modal-titulo-desativar{
+    color: var(--cor-verde-escuro);
+    font-weight: bold;
+    font-size: 24px !important;
+    font-family: var(--fonte-poppins);
+}
+
+.modal-desativar p{
+    font-weight: 500;
 }
