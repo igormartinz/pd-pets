@@ -5,7 +5,7 @@
 
 h1 {
     font-family: var(--fonte-poppins);
-    font-size: clamp(32px, 5vw, 32px);
+    font-size: clamp(30px, 5vw, 32px);
     font-weight: bold;
 }
 
@@ -20,7 +20,7 @@ h1 {
     width: 100%;
 }
 
-.tabela-clientes {
+.tabela-listagem {
     width: 100%;
     background-color: var(--cor-cinza);
     font-family: var(--fonte-nunito);
@@ -106,4 +106,33 @@ h1 {
 
 .form-check-input:focus{
     border: none !important;
+}
+
+/* LISTAGEM DE PRODUTOS */
+.estoque{
+    width: 20px;
+}
+
+.produto-estoque{
+    background-color: var(--cor-verde);
+    border-radius: 50px;
+    font-weight: bold;
+    padding: .2em 1.5em;
+    width: 100%;
+    display: block;
+}
+
+.esgotado{
+    background-color: #717171;
+}
+
+.modal-titulo-desativar{
+    color: var(--cor-verde-escuro);
+    font-weight: bold;
+    font-size: 24px !important;
+    font-family: var(--fonte-poppins);
+}
+
+.modal-desativar p{
+    font-weight: 500;
 }
