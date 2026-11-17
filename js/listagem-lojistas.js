@@ -1,4 +1,4 @@
-const tabelaClientes = document.getElementById('tabela-clientes-lista');
+const tabelaClientes = document.getElementById('tabela-lojista-lista');
 const modalDetalhes = document.getElementById('modalDetalhesUsuario');
 
 tabelaClientes.addEventListener('click', (evento) => {
