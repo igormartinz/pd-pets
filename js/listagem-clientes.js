@@ -4,6 +4,7 @@ const URL_USUARIOS = 'https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios';
 const CLIENTES_POR_PAGINA = 9;
 
 let clientes = []; // usuários com o perfil Cliente
+let clientesExibidos = [];
 let paginaAtual = 1;
 
 // "2026-08-28" -> "28/08/2026"
@@ -113,20 +114,21 @@ function conectarDetalhes() {
     });
 }
 
-function renderizarPagina(pagina) {
+function renderizarPagina(pagina, listaClientes = clientes) {
     const corpo = document.getElementById('tabela-clientes-lista');
     
-    if (clientes === 0) {
+    paginaAtual = pagina;
+    clientesExibidos = listaClientes;
+    
+    if (listaClientes.length === 0) {
         mostrarMensagemTabela('Nenhum cliente encontrado.');
-        renderizarPaginacao();
+        renderizarPaginacao(0);
         return;
     }
 
-    paginaAtual = pagina;
-
     const inicio = (paginaAtual - 1) * CLIENTES_POR_PAGINA;
     const fim = inicio + CLIENTES_POR_PAGINA;
-    const clientesPagina = clientes.slice(inicio, fim);
+    const clientesPagina = listaClientes.slice(inicio, fim);
 
 
     corpo.innerHTML = '';
@@ -134,13 +136,13 @@ function renderizarPagina(pagina) {
         corpo.append(criarLinhaCliente(cliente));
     }
 
-    renderizarPaginacao();
+    renderizarPaginacao(listaClientes.length);
 
     window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function renderizarPaginacao() {
-    const totalPaginas = Math.ceil(clientes.length / CLIENTES_POR_PAGINA);
+function renderizarPaginacao(totalClientes = clientes.length) {
+    const totalPaginas = Math.ceil(totalClientes / CLIENTES_POR_PAGINA);
     const paginacao = document.getElementById("paginacao");
 
     paginacao.innerHTML = "";
@@ -168,7 +170,7 @@ function criarSeta(direcao, pagina, desabilitado, aria) {
 
     link.addEventListener("click", (e) => {
         e.preventDefault();
-        if (!desabilitado) renderizarPagina(pagina, true);
+        if (!desabilitado) renderizarPagina(pagina, clientesExibidos);
     });
 
     item.appendChild(link);
@@ -188,28 +190,35 @@ function criarNumero(pagina, ativo) {
 
     link.addEventListener("click", (e) => {
         e.preventDefault();
-        renderizarPagina(pagina);
+        renderizarPagina(pagina, clientesExibidos);
     });
 
     item.appendChild(link);
     return item;
 }
 
-// async function carregarClientes(clientes) {
-//     mostrarMensagemTabela("Carregando...");
+function filtrarClientes() {
+    const campoPesquisa = document.getElementById('filtro-clientes');
+    const pesquisa = campoPesquisa.value.trim().toLowerCase();
 
-//     try {
-//         clientes = await carregarClientes();
-//         produtosFiltrados = produtosDoLojista;
-//         renderizarPagina(1);
-//     } catch (erro) {
-//         console.error(erro);
-//         mostrarMensagemTabela("Não foi possível carregar os produtos.");
-//         mostrarToast("Erro", "Não foi possível carregar o estoque. Tente novamente.", "erro");
-//     }
-// }
+    const digitosPesquisa = pesquisa.replace(/\D/g, '');
+
+    const clientesFiltrados = clientes.filter(cliente => {
+        const nome = String(cliente.nomeCompleto ?? '').toLowerCase();
+        const cpf = String(cliente.cpf ?? '').replace(/\D/g, '');
+
+        const correspondeNome = nome.includes(pesquisa);
+        const correspondeCPF = digitosPesquisa.length > 0 && cpf.includes(digitosPesquisa);
+
+        return correspondeNome || correspondeCPF;
+    });
+
+    renderizarPagina(1, clientesFiltrados);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarClientes();
     conectarDetalhes();
+
+    document.getElementById('filtro-clientes').addEventListener('input', filtrarClientes);
 });
