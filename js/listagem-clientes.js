@@ -1,8 +1,10 @@
 import { mostrarToast } from "./toast.js";
 
 const URL_USUARIOS = 'https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios';
+const CLIENTES_POR_PAGINA = 9;
 
 let clientes = []; // usuários com o perfil Cliente
+let paginaAtual = 1;
 
 // "2026-08-28" -> "28/08/2026"
 function formatarData(data) {
@@ -66,20 +68,6 @@ function criarLinhaCliente(cliente) {
     return linha;
 }
 
-function renderizarClientes() {
-    if (clientes.length === 0) {
-        mostrarMensagemTabela('Nenhum cliente encontrado.');
-        return;
-    }
-
-    const corpo = document.getElementById('tabela-clientes-lista');
-    corpo.innerHTML = '';
-
-    for (const cliente of clientes) {
-        corpo.append(criarLinhaCliente(cliente));
-    }
-}
-
 async function carregarClientes() {
     mostrarMensagemTabela('Carregando...');
 
@@ -95,7 +83,7 @@ async function carregarClientes() {
             .filter(usuario => (usuario.perfis ?? []).includes('Cliente'))
             .sort((a, b) => String(a.nomeCompleto).localeCompare(String(b.nomeCompleto), 'pt-BR'));
 
-        renderizarClientes();
+        renderizarPagina(1);
 
     } catch (erro) {
         console.error(erro);
@@ -117,13 +105,109 @@ function conectarDetalhes() {
             return;
         }
 
-        document.getElementById('tituloDetalhesUsuario').textContent = cliente.nomeCompleto || '—';
-        document.getElementById('detalhes-usuario-email').textContent = cliente.email || '—';
+        document.getElementById('tituloDetalhesUsuario').textContent = cliente.nomeCompleto || '-';
+        document.getElementById('detalhes-usuario-email').textContent = cliente.email || '-';
         document.getElementById('detalhes-usuario-cpf').textContent = formatarCPF(cliente.cpf);
         document.getElementById('detalhes-usuario-telefone').textContent = formatarTelefone(cliente.telefone);
         document.getElementById('detalhes-usuario-nascimento').textContent = formatarData(cliente.dataNascimento);
     });
 }
+
+function renderizarPagina(pagina) {
+    const corpo = document.getElementById('tabela-clientes-lista');
+    
+    if (clientes === 0) {
+        mostrarMensagemTabela('Nenhum cliente encontrado.');
+        renderizarPaginacao();
+        return;
+    }
+
+    paginaAtual = pagina;
+
+    const inicio = (paginaAtual - 1) * CLIENTES_POR_PAGINA;
+    const fim = inicio + CLIENTES_POR_PAGINA;
+    const clientesPagina = clientes.slice(inicio, fim);
+
+
+    corpo.innerHTML = '';
+    for (const cliente of clientesPagina) {
+        corpo.append(criarLinhaCliente(cliente));
+    }
+
+    renderizarPaginacao();
+
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function renderizarPaginacao() {
+    const totalPaginas = Math.ceil(clientes.length / CLIENTES_POR_PAGINA);
+    const paginacao = document.getElementById("paginacao");
+
+    paginacao.innerHTML = "";
+
+    if (totalPaginas <= 1) return null;
+
+    paginacao.appendChild(criarSeta("left", paginaAtual - 1, paginaAtual === 1, "Página anterior"));
+
+    for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+        paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
+    }
+
+    paginacao.appendChild(criarSeta("right", paginaAtual + 1, paginaAtual === totalPaginas, "Proxima página"));
+}
+
+function criarSeta(direcao, pagina, desabilitado, aria) {
+    const item = document.createElement("li");
+    item.className = "page-item"
+
+    const link = document.createElement("a");
+    link.className = "page-link paginacao-seta";
+    link.href = "#";
+    link.setAttribute("aria-label", aria);
+    link.innerHTML = `<span aria-hidden="true"><i class="ti ti-chevron-compact-${direcao}"></i></span>`;
+
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!desabilitado) renderizarPagina(pagina, true);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+function criarNumero(pagina, ativo) {
+    const item = document.createElement("li");
+    item.className = `page-item ${ativo ? "ativo" : ''}`;
+
+    const link = document.createElement("a");
+    link.className = `page-link paginacao-numeracao ${ativo ? "link-ativo" : ''}`;
+    link.href = "#";
+    link.textContent = pagina;
+
+    if (ativo) link.setAttribute("aria-current", "page");
+
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        renderizarPagina(pagina);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+// async function carregarClientes(clientes) {
+//     mostrarMensagemTabela("Carregando...");
+
+//     try {
+//         clientes = await carregarClientes();
+//         produtosFiltrados = produtosDoLojista;
+//         renderizarPagina(1);
+//     } catch (erro) {
+//         console.error(erro);
+//         mostrarMensagemTabela("Não foi possível carregar os produtos.");
+//         mostrarToast("Erro", "Não foi possível carregar o estoque. Tente novamente.", "erro");
+//     }
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarClientes();

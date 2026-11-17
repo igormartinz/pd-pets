@@ -17,7 +17,7 @@
 
 <body>
     <!-- CONTEUDO -->
-    <a href="dashboard-administrador.html" class="botao-secundario btn-voltar px-5">Voltar</a>
+    <a href="dashboard-administrador.html" class="botao-secundario btn-voltar px-5" id="btn-voltar">Voltar</a>
     <main class="container">
         <div class="d-flex flex-column align-items-center mb-4 flex-md-row justify-content-md-between gap-3">
             <h1>Listagem de Clientes</h1>
@@ -49,27 +49,16 @@
 
             <!-- PAGINAÇÃO -->
             <nav class="mt-4" aria-label="Paginação">
-                <ul class="pagination justify-content-end">
-                    <li class="page-item">
-                        <a class="page-link paginacao-seta" href="#" aria-label="Previous">
-                            <span aria-hidden="true"><i class="ti ti-chevron-compact-left"></i></span>
-                        </a>
-                    </li>
-                    <li class="page-item ativo"><a class="page-link link-ativo paginacao-numeracao" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link paginacao-numeracao" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link paginacao-numeracao" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link paginacao-seta" href="#" aria-label="Next">
-                            <span aria-hidden="true"><i class="ti ti-chevron-compact-right"></i></span>
-                        </a>
-                    </li>
+                <ul class="pagination justify-content-end rounded-2" id="paginacao">
+
                 </ul>
             </nav>
         </section>
     </main>
 
     <!-- MODAL DETALHES DO USUARIO -->
-    <div class="modal fade" id="modalDetalhesUsuario" tabindex="-1" aria-labelledby="tituloDetalhesUsuario" aria-hidden="true">
+    <div class="modal fade" id="modalDetalhesUsuario" tabindex="-1" aria-labelledby="tituloDetalhesUsuario"
+        aria-hidden="true">
         <div class="modal-dialog my-3 modal-dialog-centered">
             <div class="modal-content">
                 <h2 class="modal-titulo mb-3" id="tituloDetalhesUsuario"></h2>
@@ -77,8 +66,21 @@
                 <p class="mb-2">CPF: <span id="detalhes-usuario-cpf"></span></p>
                 <p class="mb-2">Telefone: <span id="detalhes-usuario-telefone"></span></p>
                 <p class="mb-4">Data de Nascimento: <span id="detalhes-usuario-nascimento"></span></p>
-                <button type="button" class="botao-secundario align-self-end px-5" data-bs-dismiss="modal">Voltar</button>
+                <button type="button" class="botao-secundario align-self-end px-5"
+                    data-bs-dismiss="modal">Voltar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded-1" id="toast-indicador" style="width: 1em; height: 1em;"></div>
+                <strong class="me-auto ms-2" id="toast-titulo"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-mensagem"></div>
         </div>
     </div>
 
