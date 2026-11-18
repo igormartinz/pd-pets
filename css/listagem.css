@@ -43,6 +43,10 @@ h1 {
     border: 1px solid var(--cor-verde-escuro);
 }
 
+.linha-nome {
+    max-width: 450px;
+}
+
 .linha-clicavel{
     cursor: pointer;
 }
@@ -96,6 +100,7 @@ h1 {
 .form-check .form-check-input {
     width: 3em;
     float: none;
+    cursor: pointer;
 }
 
 .form-check-input:checked{
