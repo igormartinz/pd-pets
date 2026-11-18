@@ -57,15 +57,16 @@ function mostrarMensagemTabela(texto) {
 function criarLinhaLojista(lojista) {
     const linha = document.createElement('tr');
 
-    linha.className = 'pedido-linha linha-clicavel';
-    linha.dataset.usuarioId = lojista.id;
-    linha.dataset.bsToggle = 'modal';
-    linha.dataset.bsTarget = '#modalDetalhesUsuario';
-
+    linha.className = 'pedido-linha';
+    
     // Nome da empresa
     const celulaNome = document.createElement('td');
-    celulaNome.className = 'linha-celula nome-empresa';
+    celulaNome.className = 'linha-celula nome-empresa linha-clicavel';
     celulaNome.textContent = lojista.nomeEmpresa || '-';
+
+    celulaNome.dataset.usuarioId = lojista.id;
+    celulaNome.dataset.bsToggle = 'modal';
+    celulaNome.dataset.bsTarget = '#modalDetalhesUsuario';
 
     // Status do lojista
     const celulaStatus = document.createElement('td');
@@ -78,16 +79,11 @@ function criarLinhaLojista(lojista) {
     formCheck.className = 'form-check form-switch';
 
     const switchStatus = document.createElement('input');
-    switchStatus.className = 'form-check-input';
+    switchStatus.className = 'form-check-input linha-clicavel';
     switchStatus.type = 'checkbox';
     switchStatus.role = 'switch';
     switchStatus.checked = lojista.status === 'Ativo';
     switchStatus.setAttribute('aria-label', `Status de ${lojista.nomeEmpresa || 'lojista'}`);
-
-    // Impede que o clique no switch abra o modal.
-    switchStatus.addEventListener('click', evento => {
-        evento.stopPropagation();
-    });
 
     formCheck.append(switchStatus);
     container.append(formCheck);
@@ -270,7 +266,7 @@ function criarNumero(pagina, ativo) {
 }
 
 function filtrarLojistas() {
-    const campoPesquisa = document.getElementById('input-pesquisa');
+    const campoPesquisa = document.getElementById('filtro-lojistas');
     const pesquisa = campoPesquisa.value.trim().toLowerCase();
 
     const lojistasFiltrados = lojistas.filter(lojista => {
@@ -286,8 +282,5 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarLojistas();
     conectarDetalhes();
 
-    document.getElementById('form-pesquisa').addEventListener('submit', evento => {
-        evento.preventDefault();
-        filtrarLojistas();
-    });
+    document.getElementById('filtro-lojistas').addEventListener('input', filtrarLojistas);
 });
