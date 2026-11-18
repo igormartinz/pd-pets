@@ -10,7 +10,6 @@ let paginaAtual = 1;
 
 function formatarData(data) {
     if (!data) return '-';
-
     const [ano, mes, dia] = data.split('-');
     return `${dia}/${mes}/${ano}`;
 }
@@ -58,7 +57,7 @@ function criarLinhaLojista(lojista) {
     const linha = document.createElement('tr');
 
     linha.className = 'pedido-linha';
-    
+
     // Nome da empresa
     const celulaNome = document.createElement('td');
     celulaNome.className = 'linha-celula nome-empresa linha-clicavel';
@@ -84,6 +83,7 @@ function criarLinhaLojista(lojista) {
     switchStatus.role = 'switch';
     switchStatus.checked = lojista.status === 'Ativo';
     switchStatus.setAttribute('aria-label', `Status de ${lojista.nomeEmpresa || 'lojista'}`);
+    switchStatus.addEventListener('change', () => {atualizarStatusLojista(lojista, switchStatus);});
 
     formCheck.append(switchStatus);
     container.append(formCheck);
@@ -107,12 +107,8 @@ async function carregarLojistas() {
         const usuarios = await resposta.json();
 
         lojistas = usuarios
-            .filter(usuario => (usuario.perfis ?? []).includes('Lojista'))
-            .sort((a, b) =>
-                String(a.nomeEmpresa ?? '').localeCompare(
-                    String(b.nomeEmpresa ?? ''),
-                    'pt-BR'
-                )
+            .filter(usuario => (usuario.perfis ?? []).includes('Lojista') && (usuario.status !== "Pendente"))
+            .sort((a, b) => String(a.nomeEmpresa ?? '').localeCompare(String(b.nomeEmpresa ?? ''), 'pt-BR')
             );
 
         renderizarPagina(1);
@@ -120,12 +116,7 @@ async function carregarLojistas() {
     } catch (erro) {
         console.error(erro);
         mostrarMensagemTabela('Não foi possível carregar os lojistas.');
-
-        mostrarToast(
-            'Erro',
-            'Não foi possível carregar os lojistas. Tente novamente.',
-            'erro'
-        );
+        mostrarToast('Erro', 'Não foi possível carregar os lojistas. Tente novamente.', 'erro');
     }
 }
 
@@ -135,32 +126,19 @@ function conectarDetalhes() {
     modalElemento.addEventListener('show.bs.modal', function (evento) {
         const idLojista = evento.relatedTarget?.dataset.usuarioId;
 
-        const lojista = lojistas.find(
-            item => String(item.id) === String(idLojista)
-        );
+        const lojista = lojistas.find(item => String(item.id) === String(idLojista));
 
         if (!lojista) {
             evento.preventDefault();
             return;
         }
 
-        document.getElementById('tituloDetalhesUsuario').textContent =
-            lojista.nomeEmpresa || '-';
-
-        document.getElementById('detalhes-usuario-responsavel').textContent =
-            lojista.nomeCompleto || '-';
-
-        document.getElementById('detalhes-usuario-email').textContent =
-            lojista.email || '-';
-
-        document.getElementById('detalhes-usuario-cnpj').textContent =
-            formatarCNPJ(lojista.cnpj);
-
-        document.getElementById('detalhes-usuario-telefone').textContent =
-            formatarTelefone(lojista.telefone);
-
-        document.getElementById('detalhes-usuario-aprovacao').textContent =
-            formatarData(lojista.dataAprovacao);
+        document.getElementById('tituloDetalhesUsuario').textContent = lojista.nomeEmpresa || '-';
+        document.getElementById('detalhes-usuario-responsavel').textContent = lojista.nomeCompleto || '-';
+        document.getElementById('detalhes-usuario-email').textContent = lojista.email || '-';
+        document.getElementById('detalhes-usuario-cnpj').textContent = formatarCNPJ(lojista.cnpj);
+        document.getElementById('detalhes-usuario-telefone').textContent = formatarTelefone(lojista.telefone);
+        document.getElementById('detalhes-usuario-aprovacao').textContent = formatarData(lojista.dataAprovacao);
     });
 }
 
@@ -178,7 +156,6 @@ function renderizarPagina(pagina, listaLojistas = lojistas) {
 
     const inicio = (paginaAtual - 1) * LOJISTAS_POR_PAGINA;
     const fim = inicio + LOJISTAS_POR_PAGINA;
-
     const lojistasPagina = listaLojistas.slice(inicio, fim);
 
     corpo.innerHTML = '';
@@ -203,19 +180,13 @@ function renderizarPaginacao(totalLojistas = lojistas.length) {
 
     if (totalPaginas <= 1) return;
 
-    paginacao.appendChild(
-        criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Página anterior')
-    );
+    paginacao.appendChild(criarSeta('left', paginaAtual - 1, paginaAtual === 1, 'Página anterior'));
 
     for (let pagina = 1; pagina <= totalPaginas; pagina++) {
-        paginacao.appendChild(
-            criarNumero(pagina, pagina === paginaAtual)
-        );
+        paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
     }
 
-    paginacao.appendChild(
-        criarSeta('right', paginaAtual + 1, paginaAtual === totalPaginas, 'Próxima página')
-    );
+    paginacao.appendChild(criarSeta('right', paginaAtual + 1, paginaAtual === totalPaginas, 'Próxima página'));
 }
 
 function criarSeta(direcao, pagina, desabilitado, aria) {
@@ -276,6 +247,42 @@ function filtrarLojistas() {
     });
 
     renderizarPagina(1, lojistasFiltrados);
+}
+
+async function atualizarStatusLojista(lojista, switchStatus) {
+    const statusAnterior = lojista.status;
+    const novoStatus = switchStatus.checked ? 'Ativo' : 'Inativo';
+
+    // Evita novas alterações enquanto a requisição está em andamento.
+    switchStatus.disabled = true;
+
+    try {
+        const resposta = await fetch(`${URL_USUARIOS}/${lojista.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({status: novoStatus})
+        });
+
+        if (!resposta.ok) {
+            throw new Error('Falha ao atualizar o status do lojista.');
+        }
+
+        lojista.status = novoStatus;
+
+        mostrarToast('Sucesso', `Status alterado com sucesso`, 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+
+        // Retorna o switch ao estado anterior.
+        switchStatus.checked = statusAnterior === 'Ativo';
+        mostrarToast('Erro', 'Não foi possível atualizar o status do lojista.', 'erro');
+
+    } finally {
+        switchStatus.disabled = false;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
