@@ -1,257 +1,118 @@
-:root {
-    /* FONTES */
-    --fonte-poppins: "Poppins", sans-serif;
-    --fonte-nunito: "Nunito", sans-serif;
-
-    /* CORES */
-    --cor-de-fundo: #33714E;
-    --cor-verde: #1F9C62;
-    --cor-verde-escuro: #173B37;
-    --cor-salmao: #F0885A;
-    --cor-branco-amarelado: #FAF8F2;
-    --cor-branco: #FFFFFF;
-    --cor-cinza: #1D1D1D;
+/* PÁGINAS DE LISTAGEM */
+.container {
+    margin: 6em auto;
 }
 
-body {
-    min-height: 100vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-figcaption {
-    display: none;
-}
-
-p,
-h2,
-h3 {
-    margin-bottom: 0 !important;
-}
-
-main {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: clamp(100px, 8vw, 120px) 17px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    flex: 1;
-}
-
-.btn-voltar {
-    position: absolute;
-    top: 30px;
-    left: 40px;
-}
-
-#lista-pedidos-adm {
-    display: flex;
-    justify-content: space-between;
-}
-
-.header-listagem-pedidos {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.titulo-listagem-pedidos {
+h1 {
     font-family: var(--fonte-poppins);
+    font-size: clamp(32px, 5vw, 32px);
     font-weight: bold;
-    font-size: clamp(32px, 2.5vw, 36px);
-    color: var(--cor-branco);
 }
 
 #form-pesquisa {
-    max-width: 360px;
+    min-width: 17em;
+    max-width: 19em;
     margin: 0;
 }
 
-.card-pedido {
-    background-color: var(--cor-branco);
-    border-radius: 15px;
-    color: var(--cor-cinza);
-    padding: 20px;
-}
-
-.header-card-pedido {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px 0;
-    border-bottom: 2px solid var(--cor-verde-escuro);
-}
-
-.id-pedido {
-    font-family: var(--fonte-nunito);
-    font-weight: bold;
-    font-size: 14px;
-    color: var(--cor-verde-escuro);
+.table-responsive {
+    border-radius: 1em;
+    width: 100%;
 }
 
 .tabela-listagem {
     width: 100%;
     background-color: var(--cor-cinza);
     font-family: var(--fonte-nunito);
-    font-weight: bold;
-    font-size: 14px;
-    color: var(--cor-verde-escuro);
 }
 
-.nome-pedido {
+.tabela-cabecalho tr {
+    padding: 1em 0;
+    background-color: var(--cor-verde-escuro);
+}
+
+.linha-cabecalho {
+    text-align: center;
+    font-size: 20px;
+    padding: 1em 0;
+}
+
+.linha-celula {
+    white-space: nowrap;
+    padding: 1em;
+    border: 1px solid var(--cor-verde-escuro);
+}
+
+.linha-nome {
+    max-width: 450px;
+}
+
+.linha-clicavel{
+    cursor: pointer;
+}
+
+/* MODAL DETALHES DO USUARIO */
+.modal-content {
+    background-color: var(--cor-branco-amarelado);
+    padding: 2em;
+    border-radius: 1em;
     font-family: var(--fonte-nunito);
+}
+
+.modal-titulo {
+    font-family: var(--fonte-poppins);
     font-weight: bold;
+    font-size: clamp(24px, 5vw, 36px);
 }
 
-.container-info-pedido-adm {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 15px 0;
-    font-family: var(--fonte-nunito);
-}
-
-#nomePedido,
-#dataPedido,
-#valorTotalPedido,
-#itensPedido {
+.modal-content p {
     font-weight: bold;
+    font-size: clamp(16px, 3vw, 20px);
 }
 
-#valorTotalPedido {
-    color: var(--cor-verde-escuro);
+.modal-content p span {
+    font-weight: 500;
 }
 
-.btn-ver-produtos {
+/* LISTAGEM DE LOJISTAS */
+.status-titulo {
+    white-space: nowrap;
+    padding: 0 1em;
+}
+
+.nome-empresa {
     width: 100%;
 }
 
-.aguardando-pagamento,
-.pago,
-.separando,
-.enviado,
-.entregue,
-.cancelado {
-    font-family: var(--fonte-nunito);
-    font-weight: bold;
-    font-size: 12px;
-    color: var(--cor-branco);
-    padding: 5px 20px;
-    border-radius: 30px;
-    max-width: 180px;
+.form-check {
+    margin: 0;
 }
 
-.aguardando-pagamento {
-    background-color: var(--cor-salmao);
+.form-check-input{
+    height: 1.5em;
 }
 
-.pago {
-    background-color: #198754;
+.form-switch{
+    text-align: center;
+    height: 1em;
 }
 
-.separando {
-    background-color: #FFC107;
-    color: var(--cor-cinza);
+.form-check .form-check-input {
+    width: 3em;
+    float: none;
+    cursor: pointer;
 }
 
-.enviado {
-    background-color: var(--cor-cinza);
+.form-check-input:checked{
+    background-color: var(--cor-verde);
+    border: var(--cor-verde);
 }
 
-.entregue {
-    background-color: #007bff;
-}
-
-.cancelado {
-    background-color: #DC3545;
-}
-
-/* MODAL VER DETALHES */
-
-.titulo-detalhes {
-    font-size: clamp(20px, 5vw, 24px);
-    font-weight: bold;
-    font-family: var(--fonte-poppins);
-    margin-bottom: 1em !important;
-}
-
-.produto {
-    border: 2px solid var(--cor-verde-escuro);
-    padding: .8em;
-    border-radius: 1em;
-}
-
-.produto h4 {
-    font-family: var(--fonte-nunito);
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.produto-quantidade {
-    font-family: var(--fonte-nunito);
-    font-size: 16px;
-}
-
-.produto-preco-total {
-    font-family: var(--fonte-poppins);
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--cor-verde-escuro);
-    margin-top: .2em;
-}
-
-@media(max-width: 768px) {
-    .header-listagem-pedidos {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    #form-pesquisa {
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .btn-voltar {
-        top: 20px;
-        left: 20px;
-    }
+.form-switch .form-check-input:focus {
+    box-shadow: none;
+    outline: none;
 }
 
 .form-check-input:focus{
     border: none !important;
-}
-
-/* LISTAGEM DE PRODUTOS */
-.estoque{
-    width: 20px;
-}
-
-.produto-estoque{
-    background-color: var(--cor-verde);
-    border-radius: 50px;
-    font-weight: bold;
-    padding: .2em 1.5em;
-    width: 100%;
-    display: block;
-}
-
-.esgotado{
-    background-color: #717171;
-}
-
-.modal-titulo-desativar{
-    color: var(--cor-verde-escuro);
-    font-weight: bold;
-    font-size: 24px !important;
-    font-family: var(--fonte-poppins);
-}
-
-.modal-desativar p{
-    font-weight: 500;
 }
