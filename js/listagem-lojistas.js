@@ -1,4 +1,3 @@
-
 import { mostrarToast } from "./toast.js";
 
 const URL_USUARIOS = 'https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios';

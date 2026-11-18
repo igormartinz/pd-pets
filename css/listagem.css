@@ -20,7 +20,7 @@ h1 {
     width: 100%;
 }
 
-.tabela-clientes {
+.tabela-listagem {
     width: 100%;
     background-color: var(--cor-cinza);
     font-family: var(--fonte-nunito);
