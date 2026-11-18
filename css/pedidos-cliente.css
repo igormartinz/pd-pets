@@ -58,7 +58,7 @@ main>h1 {
 .header-pedidos-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 10px 0;
     border-bottom: 2px solid var(--cor-verde-escuro);
 }
@@ -92,7 +92,7 @@ main>h1 {
     font-weight: bold;
     font-size: 12px;
     color: var(--cor-branco);
-    padding: 5px 10px;
+    padding: 5px 20px;
     border-radius: 30px;
     max-width: 180px;
 }

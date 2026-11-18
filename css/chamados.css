@@ -1,0 +1,144 @@
+/* PÁGINAS DE CHAMADOS */
+.container {
+    margin: 6em auto;
+}
+
+h1 {
+    font-family: var(--fonte-poppins);
+    font-size: clamp(28px, 5vw, 32px);
+    font-weight: bold;
+}
+
+.ti-message-circle-plus{
+    font-size: 24px;
+}
+
+/* CHAMADOS DOS CLIENTES */
+.chamado, .solicitacao{
+    background-color: var(--cor-branco-amarelado);
+    color: var(--cor-cinza);
+    padding: 1.5em;
+    border-radius: 1em;
+    min-height: 320px;
+    font-family: var(--fonte-nunito);
+}
+
+.nome-cliente{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nome-cliente span{
+    color: var(--cor-verde-escuro);
+    font-weight: 500;
+}
+
+.chamado-status{
+    padding: .2em 1.5em;
+    font-weight: bold;
+}
+
+.chamado hr, .solicitacao hr{
+    border: 2px solid var(--cor-verde-escuro);
+}
+
+.chamado-titulo{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#status-input{
+    padding: 0 2.5em 0 1.2em;
+    border: none;
+    outline: none;
+    appearance: none;
+}
+
+.input-border-secundario {
+    position: relative;
+}
+
+.input-border-secundario::after {
+    content: "";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--cor-verde-escuro);
+    border-bottom: 2px solid var(--cor-verde-escuro);
+    transform: translateY(-70%) rotate(45deg);
+}
+
+/* MODAL DETALHES DO CHAMADO */
+.modal-titulo{
+    font-family: var(--fonte-poppins);
+}
+
+.form-control, .form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+.ti-star{
+    color: var(--cor-verde);
+    font-size: 35px;
+}
+
+.resposta-cliente, .resposta-adm{
+    background-color: var(--cor-verde);
+    color: var(--cor-branco);
+    width: 60%;
+    align-self: flex-end;
+    padding: .5em;
+    border-radius: 1em 0 1em 1em;
+    font-family: var(--fonte-nunito);
+}
+
+.resposta-adm{
+    background-color: var(--cor-cinza);
+    align-self: flex-start;
+    border-radius: 0 1em 1em 1em;
+}
+
+/* SOLICITAÇÃO DE LOJISTAS */
+.solicitacao{
+    min-height: auto;
+}
+
+.ti-building-store{
+    background-color: var(--cor-verde-escuro);
+    font-size: 24px;
+    color: var(--cor-branco);
+    padding: .4em;
+    border-radius: 2em;
+}
+
+.solicitacao h3{
+    font-family: var(--fonte-poppins);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.solicitacao p{
+    font-weight: bold;
+}
+
+.solicitacao p span{
+    font-weight: 500;
+}
+
+.btn-aprovar, .btn-rejeitar{
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .btn-aprovar, .btn-rejeitar{
+        width: auto;
+    }
+
+    .btn-aprovar{
+        margin-left: auto;
+    }
+}
