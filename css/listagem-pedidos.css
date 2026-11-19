@@ -26,7 +26,8 @@ figcaption {
 
 p,
 h2,
-h3 {
+h3,
+h4 {
     margin-bottom: 0 !important;
 }
 
@@ -110,9 +111,9 @@ main {
 }
 
 .container-info-pedido-adm {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 15px 0;
     font-family: var(--fonte-nunito);
 }
@@ -185,6 +186,9 @@ main {
     border: 2px solid var(--cor-verde-escuro);
     padding: .8em;
     border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .produto h4 {
@@ -203,7 +207,24 @@ main {
     font-size: 20px;
     font-weight: bold;
     color: var(--cor-verde-escuro);
-    margin-top: .2em;
+}
+
+.nome-empresa {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+    color: var(--cor-cinza);
+    font-size: clamp(14px, 1.5vw, 16px);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: .25rem;
+}
+
+#nomeEmpresa {
+    font-family: var(--fonte-nunito);
+    font-weight: bold;
+    color: var(--cor-verde-escuro);
+    font-size: clamp(14px, 1.5vw, 16px);
 }
 
 @media(max-width: 768px) {
@@ -221,37 +242,4 @@ main {
         top: 20px;
         left: 20px;
     }
-}
-
-.form-check-input:focus{
-    border: none !important;
-}
-
-/* LISTAGEM DE PRODUTOS */
-.estoque{
-    width: 20px;
-}
-
-.produto-estoque{
-    background-color: var(--cor-verde);
-    border-radius: 50px;
-    font-weight: bold;
-    padding: .2em 1.5em;
-    width: 100%;
-    display: block;
-}
-
-.esgotado{
-    background-color: #717171;
-}
-
-.modal-titulo-desativar{
-    color: var(--cor-verde-escuro);
-    font-weight: bold;
-    font-size: 24px !important;
-    font-family: var(--fonte-poppins);
-}
-
-.modal-desativar p{
-    font-weight: 500;
 }
