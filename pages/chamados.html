@@ -48,29 +48,19 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-4 rounded-3">
                 <h2 class="modal-titulo mb-1">Chamado</h2>
-                <div class="d-flex flex-column gap-3 my-4">
-                    <p class="resposta-adm">Olá! Meu pedido consta como "Entregue", mas não recebi o produto. Poderiam
-                        verificar o que aconteceu?</p>
-                    <p class="resposta-cliente">Olá! Claro. Vou verificar as informações do seu pedido e o status da
-                        entrega.</p>
-                    <p class="resposta-adm">Certo, obrigado. Gostaria de saber se existe alguma informação sobre onde o
-                        pedido foi entregue.</p>
-                    <p class="resposta-cliente">Verifiquei o pedido e consta que ele foi entregue ontem. Vou encaminhar
-                        a ocorrência para verificarmos com a transportadora o local e o responsável pela entrega.</p>
-                    <p class="resposta-adm">Tudo bem. Existe algum prazo para eu receber um retorno?</p>
-                    <p class="resposta-cliente">Sim. A solicitação será analisada e você receberá uma atualização assim
-                        que tivermos um posicionamento.</p>
+                <div class="d-flex flex-column gap-3 my-4" id="conversa-chamado">
+                    
                 </div>
-                <form class="row gy-2">
+                <form id="form-responder-chamado" class="row gy-2">
                     <div class="d-flex flex-column campo-input">
                         <div class="input-border">
-                            <input type="text" name="resposta" id="resposta" class="form-control p-2 input-contato"
+                            <input type="text" name="resposta" id="resposta-chamado" class="form-control p-2 input-contato"
                                 placeholder="Resposta" rows="5"></input>
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2 mt-4">
                         <button type="button" class="botao-secundario px-0 w-50" data-bs-dismiss="modal">Voltar</button>
-                        <button type="button" class="botao px-0 w-50">Responder</button>
+                        <button type="submit" class="botao px-0 w-50">Responder</button>
                     </div>
                 </form>
             </div>

@@ -18,17 +18,136 @@ const CLASSE_STATUS_CHAMADO = {
     'Resolvido': 'text-bg-success'
 };
 
+let chamadoSelecionado = null;
+
 const containerChamados = document.getElementById('chamados-clientes');
 const modalChamado = document.getElementById('modalDetalhesChamado');
 
-containerChamados.addEventListener('click', (evento) => {
+containerChamados.addEventListener('click', evento => {
     const botao = evento.target.closest('.ver-detalhes');
-    
+
     if (!botao) return;
-    
+
+    const idChamado = botao.dataset.chamadoId;
+
+    chamadoSelecionado = chamados.find(chamado => String(chamado.id) === String(idChamado));
+
+    if (!chamadoSelecionado) {
+        mostrarToast('Erro', 'Não foi possível localizar o chamado.', 'erro');
+        return;
+    }
+
+    preencherModalChamado(chamadoSelecionado);
+
     const modal = bootstrap.Modal.getOrCreateInstance(modalChamado);
     modal.show();
 });
+
+function preencherModalChamado(chamado) {
+    const titulo = modalChamado.querySelector('.modal-titulo');
+    const conversa = document.getElementById('conversa-chamado');
+    const campoResposta = document.getElementById('resposta-chamado');
+    const botaoResponder = document.querySelector('#form-responder-chamado button[type="submit"]');
+
+    titulo.textContent = `Chamado`;
+
+    // Limpa a conversa anterior.
+    conversa.innerHTML = '';
+
+    // Primeira mensagem: descrição enviada pelo cliente ao abrir o chamado.
+    adicionarMensagem('Cliente', chamado.descricao);
+
+    // Mensagens posteriores da conversa.
+    for (const resposta of chamado.respostasChamado) {
+        adicionarMensagem(resposta.autor, resposta.mensagem);
+    }
+
+     // Bloqueia respostas em chamados resolvidos.
+    const resolvido = chamado.status === 'Resolvido';
+
+    campoResposta.disabled = resolvido;
+    campoResposta.placeholder = resolvido ? 'Este chamado já foi resolvido.' : 'Resposta';
+
+    botaoResponder.disabled = resolvido;
+}
+
+function adicionarMensagem(autor, mensagem) {
+    const conversa = document.getElementById('conversa-chamado');
+    const elemento = document.createElement('p');
+
+    elemento.className = autor === 'Administrador' ? 'resposta-cliente' : 'resposta-adm';
+    elemento.textContent = mensagem;
+
+    conversa.appendChild(elemento);
+}
+
+async function responderChamado(evento) {
+    evento.preventDefault();
+
+    if (!chamadoSelecionado) return;
+
+    const usuario = pegarUsuarioLogado();
+
+    const campoResposta = document.getElementById('resposta-chamado');
+    const mensagem = campoResposta.value.trim();
+
+    if (!mensagem) {
+        mostrarToast("Campo vazio", "Preencha o campo de resposta", "erro");
+        return;
+    }
+
+    const botaoResponder = evento.submitter;
+    botaoResponder.disabled = true;
+
+    try {
+        const novaResposta = {
+            autor: 'Administrador',
+            autorID: usuario.id,
+            mensagem: mensagem
+        };
+
+        const respostasAtualizadas = [
+            ...chamadoSelecionado.respostasChamado,
+            novaResposta
+        ];
+
+        const dadosAtualizados = {
+            respostasChamado: respostasAtualizadas,
+            ultimaAtualizacao: dataDeHoje()
+        };
+
+        const resposta = await fetch(`${URL_CHAMADOS}/${chamadoSelecionado.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dadosAtualizados)
+        });
+
+        if (!resposta.ok) {
+            throw new Error('Falha ao enviar resposta.');
+        }
+
+        // Atualiza o chamado na memória.
+        chamadoSelecionado.respostasChamado = respostasAtualizadas;
+        chamadoSelecionado.ultimaAtualizacao = dadosAtualizados.ultimaAtualizacao;
+
+        // Atualiza a conversa exibida.
+        adicionarMensagem('Administrador', mensagem);
+
+        campoResposta.value = '';
+
+        mostrarToast('Sucesso', 'Resposta enviada com sucesso!', 'sucesso');
+
+    } catch (erro) {
+        console.error(erro);
+
+        mostrarToast('Erro', 'Não foi possível enviar a resposta.', 'erro');
+
+    } finally {
+        botaoResponder.disabled = false;
+    }
+}
 
 
 // Mostra ou esconde um elemento. Limpa o display:none inline do HTML, se existir.
@@ -57,7 +176,7 @@ function conectarAlternancia() {
         aplicarVisao();
         renderizarPaginacao()
     });
-    
+
     aplicarVisao(); // também acerta o texto inicial do botão
 }
 
@@ -89,7 +208,6 @@ function formatarCNPJ(cnpj) {
 }
 
 // Campos do chamado como vêm da API -> campos usados na tela.
-// Se o recurso `chamados` usar outros nomes, ajuste só aqui.
 function normalizarChamado(bruto) {
     return {
         id: bruto.id,
@@ -97,8 +215,18 @@ function normalizarChamado(bruto) {
         titulo: bruto.assunto ?? bruto.titulo,
         descricao: bruto.descricao,
         data: bruto.dataAbertura ?? bruto.data,
-        status: bruto.status
+        status: bruto.status === 'Em atendimento' ? 'Aberto' : bruto.status,
+        respostasChamado: bruto.respostasChamado ?? [],
+        ultimaAtualizacao: bruto.ultimaAtualizacao
     };
+}
+
+function obterResponsavelChamado(chamado) {
+    const primeiraRespostaAdm = chamado.respostasChamado.find(
+        resposta => resposta.autor === 'Administrador' && resposta.autorID != null
+    );
+
+    return primeiraRespostaAdm?.autorID ?? null;
 }
 
 async function carregarPagina() {
@@ -110,6 +238,8 @@ async function carregarPagina() {
             fetch(URL_CHAMADOS),
             fetch(URL_USUARIOS)
         ]);
+
+        const usuario = pegarUsuarioLogado();
 
         if (!respostaChamados.ok || !respostaUsuarios.ok) {
             throw new Error('Falha ao buscar chamados ou usuários');
@@ -124,8 +254,16 @@ async function carregarPagina() {
         }
 
         // Em aberto primeiro; dentro de cada grupo, os mais recentes primeiro
-        chamados = chamadosBrutos
-            .map(normalizarChamado)
+        chamados = chamadosBrutos.map(normalizarChamado)
+            .filter(chamado => {
+                const responsavelID = obterResponsavelChamado(chamado);
+
+                // Chamados sem resposta administrativa ficam disponíveis para todos.
+                if (responsavelID === null) return true;
+
+                // Chamados respondidos aparecem somente para o administrador responsável.
+                return String(responsavelID) === String(usuario.id);
+            })
             .sort((a, b) =>
                 Number(a.status === 'Resolvido') - Number(b.status === 'Resolvido')
                 || String(b.data).localeCompare(String(a.data))
@@ -170,9 +308,9 @@ function montarCardChamado(chamado) {
                 <div class="d-flex gap-3 mt-auto">
                     <button class="botao w-100 ver-detalhes" data-chamado-id="${chamado.id}">Ver detalhes</button>
                     <div class="input-border-secundario d-flex align-items-center justify-content-center">
-                        <select id="status-input" data-chamado-id="${chamado.id}">
-                            <option value="aberto"${resolvido ? '' : ' selected'}>Aberto</option>
-                            <option value="resolvido"${resolvido ? ' selected' : ''}>Resolvido</option>
+                        <select class="status-input" data-chamado-id="${chamado.id}" ${resolvido ? 'disabled' : ''}>
+                            <option value="Aberto" ${resolvido ? '' : 'selected'}>Aberto</option>
+                            <option value="Resolvido" ${resolvido ? 'selected' : ''}>Resolvido</option>
                         </select>
                     </div>
                 </div>
@@ -384,8 +522,97 @@ async function analisarSolicitacao(idUsuario, aprovar) {
     }
 }
 
+async function atualizarStatusChamado(chamado, select) {
+    const usuario = pegarUsuarioLogado();
+
+    // Impede qualquer alteração se o chamado já estiver resolvido.
+    if (chamado.status === 'Resolvido') {
+        select.value = 'Resolvido';
+        select.disabled = true;
+        return;
+    }
+
+    const novoStatus = select.value;
+
+    if (novoStatus !== 'Resolvido') return;
+    
+    select.disabled = true;
+
+    try {
+        // Consulta os dados atuais para evitar alterações em chamados desatualizados.
+        const consulta = await fetch(`${URL_CHAMADOS}/${chamado.id}`);
+
+        if (!consulta.ok) {
+            throw new Error('Não foi possível consultar o chamado.');
+        }
+
+        const chamadoAtual = await consulta.json();
+
+        if (chamadoAtual.status === 'Resolvido') {
+            throw new Error('Este chamado já foi resolvido.');
+        }
+
+        // Verifica se o chamado pertence a outro administrador.
+        const respostasAtuais = chamadoAtual.respostasChamado ?? [];
+        const responsavelID = obterResponsavelChamado({respostasChamado: respostasAtuais});
+
+        if (responsavelID !== null && String(responsavelID) !== String(usuario.id)) {
+            throw new Error('Este chamado pertence a outro administrador.');
+        }
+
+        const resposta = await fetch(`${URL_CHAMADOS}/${chamado.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: 'Resolvido',
+                ultimaAtualizacao: dataDeHoje()
+            })
+        });
+
+        if (!resposta.ok) {
+            throw new Error('Não foi possível atualizar o status.');
+        }
+
+        // Atualiza os dados locais.
+        chamado.status = 'Resolvido';
+
+        mostrarToast('Sucesso', 'Chamado resolvido com sucesso!','sucesso');
+
+        // Atualiza o card e desabilita definitivamente o select.
+        renderizarVisao('chamados');
+        renderizarPaginacao();
+
+    } catch (erro) {
+        console.error(erro);
+
+        // Retorna o select para Aberto.
+        select.value = 'Aberto';
+        mostrarToast('Erro', 'Não foi possível resolver o chamado.', 'erro');
+        select.disabled = false;
+    }
+}
+
+function conectarStatusChamados() {
+    containerChamados.addEventListener('change', evento => {
+        const select = evento.target.closest('.status-input');
+
+        if (!select) return;
+
+        const chamado = chamados.find(item => String(item.id) === String(select.dataset.chamadoId));
+
+        if (!chamado) return;
+
+        atualizarStatusChamado(chamado, select);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     carregarPagina();
     conectarAlternancia();
     conectarAnaliseDeLojistas();
+    conectarStatusChamados();
+
+    document.getElementById('form-responder-chamado').addEventListener('submit', responderChamado);
 });
