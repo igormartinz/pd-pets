@@ -156,7 +156,7 @@ function renderizarPagina(pagina, rolar) {
     renderizarPaginacao();
 
     if (rolar) {
-        document.getElementById("section-estoque").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("section-listagem-produtos").scrollIntoView({ behavior: "smooth" });
     }
 }
 
@@ -170,9 +170,13 @@ function renderizarPaginacao() {
 
     paginacao.appendChild(criarSeta("left", paginaAtual - 1, paginaAtual === 1, "Página anterior"));
 
-    for (let pagina = 1; pagina <= totalPaginas; pagina++) {
-        paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
-    }
+    paginasVisiveis(totalPaginas, paginaAtual).forEach(pagina => {
+        if (pagina === "...") {
+            paginacao.append(criarReticencias());
+        } else {
+            paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
+        }
+    });
 
     paginacao.appendChild(criarSeta("right", paginaAtual + 1, paginaAtual === totalPaginas, "Proxima página"));
 }
@@ -307,13 +311,47 @@ async function confirmarDesativar() {
     botao.disabled = true;
 
     const deuCerto = await salvarStatusProduto(produtoParaDesativar, "Inativo");
-    
+
     botao.disabled = false;
 
     if (deuCerto) {
         bootstrap.Modal.getOrCreateInstance("#modalDesativarProduto").hide();
         produtoParaDesativar = null;
     }
+}
+
+function paginasVisiveis(totalPaginas, atual) {
+    const paginas = [];
+
+    if (totalPaginas <= 5) {
+        for (let pagina = 1; pagina <= totalPaginas; pagina++) paginas.push(pagina);
+        return paginas;
+    }
+
+    const inicio = Math.max(2, atual - 1);
+    const fim = Math.min(totalPaginas - 1, atual + 1);
+
+    paginas.push(1);
+    if (inicio > 2) paginas.push("...");
+
+    for (let pagina = inicio; pagina <= fim; pagina++) paginas.push(pagina);
+
+    if (fim < totalPaginas - 1) paginas.push("...");
+    paginas.push(totalPaginas);
+
+    return paginas;
+}
+
+function criarReticencias() {
+    const item = document.createElement("li");
+    item.className = "page-item disabled page-reticencia";
+    const texto = document.createElement("span");
+    texto.className = "page-link paginacao-numeracao page-txt-reticencia";
+    texto.textContent = "...";
+    texto.setAttribute("arian-hidden", "true");
+
+    item.append(texto);
+    return item;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
