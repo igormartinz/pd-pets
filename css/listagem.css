@@ -5,7 +5,7 @@
 
 h1 {
     font-family: var(--fonte-poppins);
-    font-size: clamp(32px, 5vw, 32px);
+    font-size: clamp(30px, 5vw, 32px);
     font-weight: bold;
 }
 
