@@ -368,7 +368,7 @@ a {
 
 .page-link {
     color: var(--cor-branco);
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .page-link:hover {
@@ -376,8 +376,8 @@ a {
 }
 
 .page-item {
-    width: 3em;
-    height: 3em;
+    width: 2.9rem;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
