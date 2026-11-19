@@ -5,7 +5,7 @@
 
 h1 {
     font-family: var(--fonte-poppins);
-    font-size: clamp(30px, 5vw, 32px);
+    font-size: clamp(32px, 5vw, 32px);
     font-weight: bold;
 }
 
@@ -45,6 +45,10 @@ h1 {
 
 .linha-nome {
     max-width: 450px;
+}
+
+.linha-clicavel {
+    cursor: pointer;
 }
 
 /* MODAL DETALHES DO USUARIO */

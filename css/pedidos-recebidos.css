@@ -70,7 +70,7 @@ main>h1 {
 .header-pedidos-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 10px 0;
     border-bottom: 2px solid var(--cor-verde-escuro);
 }
@@ -104,7 +104,7 @@ main>h1 {
     font-weight: bold;
     font-size: 12px;
     color: var(--cor-branco);
-    padding: 5px 10px;
+    padding: 5px 20px;
     border-radius: 30px;
     max-width: 180px;
 }
@@ -276,26 +276,28 @@ main>h1 {
     margin-bottom: .3em;
 }
 
-.produto{
+.produto {
     border: 2px solid var(--cor-verde-escuro);
     padding: .8em;
     border-radius: 1em;
 }
 
-.produto h4{
+.produto h4 {
+    font-family: var(--fonte-nunito);
     font-size: 16px;
     font-weight: bold;
 }
 
-.produto-quantidade{
-    font-size: 14px;
+.produto-quantidade {
+    font-family: var(--fonte-nunito);
+    font-size: 16px;
 }
 
-.produto-preco-total{
+.produto-preco-total {
+    font-family: var(--fonte-poppins);
     font-size: 20px;
     font-weight: bold;
     color: var(--cor-verde-escuro);
-    font-family: var(--fonte-poppins);
     margin-top: .2em;
 }
 
