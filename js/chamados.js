@@ -7,7 +7,8 @@ const ITENS_POR_PAGINA = 4;
 
 let chamados = [];      // chamados de clientes, já normalizados e ordenados
 let solicitacoes = [];  // lojistas com cadastro pendente
-let nomesClientes = {}; // { usuarioId: nomeCompleto }
+let nomesClientes = {};
+let exibindoChamados = true; // a página abre nos chamados de clientes
 
 // Cada lista tem a sua página atual: ao alternar, cada uma volta de onde parou
 const paginas = { chamados: 1, solicitacoes: 1 };
@@ -22,14 +23,13 @@ const modalChamado = document.getElementById('modalDetalhesChamado');
 
 containerChamados.addEventListener('click', (evento) => {
     const botao = evento.target.closest('.ver-detalhes');
-
+    
     if (!botao) return;
-
+    
     const modal = bootstrap.Modal.getOrCreateInstance(modalChamado);
     modal.show();
 });
 
-let exibindoChamados = true; // a página abre nos chamados de clientes
 
 // Mostra ou esconde um elemento. Limpa o display:none inline do HTML, se existir.
 function definirVisivel(elemento, visivel) {
@@ -55,28 +55,16 @@ function conectarAlternancia() {
     botao.addEventListener('click', () => {
         exibindoChamados = !exibindoChamados;
         aplicarVisao();
+        renderizarPaginacao()
     });
     
     aplicarVisao(); // também acerta o texto inicial do botão
 }
 
-// Escapa o texto antes de ir para o HTML. Assunto e descrição são digitados pelos clientes
-// e o nome da empresa pelos lojistas: sem isso, um código HTML digitado executaria no navegador do administrador
-function escaparHTML(texto) {
-    return String(texto ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-// "2026-08-04" -> "04/08/2026". Não usa new Date(), que leria a data como UTC e poderia mostrar o dia anterior
+// "2026-08-28" -> "28/08/2026"
 function formatarData(data) {
     if (!data) return '-';
-    if (!/^\d{4}-\d{2}-\d{2}/.test(String(data))) return String(data);
-
-    const [ano, mes, dia] = String(data).slice(0, 10).split('-');
+    const [ano, mes, dia] = data.split('-');
     return `${dia}/${mes}/${ano}`;
 }
 
@@ -99,8 +87,6 @@ function formatarCNPJ(cnpj) {
 
     return cnpj || '-';
 }
-
-// ---------- Dados ----------
 
 // Campos do chamado como vêm da API -> campos usados na tela.
 // Se o recurso `chamados` usar outros nomes, ajuste só aqui.
@@ -174,13 +160,13 @@ function montarCardChamado(chamado) {
         <div class="col-12 col-lg-6">
             <article class="chamado d-flex flex-column" data-chamado-id="${chamado.id}">
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="m-0 nome-cliente"><span>#${escaparHTML(chamado.id)} /</span> ${escaparHTML(nomeCliente)}</p>
-                    <span class="chamado-status ${classeBadge} rounded-pill">${escaparHTML(chamado.status || '-')}</span>
+                    <p class="m-0 nome-cliente"><span>#${chamado.id} /</span> ${nomeCliente}</p>
+                    <span class="chamado-status ${classeBadge} rounded-pill">${chamado.status || '-'}</span>
                 </div>
                 <small>Realizado em ${formatarData(chamado.data)}</small>
                 <hr class="my-2">
-                <h3 class="chamado-titulo">${escaparHTML(chamado.titulo || '-')}</h3>
-                <p class="chamado-descricao">${escaparHTML(chamado.descricao)}</p>
+                <h3 class="chamado-titulo">${chamado.titulo || '-'}</h3>
+                <p class="chamado-descricao">${chamado.descricao}</p>
                 <div class="d-flex gap-3 mt-auto">
                     <button class="botao w-100 ver-detalhes" data-chamado-id="${chamado.id}">Ver detalhes</button>
                     <div class="input-border-secundario d-flex align-items-center justify-content-center">
@@ -201,13 +187,13 @@ function montarCardSolicitacao(lojista) {
             <article class="solicitacao d-flex flex-column" data-usuario-id="${lojista.id}">
                 <div class="d-flex gap-2 align-items-center">
                     <i class="ti ti-building-store"></i>
-                    <h3 class="m-0">${escaparHTML(lojista.nomeEmpresa || '-')}</h3>
+                    <h3 class="m-0">${lojista.nomeEmpresa || '-'}</h3>
                 </div>
                 <hr class="my-2">
-                <p class="mb-2">Lojista: <span>${escaparHTML(lojista.nomeCompleto || '-')}</span></p>
-                <p class="mb-2">CNPJ: <span>${escaparHTML(formatarCNPJ(lojista.cnpj))}</span></p>
-                <p class="mb-2">Telefone: <span>${escaparHTML(formatarTelefone(lojista.telefone))}</span></p>
-                <p class="mb-3">E-mail: <span>${escaparHTML(lojista.email || '-')}</span></p>
+                <p class="mb-2">Lojista: <span>${lojista.nomeCompleto || '-'}</span></p>
+                <p class="mb-2">CNPJ: <span>${formatarCNPJ(lojista.cnpj)}</span></p>
+                <p class="mb-2">Telefone: <span>${formatarTelefone(lojista.telefone)}</span></p>
+                <p class="mb-3">E-mail: <span>${lojista.email || '-'}</span></p>
                 <div class="d-flex gap-3 mt-auto">
                     <button class="botao px-5 btn-aprovar" data-usuario-id="${lojista.id}">Aprovar</button>
                     <button class="botao px-5 bg-danger btn-rejeitar" data-usuario-id="${lojista.id}">Rejeitar</button>
@@ -216,8 +202,6 @@ function montarCardSolicitacao(lojista) {
         </div>
     `;
 }
-
-// ---------- Listas e paginação ----------
 
 const CONFIG_VISAO = {
     chamados: {
@@ -236,8 +220,7 @@ const CONFIG_VISAO = {
 
 // Mensagem ocupando a lista inteira (carregando, vazio ou erro)
 function mostrarMensagem(visao, texto) {
-    document.getElementById(CONFIG_VISAO[visao].idContainer).innerHTML =
-        `<div class="col-12"><p class="text-center my-4">${escaparHTML(texto)}</p></div>`;
+    document.getElementById(CONFIG_VISAO[visao].idContainer).innerHTML = `<div class="col-12"><p class="text-center my-4">${texto}</p></div>`;
 }
 
 function renderizarVisao(visao) {
@@ -326,7 +309,83 @@ function criarNumero(pagina, ativo) {
     return item;
 }
 
+// Data de hoje no formato do MockAPI (AAAA-MM-DD), no fuso local.
+// toISOString() usaria UTC e, à noite no Brasil, já devolveria o dia seguinte.
+function dataDeHoje() {
+    const hoje = new Date();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    return `${hoje.getFullYear()}-${mes}-${dia}`;
+}
+
+// Tira a solicitação da lista e redesenha (a página se ajusta sozinha se a lista diminuir)
+function removerSolicitacao(id) {
+    solicitacoes = solicitacoes.filter(lojista => String(lojista.id) !== String(id));
+    renderizarVisao('solicitacoes');
+    renderizarPaginacao();
+}
+
+// Um único listener no container cobre todos os botões, inclusive os recriados a cada renderização
+function conectarAnaliseDeLojistas() {
+    document.getElementById('solicitacoes-lojista').addEventListener('click', evento => {
+        const botao = evento.target.closest('.btn-aprovar, .btn-rejeitar');
+        if (!botao) return;
+
+        analisarSolicitacao(botao.dataset.usuarioId, botao.classList.contains('btn-aprovar'));
+    });
+}
+
+async function analisarSolicitacao(idUsuario, aprovar) {
+    const solicitacao = solicitacoes.find(lojista => String(lojista.id) === String(idUsuario));
+    if (!solicitacao) return;
+
+    const botoesDoCard = document.querySelectorAll(`#solicitacoes-lojista button[data-usuario-id="${idUsuario}"]`);
+    botoesDoCard.forEach(botao => botao.disabled = true);
+
+    const nome = solicitacao.nomeEmpresa || solicitacao.nomeCompleto;
+
+    try {
+        // Lê o cadastro ATUAL: a lista da tela pode estar desatualizada
+        const resposta = await fetch(`${URL_USUARIOS}/${solicitacao.id}`);
+        if (!resposta.ok) throw new Error('Falha ao consultar o lojista');
+
+        const lojistaAtual = await resposta.json();
+
+        // Se a solicitação já foi analisada, não grava nada
+        if (lojistaAtual.status !== 'Pendente') {
+            removerSolicitacao(solicitacao.id);
+            mostrarToast('Solicitação desatualizada', 'Esta solicitação já foi analisada. A lista foi atualizada.', 'aviso');
+            return;
+        }
+
+        // Aprovar: ativa a loja e registra a data (US048). Rejeitar: a loja fica "Inativo".
+        const dados = aprovar
+            ? { status: 'Ativo', dataAprovacao: dataDeHoje() }
+            : { status: 'Inativo' };
+
+        const respostaAtualizacao = await fetch(`${URL_USUARIOS}/${solicitacao.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
+        if (!respostaAtualizacao.ok) throw new Error('Falha ao atualizar o lojista');
+
+        removerSolicitacao(solicitacao.id);
+
+        if (aprovar) {
+            mostrarToast('Lojista aprovado', `A loja ${nome} foi aprovada com sucesso.`, 'sucesso');
+        } else {
+            mostrarToast('Lojista rejeitado', `A solicitação da loja ${nome} foi rejeitada.`, 'sucesso');
+        }
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast('Erro', 'Não foi possível concluir a ação. Tente novamente.', 'erro');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     carregarPagina();
     conectarAlternancia();
+    conectarAnaliseDeLojistas();
 });

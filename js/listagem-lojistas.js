@@ -252,7 +252,16 @@ async function atualizarStatusLojista(lojista, switchStatus) {
     const statusAnterior = lojista.status;
     const novoStatus = switchStatus.checked ? 'Ativo' : 'Inativo';
 
-    // Evita novas alterações enquanto a requisição está em andamento.
+    // Verifica se o lojista está sendo ativado e ainda não possui data de aprovação.
+    const dadosAtualizados = {
+        status: novoStatus
+    };
+
+    if (novoStatus === 'Ativo' && !lojista.dataAprovacao) {
+        const hoje = new Date().toISOString().split('T')[0];
+        dadosAtualizados.dataAprovacao = hoje;
+    }
+
     switchStatus.disabled = true;
 
     try {
@@ -261,24 +270,27 @@ async function atualizarStatusLojista(lojista, switchStatus) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({status: novoStatus})
+            body: JSON.stringify(dadosAtualizados)
         });
 
         if (!resposta.ok) {
             throw new Error('Falha ao atualizar o status do lojista.');
         }
 
+        // Atualiza os dados locais.
         lojista.status = novoStatus;
 
-        mostrarToast('Sucesso', `Status alterado com sucesso`, 'sucesso');
+        if (dadosAtualizados.dataAprovacao) {
+            lojista.dataAprovacao = dadosAtualizados.dataAprovacao;
+        }
+
+        mostrarToast('Sucesso', 'Status alterado com sucesso!', 'sucesso');
 
     } catch (erro) {
         console.error(erro);
 
-        // Retorna o switch ao estado anterior.
         switchStatus.checked = statusAnterior === 'Ativo';
         mostrarToast('Erro', 'Não foi possível atualizar o status do lojista.', 'erro');
-
     } finally {
         switchStatus.disabled = false;
     }
