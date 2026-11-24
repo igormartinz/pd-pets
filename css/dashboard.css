@@ -392,16 +392,21 @@ ul {
     border-radius: 10px;
     width: 100%;
     text-align: center;
-    padding: 8px 0;
+    padding: 8px 5px;
     font-family: var(--fonte-nunito);
     font-weight: bold;
     font-size: clamp(12px, 1.5vw, 14px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .valor-mini-card {
     font-family: var(--fonte-poppins);
     font-weight: bold;
     font-size: clamp(28px, 4.5vw, 36px);
+    padding: 5px 0;
 }
 
 .mini-card-relatorio a {

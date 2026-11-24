@@ -70,7 +70,7 @@
                 <div class="d-flex justify-content-between align-items-center gap-2 gap-md-3">
                     <a href="perfil-cliente.html" class="d-flex justify-content-between align-items-center gap-1"><i
                             class="ti ti-user-circle"></i><span class="d-none d-lg-block"
-                            id="nome-usuario-perfil">Mateus Cristiano</span></a>
+                            id="nome-usuario-perfil"></span></a>
                     <button onclick="logOut()"
                         class="botao-secundario px-4 btn-sair d-flex justify-content-between align-items-center gap-2">Sair
                         <i class="ti ti-logout"></i></button>
@@ -79,7 +79,7 @@
 
             <!-- CONTEUDO -->
             <main class="px-3 px-lg-5 mb-5">
-                <h1 id="nome-usuario-titulo" class="m-0">Olá, <span id="nome-usuario">Mateus</span></h1>
+                <h1 id="nome-usuario-titulo" class="m-0">Olá, <span id="nome-usuario"></span></h1>
                 <p class="descricao-pagina mb-2">Que bom ter você por aqui!</p>
                 <div class="row g-3">
                     <div class="col-12 col-md-6 col-xl-3">
@@ -87,7 +87,7 @@
                             <i class="ti ti-users icone-indicador"></i>
                             <p class="texto-indicador">Clientes cadastrados</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">142</h3>
+                                <h3 class="valor-indicador m-0" id="dash-clientes">-</h3>
                                 <a href="listagem-clientes.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-right"></i></a>
                             </div>
@@ -98,7 +98,7 @@
                             <i class="ti ti-building-store icone-indicador"></i>
                             <p class="texto-indicador">Lojistas cadastrados</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">17</h3>
+                                <h3 class="valor-indicador m-0" id="dash-lojistas">-</h3>
                                 <a href="listagem-lojistas.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-right"></i></a>
                             </div>
@@ -109,7 +109,7 @@
                             <i class="ti ti-basket-exclamation icone-indicador"></i>
                             <p class="texto-indicador">Produtos esgotados</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">38</h3>
+                                <h3 class="valor-indicador m-0" id="dash-sem-estoque">-</h3>
                                 <a href="listagem-produtos.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-right"></i></a>
                             </div>
@@ -120,7 +120,7 @@
                             <i class="ti ti-package icone-indicador"></i>
                             <p class="texto-indicador">Pedidos</p>
                             <div class="d-flex justify-content-between">
-                                <h3 class="valor-indicador m-0">32</h3>
+                                <h3 class="valor-indicador m-0" id="dash-pedidos">-</h3>
                                 <a href="listagem-pedidos.html" class="align-self-end d-flex align-items-center">Ver
                                     todos <i class="ti ti-chevron-right"></i></a>
                             </div>
@@ -136,7 +136,7 @@
                                     <i class="ti ti-headset icone-indicador"></i>
                                     <p class="texto-indicador">Chamados em aberto</p>
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="valor-indicador m-0">4</h3>
+                                        <h3 class="valor-indicador m-0" id="dash-chamados-abertos">-</h3>
                                         <a href="chamados.html" class="align-self-end d-flex align-items-center">Ver
                                             todos <i class="ti ti-chevron-right"></i></a>
                                     </div>
@@ -148,7 +148,7 @@
                                     <i class="ti ti-checklist icone-indicador"></i>
                                     <p class="texto-indicador">Produtos cadastrados</p>
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="valor-indicador m-0">223</h3>
+                                        <h3 class="valor-indicador m-0" id="dash-produtos">-</h3>
                                         <a href="listagem-produtos.html"
                                             class="align-self-end d-flex align-items-center">Ver
                                             todos <i class="ti ti-chevron-right"></i></a>
@@ -162,14 +162,14 @@
                                 <section class="section-card-relatorio">
                                     <div class="d-flex flex-column header-relatorio-plataforma">
                                         <h2>Relatório Plataforma</h2>
-                                        <p>Visualize os pedidos realizados, chamados resolvidos e lojistas ativos.</p>
+                                        <p>Visualize os pedidos entregues, chamados resolvidos e lojistas ativos.</p>
                                     </div>
 
                                     <div class="row g-2 mt-2">
                                         <div class="col-12 col-sm-4">
                                             <div class="mini-card-relatorio">
-                                                <p class="mini-titulo-mini-card">Pedidos</p>
-                                                <p class="valor-mini-card">320</p>
+                                                <p class="mini-titulo-mini-card">Pedidos entregues</p>
+                                                <p class="valor-mini-card" id="dash-pedidos-entregues">-</p>
                                                 <a href="listagem-pedidos.html"
                                                     class="d-flex justify-content-center align-items-center">
                                                     <p>Ver todos</p> <i class="ti ti-arrow-up-right"></i>
@@ -179,8 +179,8 @@
 
                                         <div class="col-12 col-sm-4">
                                             <div class="mini-card-relatorio">
-                                                <p class="mini-titulo-mini-card">Chamados</p>
-                                                <p class="valor-mini-card">41</p>
+                                                <p class="mini-titulo-mini-card">Chamados resolvidos</p>
+                                                <p class="valor-mini-card" id="dash-chamados-resolvidos">-</p>
                                                 <a href="chamados.html"
                                                     class="d-flex justify-content-center align-items-center">
                                                     <p>Ver todos</p> <i class="ti ti-arrow-up-right"></i>
@@ -191,7 +191,7 @@
                                         <div class="col-12 col-sm-4">
                                             <div class="mini-card-relatorio">
                                                 <p class="mini-titulo-mini-card">Lojistas ativos</p>
-                                                <p class="valor-mini-card">13</p>
+                                                <p class="valor-mini-card" id="dash-lojistas-ativos">-</p>
                                                 <a href="listagem-lojistas.html"
                                                     class="d-flex justify-content-center align-items-center">
                                                     <p>Ver todos</p> <i class="ti ti-arrow-up-right"></i>
@@ -256,6 +256,7 @@
         </div>
     </div>
 
+    <script src="/js/dashboard-administrador.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
