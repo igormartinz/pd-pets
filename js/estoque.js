@@ -631,10 +631,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function somenteInteiro(valor) {
+    return valor.replace(/\D/g, "");
+}
+
+function aplicarMascarasEnd() {
+    const prodEstoque = document.getElementById("prod-estoque");
+    const prodPreco = document.getElementById("prod-preco");
+
+    const editPreco = document.getElementById("edit-preco");
+    const editEstoque = document.getElementById("edit-estoque");
+
+    prodEstoque.addEventListener("input", () => {
+        prodEstoque.value = somenteInteiro(prodEstoque.value);
+    });
+
+    prodPreco.addEventListener("input", () => {
+        prodPreco.value = somenteInteiro(prodPreco.value);
+    });
+
+    editPreco.addEventListener("input", () => {
+        editPreco.value = somenteInteiro(editPreco.value);
+    });
+
+    editEstoque.addEventListener("input", () => {
+        editEstoque.value = somenteInteiro(editEstoque.value);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     categoriasProntas = popularCategoriasDosModais();
     conectarCampoEstoque();
     conectarCadastroDeProduto();
     conectarEdicaoDeProduto();
     conectarExclusaoDeProduto();
+    aplicarMascarasEnd();
 });
