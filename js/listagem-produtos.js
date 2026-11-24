@@ -64,7 +64,7 @@ function nomeLojista(id) {
 
 function txtEstoque(estoque) {
     const quantidade = Number(estoque);
-    return quantidade > 0 ? `Em estoque ${estoque}` : "Esgotado";
+    return quantidade > 0 ? `Em estoque (${estoque})` : "Esgotado";
 }
 
 function criarCelula(texto, classe) {
