@@ -64,7 +64,7 @@ function nomeLojista(id) {
 
 function txtEstoque(estoque) {
     const quantidade = Number(estoque);
-    return quantidade > 0 ? `Em estoque ${estoque}` : "Esgotado";
+    return quantidade > 0 ? `Em estoque (${estoque})` : "Esgotado";
 }
 
 function criarCelula(texto, classe) {
@@ -77,6 +77,10 @@ function criarCelula(texto, classe) {
 function criarLinhaProduto(produto) {
     const linha = document.createElement("tr");
     linha.className = "pedido-linha";
+
+    // Nome
+    const celulaNome = criarCelula(produto.nome, "linha-celula text-truncate linha-nome");
+    celulaNome.title = produto.nome;
 
     // estoque com o selo
     const celulaEstoque = criarCelula(undefined, "linha-celula text-center");
@@ -108,7 +112,7 @@ function criarLinhaProduto(produto) {
     celulaStatus.append(campo);
 
     linha.append(
-        criarCelula(produto.nome, "linha-celula text-truncate linha-nome"),
+        celulaNome,
         criarCelula(nomeLojista(produto.lojistaID)),
         criarCelula(nomeCategoria(produto.categoriaID)),
         celulaEstoque,

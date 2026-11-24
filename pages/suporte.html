@@ -68,11 +68,11 @@
     </div>
 
     <!-- Modal Avaliar Chamado-->
-    <div class="modal fade" id="modalAvaliarChamado" tabindex="-1" aria-labelledby="modalAvaliarChamado"
+    <div class="modal fade" id="modalAvaliarChamado" tabindex="-1" aria-labelledby="titulo-modal-avaliar-chamado"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-4 rounded-3">
-                <h2 class="modal-titulo">Avaliar atendimento</h2>
+                <h2 class="modal-titulo" id="titulo-modal-avaliar-chamado">Avaliar atendimento</h2>
                 <p class="mb-3">Como foi sua experiência com este atendimento?</p>
                 <form class="row gy-2">
                     <div class="text-center avaliacao-estrelas" id="avaliacao-estrelas">
@@ -91,7 +91,7 @@
                     <div class="d-flex align-items-center justify-content-center gap-2 mt-4">
                         <button type="button" class="botao-secundario px-0 w-50"
                             data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="botao px-0 w-50">Enviar</button>
+                        <button type="button" class="botao px-0 w-50" id="btn-enviar-avaliacao">Enviar</button>
                     </div>
                 </form>
             </div>
