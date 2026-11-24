@@ -7,7 +7,7 @@ const URL_PRODUTOS = "https://6a98614f7160beda2292eff8.mockapi.io/produtos";
 const MENSAGEM_SEM_PEDIDOS = "Ainda não possui pedidos registrados por um lojista.";
 const MENSAGEM_BUSCA_VAZIA = "Sua busca não retornou nenhum pedido. Simplifique sua pesquisa para encontrar um resultado.";
 
-const ITENS_POR_PAGINA = 6;
+const ITENS_POR_PAGINA = 9;
 
 let paginaAtual = 1;
 
@@ -32,7 +32,7 @@ function mostrarMensagemLista(texto) {
     lista.innerHTML = "";
 
     const mensagem = document.createElement("p");
-    mensagem.className = "col-12 text-center my-5";
+    mensagem.className = "col-12 text-center my-5 txt-aviso";
     mensagem.textContent = texto;
     lista.append(mensagem);
 }
@@ -93,12 +93,9 @@ function nomeEmpresaProduto(produtoID) {
 }
 
 function totalItens(pedido) {
-    let total = 0;
     const itens = pedido.itens || [];
 
-    itens.forEach(item => total = total + Number(item.quantidade));
-
-    return total;
+    return itens.length;
 }
 
 function criarElemento(tag, classe, texto) {
@@ -140,7 +137,7 @@ function criarCardPedido(pedido) {
     // Botão (Ver produtos)
     const botao = criarElemento("button", "botao-secundario btn-ver-produtos", "Ver produtos");
     botao.type = "button";
-    botao.dataset.idPedido = pedido.id;
+    botao.dataset.pedidoId = pedido.id;
 
     card.appendChild(cabecalho);
     card.appendChild(infoPedido);
@@ -182,15 +179,6 @@ function pedidoCombinaComTermo(pedido, termo) {
         || status.includes(termo);
 }
 
-function mostrarResultado() {
-    if (pedidosFiltrados.length === 0) {
-        mostrarMensagemLista(MENSAGEM_BUSCA_VAZIA);
-        return null;
-    }
-
-    renderizarLista(pedidosFiltrados);
-}
-
 function aplicarPesquisa() {
     if (listaPedidos.length === 0) return null;
 
@@ -198,23 +186,217 @@ function aplicarPesquisa() {
     if (termo === "") pedidosFiltrados = listaPedidos;
     else pedidosFiltrados = listaPedidos.filter(pedido => pedidoCombinaComTermo(pedido, termo));
 
-    mostrarResultado();
+    renderizarPagina(1, false);
 }
 
 function renderizarPagina(pagina, rolar) {
-    const totalPaginas = Math.ceil(pedidosFiltrados.length / CHAMADOS_POR_PAGINA);
-    if (pagina < 1) pagina = 1;
-    if (pagina > totalPaginas) pagina = totalPaginas;
+    if (pedidosFiltrados.length === 0) {
+        mostrarMensagemLista(MENSAGEM_BUSCA_VAZIA);
+        renderizarPaginacao();
+        return null;
+    }
 
-    paginaAtual = pagina;
+    const totalPaginas = Math.ceil(pedidosFiltrados.length / ITENS_POR_PAGINA);
+    paginaAtual = Math.max(1, Math.min(pagina, totalPaginas));
 
     const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
-    const pedidosDaPagina = pedidosFiltrados.slice(inicio, inicio + ITENS_POR_PAGINA);
+    const fim = inicio + ITENS_POR_PAGINA;
+    const pedidosDaPagina = pedidosFiltrados.slice(inicio, fim);
 
     renderizarLista(pedidosDaPagina);
-    renderizarPaginacao(totalPaginas);
+    renderizarPaginacao();
 
-    if (rolar) lista.scrollIntoView({ behavior: "smooth" });
+    if (rolar) document.getElementById("lista-pedidos-adm").scrollIntoView({ behavior: "smooth" });
+}
+
+function renderizarPaginacao() {
+    const totalPaginas = Math.ceil(pedidosFiltrados.length / ITENS_POR_PAGINA);
+    const paginacao = document.getElementById("paginacao");
+
+    paginacao.innerHTML = "";
+
+    if (totalPaginas <= 1) return null;
+
+    paginacao.appendChild(criarSeta("left", paginaAtual - 1, paginaAtual === 1, "Página anterior"));
+
+    paginasVisiveis(totalPaginas, paginaAtual).forEach(pagina => {
+        if (pagina === "...") {
+            paginacao.appendChild(criarReticencias());
+        } else {
+            paginacao.appendChild(criarNumero(pagina, pagina === paginaAtual));
+        }
+    });
+
+    paginacao.appendChild(criarSeta("right", paginaAtual + 1, paginaAtual === totalPaginas, "Próxima página"));
+}
+
+function criarSeta(direcao, pagina, desabilitado, aria) {
+    const item = document.createElement("li");
+    item.className = "page-item"
+
+    const link = document.createElement("a");
+    link.className = "page-link paginacao-seta";
+    link.href = "#";
+    link.setAttribute("aria-label", aria);
+    link.innerHTML = `<span aria-hidden="true"><i class="ti ti-chevron-compact-${direcao}"></i></span>`;
+
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!desabilitado) renderizarPagina(pagina, true);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+function criarNumero(pagina, ativo) {
+    const item = document.createElement("li");
+    item.className = `page-item ${ativo ? "ativo" : ''}`;
+
+    const link = document.createElement("a");
+    link.className = `page-link paginacao-numeracao ${ativo ? "link-ativo" : ''}`;
+    link.href = "#";
+    link.textContent = pagina;
+
+    if (ativo) link.setAttribute("aria-current", "page");
+
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        renderizarPagina(pagina, true);
+    });
+
+    item.appendChild(link);
+    return item;
+}
+
+function paginasVisiveis(totalPaginas, atual) {
+    const paginas = [];
+
+    if (totalPaginas <= 5) {
+        for (let pagina = 1; pagina <= totalPaginas; pagina++) paginas.push(pagina);
+        return paginas;
+    }
+
+    const inicio = Math.max(2, atual - 1);
+    const fim = Math.min(totalPaginas - 1, atual + 1);
+
+    paginas.push(1);
+    if (inicio > 2) paginas.push("...");
+
+    for (let pagina = inicio; pagina <= fim; pagina++) paginas.push(pagina);
+
+    if (fim < totalPaginas - 1) paginas.push("...");
+    paginas.push(totalPaginas);
+
+    return paginas;
+}
+
+function criarReticencias() {
+    const item = document.createElement("li");
+    item.className = "page-item disabled page-reticencia";
+    const texto = document.createElement("span");
+    texto.className = "page-link paginacao-numeracao page-txt-reticencia";
+    texto.textContent = "...";
+    texto.setAttribute("aria-hidden", "true");
+
+    item.append(texto);
+    return item;
+}
+
+async function buscarPedido(id) {
+    const resp = await fetch(URL_PEDIDOS + "/" + id);
+
+    if (resp.status === 404) return null;
+    if (!resp.ok) throw new Error("Erro" + resp.status + "ao buscar o pedido" + id);
+
+    return await resp.json();
+}
+
+function criarItemProduto(item) {
+    const produto = dicionarioProdutos[String(item.produtoID)];
+    let nomeProduto = "Produto desconhecido";
+    if (produto) nomeProduto = produto.nome;
+
+    const quantidade = Number(item.quantidade);
+    const subTotal = Number(item.valorUnitario) * quantidade;
+
+    const artigo = criarElemento("article", "produto");
+
+    const vendidoPor = criarElemento("h3", "nome-empresa", "vendido por");
+    vendidoPor.appendChild(criarElemento("p", "nomeEmpresa", nomeEmpresaProduto(produto.lojistaID)));
+
+    const nome = criarElemento("h4", "text-truncate", nomeProduto);
+    nome.title = nomeProduto;
+    const txtQuantidade = criarElemento("p", "produto-quantidade", "Quantidade: ");
+    txtQuantidade.appendChild(criarElemento("span", "", quantidade));
+
+    const preco = criarElemento("p", "produto-preco-total", formatarMoeda(subTotal));
+
+    artigo.appendChild(vendidoPor);
+    artigo.appendChild(nome);
+    artigo.appendChild(txtQuantidade);
+    artigo.appendChild(preco);
+
+    return artigo;
+}
+
+function preencherInfoModal(pedido, data, valorTotal) {
+    document.getElementById("modalPedidoId").textContent = pedido;
+    document.getElementById("modalData").textContent = data;
+    document.getElementById("modalValorTotal").textContent = valorTotal;
+}
+
+function preencherModal(pedido) {
+    preencherInfoModal(
+        "#" + pedido.id,
+        formatarData(pedido.data),
+        formatarMoeda(pedido.valorTotal)
+    );
+
+    const container = document.getElementById("detalhes-produtos");
+    container.innerHTML = "";
+
+    const itens = pedido.itens || [];
+    if (itens.length === 0) {
+        container.append(criarElemento("p", "", "Este pedido não possui produtos."));
+        return null;
+    }
+
+    itens.forEach(item => {
+        container.appendChild(criarItemProduto(item));
+    });
+}
+
+async function abrirDetalhesPedido(botao) {
+    const id = botao.dataset.pedidoId;
+    const modal = bootstrap.Modal.getOrCreateInstance("#modalVerDetalhes");
+
+    preencherInfoModal("", "", "")
+
+    const container = document.getElementById("detalhes-produtos");
+    container.innerHTML = "";
+    container.appendChild(criarElemento("p", "txt-aviso", "Carregando..."));
+    modal.show();
+
+    botao.disabled = true;
+
+    try {
+        const pedido = await buscarPedido(id);
+
+        if (!pedido) {
+            modal.hide();
+            mostrarToast("Aviso", "Este pedido não foi encontrado.", "aviso");
+            return null;
+        }
+
+        preencherModal(pedido);
+    } catch (erro) {
+        console.error(erro);
+        modal.hide();
+        mostrarToast("Erro", "Não foi possível carregar os produtos do pedido.", "erro");
+    } finally {
+        botao.disabled = false;
+    }
 }
 
 async function carregarListaPedidos() {
@@ -233,16 +415,18 @@ async function carregarListaPedidos() {
 
         if (listaPedidos.length === 0) {
             mostrarMensagemLista(MENSAGEM_SEM_PEDIDOS);
+            renderizarPaginacao();
             return null;
         }
         ordenarPorData(listaPedidos);
         pedidosFiltrados = listaPedidos;
-        mostrarResultado();
+        renderizarPagina(1, false);
 
     } catch (error) {
         console.error(error);
         mostrarMensagemLista("Não foi possível carregar os pedidos.");
         mostrarToast("Erro", "Falha ao carregar os pedidos. Tente novamente mais tarde.", "erro");
+        renderizarPaginacao();
     }
 }
 
@@ -255,4 +439,9 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         aplicarPesquisa();
     });
+
+    document.getElementById("lista-pedidos").addEventListener("click", (e) => {
+        const botao = e.target.closest(".btn-ver-produtos");
+        if (botao) abrirDetalhesPedido(botao);
+    })
 });

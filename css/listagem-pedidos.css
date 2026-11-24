@@ -76,8 +76,8 @@ main {
 }
 
 #lista-pedidos {
-    min-height: 1000px;
-    align-items: flex-start;
+    min-height: 700px;
+    align-content: flex-start;
 }
 
 .card-pedido {
@@ -182,11 +182,70 @@ main {
 
 /* MODAL VER DETALHES */
 
+.modal-detalhes-pedido {
+    max-height: 500px;
+}
+
 .titulo-detalhes {
     font-size: clamp(20px, 5vw, 24px);
     font-weight: bold;
     font-family: var(--fonte-poppins);
     margin-bottom: 1em !important;
+}
+
+.modal-info-pedido {
+    padding-bottom: 20px;
+    font-family: var(--fonte-nunito);
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-pedido-id {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-verde-escuro);
+}
+
+.modal-data {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-cinza);
+}
+
+.modal-valor-total {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--cor-verde-escuro);
+}
+
+.lista-produtos-detalhes {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.lista-produtos-detalhes::-webkit-scrollbar {
+    width: 12px;
+}
+
+.lista-produtos-detalhes::-webkit-scrollbar-track {
+    background-color: var(--cor-verde-escuro);
+    border-radius: 10px;
+}
+
+.lista-produtos-detalhes::-webkit-scrollbar-thumb {
+    background-color: var(--cor-branco-amarelado);
+    border-radius: 10px;
+    border: 3px solid var(--cor-verde-escuro);
+    transition: .3s ease;
+}
+
+.lista-produtos-detalhes::-webkit-scrollbar-thumb:hover {
+    background-color: var(--cor-cinza)
+}
+
+.lista-produtos-detalhes::-webkit-scrollbar-button {
+    display: none;
 }
 
 .produto {
@@ -227,11 +286,22 @@ main {
     margin-bottom: .25rem;
 }
 
-#nomeEmpresa {
+.nomeEmpresa {
     font-family: var(--fonte-nunito);
     font-weight: bold;
     color: var(--cor-verde-escuro);
     font-size: clamp(14px, 1.5vw, 16px);
+}
+
+.txt-aviso {
+    font-family: var(--fonte-nunito);
+    font-weight: 500;
+}
+
+.page-reticencia .page-txt-reticencia {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--cor-branco);
 }
 
 @media(max-width: 768px) {
