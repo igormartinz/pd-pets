@@ -16,6 +16,7 @@ let usuarioAtual = null;
 let chamadosDoCliente = [];
 let paginaAtual = 1;
 let chamadoAberto = null; // o chamado que está no modal de detalhes para servir de auxílio ao botão "Responder"
+let chamadoParaAvaliar = null; 
 
 // Guarda a nota do usuario
 let notaSelecionada = 0;
@@ -55,24 +56,6 @@ estrelas.forEach(function (estrela) {
 // Ao tirar o mouse de cima do grupo inteiro, volta a mostrar a nota realmente selecionada
 containerEstrelas.addEventListener('mouseleave', function () {
     pintarEstrelas(notaSelecionada);
-});
-
-const botoesVerDetalhes = document.querySelectorAll(".btn-ver-detalhes");
-const modalDetalhesChamado = new bootstrap.Modal(document.getElementById("modalDetalhesChamado"));
-
-botoesVerDetalhes.forEach(botao => {
-    botao.addEventListener("click", () => {
-        modalDetalhesChamado.show();
-    });
-});
-
-const botoesAvaliarChamado = document.querySelectorAll(".btn-avaliar-chamado");
-const modalAvaliarChamado = new bootstrap.Modal(document.getElementById("modalAvaliarChamado"));
-
-botoesAvaliarChamado.forEach(botao => {
-    botao.addEventListener("click", () => {
-        modalAvaliarChamado.show();
-    });
 });
 
 async function buscarChamadosDoCliente(clienteID) {
@@ -174,9 +157,16 @@ function criarCardChamado(chamado) {
         const botaoAvaliar = document.createElement("button");
         botaoAvaliar.type = "button";
         botaoAvaliar.className = "botao-secundario px-3 w-100 w-lg-auto ms-auto btn-avaliar-chamado";
-        botaoAvaliar.textContent = "Avaliar atendimento";
-        botaoAvaliar.setAttribute("data-bs-toggle", "modal");
-        botaoAvaliar.setAttribute("data-bs-target", "#modalAvaliarChamado");
+
+        if (chamadoJaAvaliado(chamado)) {
+            botaoAvaliar.textContent = "Avaliado";
+            botaoAvaliar.disabled = true;
+        } else {
+            botaoAvaliar.textContent = "Avaliar atendimento";
+            botaoAvaliar.dataset.chamadoId = chamado.id;
+            botaoAvaliar.setAttribute("data-bs-toggle", "modal");
+            botaoAvaliar.setAttribute("data-bs-target", "#modalAvaliarChamado");
+        }
 
         botaoDetalhes.classList.remove("ms-auto");
         coluna.querySelector(".acoes-chamado").prepend(botaoAvaliar);
@@ -433,7 +423,7 @@ async function enviarResposta() {
     try {
         // Versão mais recente do chamado (Porque pode acontecer de o administrador já ter respondido)
         console.log(chamadoAberto.id);
-        
+
         const chamadoAtual = await buscarChamado(chamadoAberto.id);
 
         if (chamadoAtual.status === "Resolvido") {
@@ -467,13 +457,105 @@ async function enviarResposta() {
     }
 }
 
+// Só conta como avaliação de verdade a que tem data.
+function chamadoJaAvaliado(chamado) {
+    return (chamado.avaliacoesAtendimento ?? []).some(avaliacao => avaliacao.data);
+}
+
+// Troca o chamado na lista da tela pela versão atual da API e redesenha a página
+function atualizarChamadoNaLista(chamadoAtualizado) {
+    const indice = chamadosDoCliente.findIndex(chamado => String(chamado.id) === String(chamadoAtualizado.id));
+    if (indice !== -1) chamadosDoCliente[indice] = chamadoAtualizado;
+
+    renderizarPagina(paginaAtual);
+}
+
+function conectarAvaliacaoDeChamado() {
+    const modalElemento = document.getElementById("modalAvaliarChamado");
+    const campoComentario = document.getElementById("comentario");
+    const botaoEnviar = document.getElementById("btn-enviar-avaliacao");
+
+    // Ao abrir, relatedTarget é o botão "Avaliar atendimento" clicado: dele sai o id do chamado.
+    // Também limpa o que sobrou da avaliação anterior.
+    modalElemento.addEventListener("show.bs.modal", (evento) => {
+        chamadoParaAvaliar = evento.relatedTarget?.dataset.chamadoId ?? null;
+        notaSelecionada = 0;
+        pintarEstrelas(0);
+        campoComentario.value = "";
+    });
+
+    botaoEnviar.addEventListener("click", () => {
+        enviarAvaliacaoDoChamado(modalElemento, botaoEnviar, campoComentario);
+    });
+}
+
+async function enviarAvaliacaoDoChamado(modalElemento, botaoEnviar, campoComentario) {
+    if (!chamadoParaAvaliar) return null;
+
+    if (notaSelecionada === 0) {
+        mostrarToast("Nota obrigatória", "Selecione uma nota de 1 a 5 estrelas.", "erro");
+        return null;
+    }
+
+    try {
+        // Lê o chamado ATUAL: a lista da tela pode estar desatualizada
+        const resposta = await fetch(`${API_URL_CHAMADO}/chamados/${chamadoParaAvaliar}`);
+        if (!resposta.ok) throw new Error("Erro ao buscar o chamado");
+
+        const chamadoAtual = await resposta.json();
+
+        // O chamado precisa ser do cliente logado
+        if (String(chamadoAtual.clienteID) !== String(usuarioAtual.id)) {
+            throw new Error("Chamado de outro cliente");
+        }
+
+        // Só chamados resolvidos podem ser avaliados
+        if (chamadoAtual.status !== "Resolvido") {
+            atualizarChamadoNaLista(chamadoAtual);
+            bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+            mostrarToast("Chamado não resolvido", "Só é possível avaliar chamados resolvidos.", "aviso");
+            return null;
+        }
+
+        // Um chamado só recebe uma avaliação
+        if (chamadoJaAvaliado(chamadoAtual)) {
+            atualizarChamadoNaLista(chamadoAtual);
+            bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+            mostrarToast("Atendimento já avaliado", "Você já avaliou este atendimento.", "aviso");
+            return null;
+        }
+
+        const avaliacoes = chamadoAtual.avaliacoesAtendimento ?? [];
+        const proximoId = avaliacoes.reduce((maior, avaliacao) => Math.max(maior, Number(avaliacao.id) || 0), 0) + 1;
+
+        chamadoAtual.avaliacoesAtendimento = avaliacoes.concat([{
+            id: proximoId,
+            clienteID: Number(usuarioAtual.id),
+            nota: notaSelecionada,
+            comentario: campoComentario.value.trim(),
+            data: dataHoje()
+        }]);
+
+        const chamadoSalvo = await salvarChamado(chamadoAtual);
+
+        // Atualiza a tela: o botão do chamado passa a "Avaliado"
+        atualizarChamadoNaLista(chamadoSalvo);
+        bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+        mostrarToast("Avaliação enviada", "Avaliação enviada com sucesso!", "sucesso");
+
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast("Erro", "Não foi possível enviar sua avaliação. Tente novamente.", "erro");
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     usuarioAtual = verificarAut("Cliente");
     if (!usuarioAtual) return null;
 
     carregarChamados();
+    conectarAvaliacaoDeChamado();
     document.getElementById("btn-enviar-chamado").addEventListener("click", enviarChamado);
-
     document.getElementById("btn-enviar-resposta").addEventListener("click", enviarResposta);
 
     document.getElementById("form-resposta").addEventListener("submit", (e) => {
