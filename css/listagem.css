@@ -5,7 +5,7 @@
 
 h1 {
     font-family: var(--fonte-poppins);
-    font-size: clamp(32px, 5vw, 32px);
+    font-size: clamp(30px, 5vw, 32px);
     font-weight: bold;
 }
 
@@ -47,7 +47,7 @@ h1 {
     max-width: 450px;
 }
 
-.linha-clicavel{
+.linha-clicavel {
     cursor: pointer;
 }
 
@@ -88,11 +88,11 @@ h1 {
     margin: 0;
 }
 
-.form-check-input{
+.form-check-input {
     height: 1.5em;
 }
 
-.form-switch{
+.form-switch {
     text-align: center;
     height: 1em;
 }
@@ -103,7 +103,7 @@ h1 {
     cursor: pointer;
 }
 
-.form-check-input:checked{
+.form-check-input:checked {
     background-color: var(--cor-verde);
     border: var(--cor-verde);
 }
@@ -113,6 +113,48 @@ h1 {
     outline: none;
 }
 
-.form-check-input:focus{
+.form-check-input:focus {
     border: none !important;
+}
+
+/* LISTAGEM DE PRODUTOS */
+.estoque {
+    width: 20px;
+}
+
+.produto-estoque {
+    background-color: var(--cor-verde);
+    border-radius: 50px;
+    font-weight: bold;
+    padding: .2em 1.5em;
+    width: 100%;
+    display: block;
+}
+
+.esgotado {
+    background-color: #717171;
+}
+
+.modal-titulo-desativar {
+    color: var(--cor-verde-escuro);
+    font-weight: bold;
+    font-size: 24px !important;
+    font-family: var(--fonte-poppins);
+}
+
+.modal-desativar p {
+    font-weight: 500;
+}
+
+@media(max-width: 768px) {
+    #form-pesquisa {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.page-reticencia .page-txt-reticencia {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--cor-branco);
 }
