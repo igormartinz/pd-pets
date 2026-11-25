@@ -80,6 +80,7 @@ const paginas = { chamados: 1, solicitacoes: 1 };
 
 const CLASSE_STATUS_CHAMADO = {
     'Aberto': 'text-bg-warning',
+    'Em atendimento': 'status-em-atendimento',
     'Resolvido': 'text-bg-success'
 };
 
@@ -153,12 +154,13 @@ async function responderChamado(evento) {
     if (!chamadoSelecionado) return;
 
     const usuario = pegarUsuarioLogado();
+    if (!usuario) return;
 
     const campoResposta = document.getElementById('resposta-chamado');
     const mensagem = campoResposta.value.trim();
 
     if (!mensagem) {
-        mostrarToast("Campo vazio", "Preencha o campo de resposta", "erro");
+        mostrarToast('Campo vazio', 'Preencha o campo de resposta', 'erro');
         return;
     }
 
@@ -166,27 +168,53 @@ async function responderChamado(evento) {
     botaoResponder.disabled = true;
 
     try {
-        const novaResposta = {
-            autor: 'Administrador',
-            autorID: usuario.id,
-            mensagem: mensagem
-        };
+        // Lê o chamado ATUAL: o cliente ou outro administrador pode ter mexido nele desde que a página abriu
+        const consulta = await fetch(`${URL_CHAMADOS}/${chamadoSelecionado.id}`);
+        if (!consulta.ok) throw new Error('Falha ao consultar o chamado.');
+
+        const chamadoAtual = await consulta.json();
+        const respostasAtuais = chamadoAtual.respostasChamado ?? [];
+
+        // Chamado já resolvido: não recebe respostas
+        if (chamadoAtual.status === 'Resolvido') {
+            chamadoSelecionado.status = 'Resolvido';
+            chamadoSelecionado.respostasChamado = respostasAtuais;
+            preencherModalChamado(chamadoSelecionado); // desabilita o campo de resposta
+            renderizarVisao('chamados');
+            mostrarToast('Chamado resolvido', 'Este chamado já foi resolvido e não recebe novas respostas.', 'aviso');
+            return;
+        }
+
+        // Quem responde primeiro fica com o chamado. Se já é de outro administrador, ele sai desta lista.
+        const responsavelID = obterResponsavelChamado({ respostasChamado: respostasAtuais });
+        if (responsavelID !== null && String(responsavelID) !== String(usuario.id)) {
+            chamados = chamados.filter(chamado => String(chamado.id) !== String(chamadoSelecionado.id));
+            chamadoSelecionado = null;
+            bootstrap.Modal.getOrCreateInstance(modalChamado).hide();
+            renderizarVisao('chamados');
+            renderizarPaginacao();
+            mostrarToast('Chamado indisponível', 'Este chamado já está sendo atendido por outro administrador.', 'aviso');
+            return;
+        }
+
+        // A resposta é somada às respostas ATUAIS, e não às da tela
+        const proximoId = respostasAtuais.reduce((maior, resposta) => Math.max(maior, Number(resposta.id) || 0), 0) + 1;
 
         const respostasAtualizadas = [
-            ...chamadoSelecionado.respostasChamado,
-            novaResposta
+            ...respostasAtuais,
+            { id: proximoId, autor: 'Administrador', autorID: Number(usuario.id), mensagem: mensagem }
         ];
 
         const dadosAtualizados = {
             respostasChamado: respostasAtualizadas,
-            ultimaAtualizacao: dataDeHoje()
+            ultimaAtualizacao: dataDeHoje(),
+            // Primeira resposta a um chamado aberto: ele passa a "Em atendimento"
+            status: chamadoAtual.status === 'Aberto' ? 'Em atendimento' : chamadoAtual.status
         };
 
         const resposta = await fetch(`${URL_CHAMADOS}/${chamadoSelecionado.id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosAtualizados)
         });
 
@@ -194,12 +222,14 @@ async function responderChamado(evento) {
             throw new Error('Falha ao enviar resposta.');
         }
 
-        // Atualiza o chamado na memória.
+        // Atualiza o chamado na memória
         chamadoSelecionado.respostasChamado = respostasAtualizadas;
         chamadoSelecionado.ultimaAtualizacao = dadosAtualizados.ultimaAtualizacao;
+        chamadoSelecionado.status = dadosAtualizados.status;
 
-        // Atualiza a conversa exibida.
-        adicionarMensagem('Administrador', mensagem);
+        // Redesenha a conversa inteira
+        preencherModalChamado(chamadoSelecionado);
+        renderizarVisao('chamados');
 
         campoResposta.value = '';
 
@@ -211,7 +241,8 @@ async function responderChamado(evento) {
         mostrarToast('Erro', 'Não foi possível enviar a resposta.', 'erro');
 
     } finally {
-        botaoResponder.disabled = false;
+        // Em chamado resolvido o botão continua desabilitado
+        botaoResponder.disabled = chamadoSelecionado?.status === 'Resolvido';
     }
 }
 
@@ -281,7 +312,7 @@ function normalizarChamado(bruto) {
         titulo: bruto.assunto ?? bruto.titulo,
         descricao: bruto.descricao,
         data: bruto.dataAbertura ?? bruto.data,
-        status: bruto.status === 'Em atendimento' ? 'Aberto' : bruto.status,
+        status: bruto.status,
         respostasChamado: bruto.respostasChamado ?? [],
         ultimaAtualizacao: bruto.ultimaAtualizacao
     };
@@ -326,6 +357,9 @@ async function carregarPagina() {
 
                 // Chamados sem resposta administrativa ficam disponíveis para todos.
                 if (responsavelID === null) return true;
+                
+                // Chamados com status "Resolvido" ficam disponíveis para todos.
+                if (chamado.status === "Resolvido") return true;
 
                 // Chamados respondidos aparecem somente para o administrador responsável.
                 return String(responsavelID) === String(usuario.id);
@@ -357,8 +391,12 @@ async function carregarPagina() {
 
 function montarCardChamado(chamado) {
     const resolvido = chamado.status === 'Resolvido';
+    const statusAtual = chamado.status || 'Aberto';
     const classeBadge = CLASSE_STATUS_CHAMADO[chamado.status] ?? 'text-bg-secondary';
     const nomeCliente = nomesClientes[chamado.clienteID] ?? 'Cliente não encontrado';
+
+    // O select mostra o status atual e a única mudança permitida: resolver o chamado
+    const opcoesStatus = resolvido ? '<option value="Resolvido" selected>Resolvido</option>' : `<option value="${statusAtual}" selected>${statusAtual}</option><option value="Resolvido">Resolvido</option>`;
 
     return `
         <div class="col-12 col-lg-6">
@@ -375,8 +413,7 @@ function montarCardChamado(chamado) {
                     <button class="botao w-100 ver-detalhes" data-chamado-id="${chamado.id}">Ver detalhes</button>
                     <div class="input-border-secundario d-flex align-items-center justify-content-center">
                         <select class="status-input" data-chamado-id="${chamado.id}" ${resolvido ? 'disabled' : ''}>
-                            <option value="Aberto" ${resolvido ? '' : 'selected'}>Aberto</option>
-                            <option value="Resolvido" ${resolvido ? 'selected' : ''}>Resolvido</option>
+                            ${opcoesStatus}
                         </select>
                     </div>
                 </div>
@@ -654,7 +691,7 @@ async function atualizarStatusChamado(chamado, select) {
         console.error(erro);
 
         // Retorna o select para Aberto.
-        select.value = 'Aberto';
+        select.value = chamado.status;
         mostrarToast('Erro', 'Não foi possível resolver o chamado.', 'erro');
         select.disabled = false;
     }
