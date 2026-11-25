@@ -70,6 +70,12 @@ h1 {
     transform: translateY(-70%) rotate(45deg);
 }
 
+.status-em-atendimento {
+    background-color: var(--cor-salmao);
+    color: var(--cor-branco);
+}
+
+
 /* MODAL DETALHES DO CHAMADO */
 .modal-titulo{
     font-family: var(--fonte-poppins);
