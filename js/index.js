@@ -48,28 +48,39 @@ async function carregarProdutosDestaque() {
     container.innerHTML = '<p class="text-center w-100">Carregando...</p>';
 
     try {
-        // 1) Só os 4 produtos (um GET por id, em paralelo) e a lista de categorias
+        // Só os 4 produtos (um GET por id, em paralelo) e a lista de categorias
         const [produtosBuscados, categorias] = await Promise.all([
             Promise.all(IDS_DESTAQUE.map(id => buscarOuNulo(`${URL_PRODUTOS}/${id}`))),
             buscarOuNulo(URL_CATEGORIAS)
         ]);
 
-        // Descarta os que não existem mais e os inativos (RN027/RN032)
-        const produtos = produtosBuscados.filter(produto => produto && produto.status === 'Ativo');
+        // Descarta os que não existem mais e os inativos
+        const produtosAtivos = produtosBuscados.filter(produto => produto && produto.status === 'Ativo');
+
+        // Só os lojistas desses produtos, em vez de baixar todos os usuários
+        const idsLojistas = [...new Set(produtosAtivos.map(produto => produto.lojistaID))];
+        const lojistas = await Promise.all(idsLojistas.map(id => buscarOuNulo(`${URL_USUARIOS}/${id}`)));
+
+        // Mapa id -> nome e conjunto dos lojistas ativos
+        const nomesLojistas = {};
+        const lojistasAtivos = new Set();
+
+        for (const lojista of lojistas) {
+            if (!lojista) continue;
+
+            nomesLojistas[lojista.id] = lojista.nomeEmpresa;
+
+            if ((lojista.perfis ?? []).includes('Lojista') && lojista.status === 'Ativo') {
+                lojistasAtivos.add(String(lojista.id));
+            }
+        }
+
+        // Só entram produtos de lojistas ativos
+        const produtos = produtosAtivos.filter(produto => lojistasAtivos.has(String(produto.lojistaID)));
 
         if (produtos.length === 0) {
             container.innerHTML = '<p class="text-center w-100">Não foi possível carregar os produtos em destaque.</p>';
             return;
-        }
-
-        // 2) Só os lojistas desses produtos, em vez de baixar todos os usuários
-        const idsLojistas = [...new Set(produtos.map(produto => produto.lojistaID))];
-        const lojistas = await Promise.all(idsLojistas.map(id => buscarOuNulo(`${URL_USUARIOS}/${id}`)));
-
-        // Mapas id -> nome, para consulta rápida na hora de montar os cards
-        const nomesLojistas = {};
-        for (const lojista of lojistas) {
-            if (lojista) nomesLojistas[lojista.id] = lojista.nomeEmpresa;
         }
 
         const nomesCategorias = {};
@@ -80,7 +91,6 @@ async function carregarProdutosDestaque() {
         if (usuario) {
             const dadosUsuario = await buscarOuNulo(`${URL_USUARIOS}/${usuario.id}`);
             favoritos = (dadosUsuario?.favoritos ?? []).map(String);
-
         } else {
             favoritos = [];
         }
