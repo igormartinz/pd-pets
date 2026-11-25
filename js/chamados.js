@@ -9,6 +9,7 @@ let chamados = [];      // chamados de clientes, já normalizados e ordenados
 let solicitacoes = [];  // lojistas com cadastro pendente
 let nomesClientes = {};
 let exibindoChamados = true; // a página abre nos chamados de clientes
+let chamadoSelecionado = null;
 
 // Cada lista tem a sua página atual: ao alternar, cada uma volta de onde parou
 const paginas = { chamados: 1, solicitacoes: 1 };
@@ -19,7 +20,6 @@ const CLASSE_STATUS_CHAMADO = {
     'Resolvido': 'text-bg-success'
 };
 
-let chamadoSelecionado = null;
 
 const containerChamados = document.getElementById('chamados-clientes');
 const modalChamado = document.getElementById('modalDetalhesChamado');
@@ -291,6 +291,9 @@ async function carregarPagina() {
 
                 // Chamados sem resposta administrativa ficam disponíveis para todos.
                 if (responsavelID === null) return true;
+                
+                // Chamados com status "Resolvido" ficam disponíveis para todos.
+                if (chamado.status === "Resolvido") return true;
 
                 // Chamados respondidos aparecem somente para o administrador responsável.
                 return String(responsavelID) === String(usuario.id);
