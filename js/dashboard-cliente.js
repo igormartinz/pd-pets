@@ -1,6 +1,6 @@
 import { mostrarToast } from "./toast.js";
 
-const usuario = pegarUsuarioLogado();
+let usuario = pegarUsuarioLogado();
 
 const nomeUsuarioPerfil = document.getElementById('nome-usuario-perfil');
 nomeUsuarioPerfil.innerHTML = usuario.nome;
@@ -36,6 +36,29 @@ async function buscaUsuario(id) {
         console.error(erro);
     }
 
+}
+
+// Busca os dados atuais do usuário na API e atualiza o objeto local.
+async function atualizarUsuarioLogado() {
+    try {
+        const resposta = await fetch(`https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios/${usuario.id}`);
+
+        if (!resposta.ok) {
+            throw new Error('Falha ao buscar o usuário.');
+        }
+
+        const dados = await resposta.json();
+
+        usuario = {
+            ...usuario,
+            status: dados.status,
+            perfil: dados.perfis ?? dados.perfil ?? usuario.perfil,
+            nome: dados.nomeCompleto ?? usuario.nome
+        };
+
+    } catch (erro) {
+        console.error(erro);
+    }
 }
 
 const CLASSE_STATUS = {
@@ -221,7 +244,9 @@ function exibeDashboardsSidebar() {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await atualizarUsuarioLogado();
+
     exibeCadastroLojista();
     exibeDashboardsSidebar();
     buscaUsuario(usuario.id);
