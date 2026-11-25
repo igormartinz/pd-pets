@@ -77,6 +77,12 @@ async function buscarCliente(id) {
     }
 }
 
+function lojistaEstaAtivo(lojista) {
+    return Boolean(lojista)
+        && (lojista.perfis ?? []).includes('Lojista')
+        && lojista.status === 'Ativo';
+}
+
 async function anexarNomesClientes(avaliacoesProduto) {
     // Vai buscar cada cliente uma única vez, mesmo que ele apareça em outras avaliações
 
@@ -374,49 +380,50 @@ function configurarQuantidade(estoque) {
 document.addEventListener("DOMContentLoaded", async () => {
     const produtoId = pegarProdutoIdUrl();
 
-    // Pegar o produto a partir da URL
     if (!produtoId) {
         statusPagina("erro", "Produto não identificado.");
-        return null;
+        return;
     }
 
-    // Requisição para retornar o id do Produto com suas informações
     const produto = await buscarProduto(produtoId);
 
+    if (!produto) {
+        statusPagina("erro", "Produto não encontrado.");
+        return;
+    }
 
+    // Verifica o lojista ANTES de carregar qualquer informação do produto
+    const lojista = await buscarLojista(produto.lojistaID);
+
+    if (!lojistaEstaAtivo(lojista) || produto.status !== 'Ativo') {
+        statusPagina("erro", "Este produto não está disponível no momento.");
+        return;
+    }
+
+    // O botão do carrinho só é ligado depois que o produto foi validado
     document.getElementById("botao-estoque").addEventListener("click", (e) => {
         const quantidade = Number(document.getElementById("input-quantidade").value);
         addProdutoCarrinho(produto, quantidade, e.currentTarget);
-    })
-
-    // Mensagem de erro caso o produto não seja encontrado
-    if (!produto) {
-        statusPagina("erro", "Produto não encontrado.");
-        return null;
-    }
-
+    });
 
     try {
-        let favoritado;
+        let favoritado = false;
 
         if (usuarioLogado?.id) {
-            const usuario = await buscarCliente(usuarioLogado.id);
-            favoritado = usuario.favoritos.includes(produtoId) ? true : false;
+            const cliente = await buscarCliente(usuarioLogado.id);
+            favoritado = (cliente?.favoritos ?? []).map(String).includes(String(produtoId));
         }
 
         const avaliacoesBrutas = (Array.isArray(produto.avaliacoesProduto) ? produto.avaliacoesProduto : [])
             .filter(avaliacao => !isNaN(new Date(avaliacao.data)));
 
-        // Busca categoria e lojista
-        const [categoria, lojista, avaliacoesProduto] = await Promise.all([
+        const [categoria, avaliacoesProduto] = await Promise.all([
             buscarCategoria(produto.categoriaID),
-            buscarLojista(produto.lojistaID),
-            anexarNomesClientes(avaliacoesBrutas),
-            configurarQuantidade(produto.estoque)
+            anexarNomesClientes(avaliacoesBrutas)
         ]);
 
+        configurarQuantidade(produto.estoque);
         popularInfoProduto(produto, categoria, lojista, avaliacoesProduto, favoritado);
-
 
         statusPagina(null);
 

@@ -44,28 +44,36 @@ async function carregarCatalogo() {
         const categorias = await respostaCategorias.json();
 
         // Monta os mapas id -> nome pra consulta
+        const lojistasAtivos = new Set();
+
         for (const usuario of usuarios) {
             if (usuario.nomeEmpresa) {
                 mapaLojistas[usuario.id] = usuario.nomeEmpresa;
             }
+
+            // Só lojistas com status "Ativo" têm os produtos exibidos
+            if ((usuario.perfis ?? []).includes('Lojista') && usuario.status === 'Ativo') {
+                lojistasAtivos.add(String(usuario.id));
+            }
         }
+
         for (const categoria of categorias) {
             mapaCategorias[categoria.id] = categoria.nome;
         }
 
         const sessao = pegarUsuarioLogado();
 
-        if(sessao){
+        if (sessao) {
             usuarioLogado = usuarios.find(usuario => usuario.id == sessao.id);
-            favoritosUsuario = (usuarioLogado?.favoritos ?? []).map(String); 
+            favoritosUsuario = (usuarioLogado?.favoritos ?? []).map(String);
         }
 
-        // Só produtos "Ativo" entram no catálogo
-        todosOsProdutos = produtos.filter(produto => produto.status === 'Ativo');
+        // Só produtos "Ativo" de lojistas "Ativo" entram no catálogo
+        todosOsProdutos = produtos.filter(produto => produto.status === 'Ativo' && lojistasAtivos.has(String(produto.lojistaID)));
 
         // Cópia inicial, sem filtro nenhum aplicado ainda
         produtosExibidos = [...todosOsProdutos];
-        
+
         conectarEventosDeFavoritos();
         popularCategorias(categorias);
         conectarEventosDeFiltro();
@@ -263,8 +271,8 @@ async function alternarFavorito(coracao) {
 
     const produtoId = String(coracao.dataset.produtoId);
     const jaFavoritado = favoritosUsuario.includes(produtoId);
-    
-    if(jaFavoritado){
+
+    if (jaFavoritado) {
         mostrarToast('Produto já favoritado', 'Produto já adicionado aos favoritos.', 'erro');
         return
     }
