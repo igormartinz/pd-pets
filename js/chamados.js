@@ -5,11 +5,75 @@ const URL_USUARIOS = 'https://6aaac6cdff4dd5698b4f060c.mockapi.io/usuarios';
 
 const ITENS_POR_PAGINA = 4;
 
+const containerAvaliacao = document.getElementById('containerAvaliarAtendimento');
+const estrelas = containerAvaliacao.querySelectorAll('#avaliacao-estrelas i');
+
 let chamados = [];      // chamados de clientes, já normalizados e ordenados
 let solicitacoes = [];  // lojistas com cadastro pendente
 let nomesClientes = {};
 let exibindoChamados = true; // a página abre nos chamados de clientes
 let chamadoSelecionado = null;
+
+// Pinta as estrelas visulmente até a quantidade informada
+function pintarEstrelas(quantidade) {
+    estrelas.forEach(estrela => {
+        // Lê o valor numérico guardado no atributo data-nota de cada estrela
+        const valor = parseInt(estrela.dataset.nota);
+
+        if (valor <= quantidade) {
+            // Estrela dentro da faixa selecionada fica preenchida
+            estrela.classList.remove('ti-star');
+            estrela.classList.add('ti-star-filled');
+        } else {
+            // Estrela fora da faixa: volta a ficar vazia
+            estrela.classList.remove('ti-star-filled');
+            estrela.classList.add('ti-star');
+        }
+    });
+}
+
+async function buscarAvaliacao(chamado) {
+    const resp = await fetch(`${URL_CHAMADOS}/${chamado.id}`);
+    if (resp.status === 404) return [];
+    if (!resp.ok) throw new Error("Erro ao buscar a avaliação chamado.");
+
+    const chamadoAtual = await resp.json();
+    const avaliacoes = chamadoAtual.avaliacoesAtendimento || [];
+
+    const avaliacaoDoCliente = avaliacoes.find(avaliacao => String(avaliacao.clienteID) === String(chamado.clienteID));
+
+    return avaliacaoDoCliente || null;
+}
+
+async function mostrarAvaliacao(chamado) {
+    // Começa sempre escondido pra não sobrar avaliacao do chamado anterior.
+    containerAvaliacao.classList.add('d-none');
+
+    if (chamado.status !== "Resolvido") return null;
+
+    try {
+        const avaliacao = await buscarAvaliacao(chamado);
+        if (!chamadoSelecionado || String(chamadoSelecionado.id) !== String(chamado.id)) return null;
+
+        if (!avaliacao) return null;
+
+        document.getElementById("nomeCliente").textContent = nomesClientes[chamado.clienteID] || "Cliente desconhecido";
+
+        pintarEstrelas(Number(avaliacao.nota));
+
+        const comentario = document.getElementById("comentarioCliente");
+        if (avaliacao.comentario) {
+            comentario.textContent = '"' + avaliacao.comentario + '"';
+        } else {
+            comentario.textContent = "O cliente não deixou comentario.";
+        }
+
+        containerAvaliacao.classList.remove("d-none");
+    } catch (erro) {
+        console.error(erro);
+        mostrarToast("Erro", "Não foi possível exibir a avaliação do cliente. Tente novamente mais tarde.", "erro");
+    }
+}
 
 // Cada lista tem a sua página atual: ao alternar, cada uma volta de onde parou
 const paginas = { chamados: 1, solicitacoes: 1 };
@@ -42,6 +106,8 @@ containerChamados.addEventListener('click', evento => {
 
     const modal = bootstrap.Modal.getOrCreateInstance(modalChamado);
     modal.show();
+
+    mostrarAvaliacao(chamadoSelecionado);
 });
 
 function preencherModalChamado(chamado) {
@@ -63,7 +129,7 @@ function preencherModalChamado(chamado) {
         adicionarMensagem(resposta.autor, resposta.mensagem);
     }
 
-     // Bloqueia respostas em chamados resolvidos.
+    // Bloqueia respostas em chamados resolvidos.
     const resolvido = chamado.status === 'Resolvido';
 
     campoResposta.disabled = resolvido;
@@ -572,7 +638,7 @@ async function atualizarStatusChamado(chamado, select) {
     const novoStatus = select.value;
 
     if (novoStatus !== 'Resolvido') return;
-    
+
     select.disabled = true;
 
     try {
@@ -591,7 +657,7 @@ async function atualizarStatusChamado(chamado, select) {
 
         // Verifica se o chamado pertence a outro administrador.
         const respostasAtuais = chamadoAtual.respostasChamado ?? [];
-        const responsavelID = obterResponsavelChamado({respostasChamado: respostasAtuais});
+        const responsavelID = obterResponsavelChamado({ respostasChamado: respostasAtuais });
 
         if (responsavelID !== null && String(responsavelID) !== String(usuario.id)) {
             throw new Error('Este chamado pertence a outro administrador.');
@@ -615,7 +681,7 @@ async function atualizarStatusChamado(chamado, select) {
         // Atualiza os dados locais.
         chamado.status = 'Resolvido';
 
-        mostrarToast('Sucesso', 'Chamado resolvido com sucesso!','sucesso');
+        mostrarToast('Sucesso', 'Chamado resolvido com sucesso!', 'sucesso');
 
         // Atualiza o card e desabilita definitivamente o select.
         renderizarVisao('chamados');
