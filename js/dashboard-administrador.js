@@ -50,7 +50,7 @@ async function carregarDashboardAdministrativo() {
         const chamados = await respostaChamados.json();
 
         const semEstoque = produtos.filter(produto => Number(produto.estoque) === 0).length;
-        const lojistas = usuarios.filter(usuario => usuario.perfis.includes("Lojista"));
+        const lojistas = usuarios.filter(usuario => usuario.perfis.includes("Lojista") && usuario.status !== "Pendente");
         const chamadosAbertos = chamados.filter(chamado => chamado.status === "Aberto");
         const pedidosEntregues = pedidos.filter(pedido => pedido.status === "Entregue");
         const chamadosResolvidos = chamados.filter(chamado => chamado.status === "Resolvido");
